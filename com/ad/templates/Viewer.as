@@ -6,9 +6,6 @@ package com.ad.templates {
 	[Event(name = 'TransitionEvent.TRANSITION_IN_COMPLETE', type = 'com.ad.events.TransitionEvent')]
 	[Event(name = 'TransitionEvent.TRANSITION_OUT_COMPLETE', type = 'com.ad.events.TransitionEvent')]
 	
-	/**
-	 * @author Adrian Miranda
-	 */
 	public class Viewer extends Base {
 		
 		public function Viewer(resizable:Boolean = false) {
