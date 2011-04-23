@@ -6,11 +6,11 @@ package com.ad.utils {
 	
 	public final class Cleaner {
 		
-		public static function removeAllChildrensOf(displayObject:DisplayObjectContainer):void {
+		public static function removeAllChildrensOf(target:DisplayObjectContainer):void {
 			var child:Object;
 			var id:int = -1;
-			while (++id < displayObject.numChildren) {
-				child = displayObject.removeChild(displayObject.getChildAt(0));
+			while (++id < target.numChildren) {
+				child = target.removeChild(target.getChildAt(0));
 				if (child is DisplayObjectContainer) {
 					removeAllChildrensOf(child as DisplayObjectContainer);
 				}
@@ -18,52 +18,52 @@ package com.ad.utils {
 			}
 		}
 		
-		public static function kill(displayObject:DisplayObjectContainer):void {
-			removeAllChildrensOf(displayObject);
-			if (displayObject.stage && displayObject.parent.contains(displayObject)) {
-				displayObject.parent.removeChild(displayObject);
+		public static function kill(target:DisplayObjectContainer):void {
+			removeAllChildrensOf(target);
+			if (target.stage && target.parent.contains(target)) {
+				target.parent.removeChild(target);
 			}
 		}
 		
-		public static function cleanupDictionary(dictionary:Dictionary):void {
+		public static function cleanupDictionary(target:Dictionary):void {
 			var key:String;
-			for (key in dictionary) {
-				delete dictionary[key];
+			for (key in target) {
+				delete target[key];
 			}
 		}
 		
-		public static function cleanupObject(object:Object):void {
+		public static function cleanupObject(target:Object):void {
 			var key:String;
-			for (key in object) {
-				delete object[key];
+			for (key in target) {
+				delete target[key];
 			}
 		}
 		
-		public static function removeValueFromArray(array:Array, value:Object):void {
-			var index:int = array.indexOf(value);
+		public static function removeValueFromArray(target:Array, value:Object):void {
+			var index:int = target.indexOf(value);
 			if (index != -1) {
-				array.splice(index, 1);
+				target.splice(index, 1);
 			}
 		}
 		
-		public static function cleanupArray(array:Array):void {
+		public static function cleanupArray(target:Array):void {
 			var id:int = -1;
-			while (++id < array.length) {
-				array.splice(id, 1);
+			while (++id < target.length) {
+				target.splice(id, 1);
 			}
 		}
 		
-		public static function removeValueFromVector(vector:Vector.<*>, value:*):void {
-			var index:int = vector.indexOf(value);
+		public static function removeValueFromVector(target:Vector.<*>, value:*):void {
+			var index:int = target.indexOf(value);
 			if (index != -1) {
-				vector.splice(index, 1);
+				target.splice(index, 1);
 			}
 		}
 		
-		public static function cleanupVector(vector:Vector.<*>):void {
+		public static function cleanupVector(target:Vector.<*>):void {
 			var id:int = -1;
-			while (++id < vector.length) {
-				vector.splice(id, 1);
+			while (++id < target.length) {
+				target.splice(id, 1);
 			}
 		}
 		
