@@ -4,8 +4,8 @@
 	import flash.geom.Rectangle;
 	
 	public function createBitmapData(target:DisplayObject):BitmapData {
-		var rect:Rectangle = target.getBounds(target);
-		var bitmap:BitmapData = new BitmapData(rect.x + rect.width, rect.y + rect.height, true, 0);
+		var bounds:Rectangle = target.getBounds(target);
+		var bitmap:BitmapData = new BitmapData(bounds.x + bounds.width, bounds.y + bounds.height, true, 0);
 		bitmap.draw(target);
 		return bitmap;
 	}
