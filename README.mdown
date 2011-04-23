@@ -9,11 +9,6 @@ To install via Git:
 		cd ~/
 		git clone git://github.com/adrianmiranda/ad.git
 		
-How-To
------------
-
--
-
 Support
 -------
 
