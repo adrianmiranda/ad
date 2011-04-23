@@ -40,5 +40,9 @@ package com.ad.display {
 			this._heigth = heigth;
 			this.draw();
 		}
+		
+		override public function toString():String {
+			return '[BitmapFill ' + super.name + ']';
+		}
 	}
 }

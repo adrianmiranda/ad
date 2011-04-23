@@ -172,5 +172,9 @@ package com.ad.display {
 				}
 			}
 		}
+		
+		override public function toString():String {
+			return '[Joker ' + super.name + ']';
+		}
 	}
 }

@@ -36,5 +36,9 @@ package com.ad.display {
 			this._width = value;
 			this.draw();
 		}
+		
+		override public function toString():String {
+			return '[Rect ' + super.name + ']';
+		}
 	}
 }

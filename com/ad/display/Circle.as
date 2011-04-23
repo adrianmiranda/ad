@@ -16,5 +16,9 @@ package com.ad.display {
 			super.graphics.drawCircle(0, 0, this._radius);
 			super.graphics.endFill();
 		}
+		
+		override public function toString():String {
+			return '[Circle ' + super.name + ']';
+		}
 	}
 }
