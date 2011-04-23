@@ -54,7 +54,7 @@ package com.ad.display {
 			super.play();
 		}
 		
-		public function playTo(frame:Object, vars:Object, scene:String = null):void {
+		public function playTo(frame:Object, vars:Object = null, scene:String = null):void {
 			if (this.frameIsValid(frame)) {
 				this._vars = vars ? vars : {};
 				this._delay = Number(this.vars.delay) || 0; // no yet implement
@@ -66,14 +66,14 @@ package com.ad.display {
 			}
 		}
 		
-		public function playToBeginAndStop():void {
+		public function playToBeginAndStop(vars:Object = null):void {
 			this.removeEnterFrame();
-			this.playTo(1);
+			this.playTo(1, vars);
 		}
 		
-		public function playToEndAndStop():void {
+		public function playToEndAndStop(vars:Object = null):void {
 			this.removeEnterFrame();
-			this.playTo(super.totalFrames);
+			this.playTo(super.totalFrames, vars);
 		}
 		
 		public function loopBetween(from:Object = 1, to:Object = 0, yoyo:Boolean = false):void {
