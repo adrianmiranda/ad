@@ -73,7 +73,7 @@ package com.ad.utils {
 			try {
 				new LocalConnection().connect('gc');
 				new LocalConnection().connect('gc');
-			} catch (evt:Error) {
+			} catch (event:Error) {
 				// never implements, the Garbage Collector will
 				// perform a full mark/sweep on the second call.
 			}
