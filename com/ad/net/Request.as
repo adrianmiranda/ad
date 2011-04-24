@@ -61,8 +61,8 @@ package com.ad.net {
 				this._timeout.removeEventListener(TimerEvent.TIMER_COMPLETE, this.onRequestTimedOut);
 				try {
 					this._loader.close();
-				} catch(evt:Error) {
-					trace(this.toString(), evt.message);
+				} catch(event:Error) {
+					trace(this.toString(), event.message);
 				}
 				if (flush) {
 					this._loader = null;
@@ -70,7 +70,7 @@ package com.ad.net {
 			}
 		}
 		
-		public function onRequestResult(e:Event):void {
+		public function onRequestResult(event:Event):void {
 			this._data = this._loader.data;
 			if (this._onResult != null) {
 				this._onResult();
@@ -80,15 +80,15 @@ package com.ad.net {
 			}
 		}
 
-		public function onRequestProgress(evt:ProgressEvent):void {
-			this._percentage = int(evt.bytesLoaded / evt.bytesTotal);
-			if (this._onProgress != null){
+		public function onRequestProgress(event:ProgressEvent):void {
+			this._percentage = int(event.bytesLoaded / event.bytesTotal);
+			if (this._onProgress != null) {
 				this._onProgress();
 			}
 		}
 
-		public function onRequestFault(evt:ErrorEvent):void {
-			this._error = evt.text;
+		public function onRequestFault(event:ErrorEvent):void {
+			this._error = event.text;
 			if (this._onFault != null) {
 				this._onFault();
 			}
@@ -97,7 +97,7 @@ package com.ad.net {
 			}
 		}
 		
-		public function onRequestTimedOut(evt:TimerEvent):void {
+		public function onRequestTimedOut(event:TimerEvent):void {
 			this._error = 'Request timed out.';
 			if (this._onTimeout != null) {
 				this._onTimeout();
@@ -137,7 +137,7 @@ package com.ad.net {
 			if (this._data) {
 				try {
 					json = JSON.decode(String(this._data));
-				} catch(evt:Error) {
+				} catch(event:Error) {
 					json = new Object();
 				}
 			}
