@@ -42,11 +42,11 @@ package com.ad.net {
 		
 		public function load():void {
 			this._loader = new URLLoader(this._request);
-			this._loader.addEventListener(Event.COMPLETE, this.onRequestResult, false, 0, true);
-			this._loader.addEventListener(ProgressEvent.PROGRESS, this.onRequestProgress, false, 0, true);
-			this._loader.addEventListener(IOErrorEvent.IO_ERROR, this.onRequestFault, false, 0, true);
-			this._loader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, this.onRequestFault, false, 0, true);
-			this._timeout.addEventListener(TimerEvent.TIMER_COMPLETE, this.onRequestTimedOut, false, 0, true);
+			this._loader.addEventListener(Event.COMPLETE, this.onRequestResult, false, 0, this._weak);
+			this._loader.addEventListener(ProgressEvent.PROGRESS, this.onRequestProgress, false, 0, this._weak);
+			this._loader.addEventListener(IOErrorEvent.IO_ERROR, this.onRequestFault, false, 0, this._weak);
+			this._loader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, this.onRequestFault, false, 0, this._weak);
+			this._timeout.addEventListener(TimerEvent.TIMER_COMPLETE, this.onRequestTimedOut, false, 0, this._weak);
 			this._timeout.start();
 		}
 		
