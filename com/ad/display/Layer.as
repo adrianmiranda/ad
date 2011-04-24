@@ -12,11 +12,13 @@ package com.ad.display {
 			super();
 		}
 		
-		nsdisplay function setNode(node:XML):void {
+		/** @private */
+                nsdisplay function setNode(node:XML):void {
 			this._node = node;
 		}
 		
-		nsdisplay function setLocked(value:String):void {
+		/** @private */
+                nsdisplay function setLocked(value:String):void {
 			super.locked = (value == 'true' || value == '1' || value == 'yes' || value == 'y' || value == 'sim' || value == 's');
 		}
 		
