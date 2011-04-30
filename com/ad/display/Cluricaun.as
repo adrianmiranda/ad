@@ -55,7 +55,7 @@ package com.ad.display {
 		}
 		
 		public function removeAllChildren():void {
-			Cleaner.removeAllChildrensOf(super);
+			Cleaner.removeAllChildrenOf(super);
 		}
 		
 		public function die():void {
