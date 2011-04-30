@@ -66,7 +66,7 @@ package com.ad.display {
 		}
 		
 		override public function toString():String {
-			return '[Cluricaun ' + super.name + ']'
+			return '[Cluricaun ' + super.name + ']';
 		}
 	}
 }
