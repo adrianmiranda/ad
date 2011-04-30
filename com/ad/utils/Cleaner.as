@@ -6,7 +6,7 @@ package com.ad.utils {
 	
 	public final class Cleaner {
 		
-		public static function removeAllChildrensOf(target:DisplayObjectContainer):void {
+		public static function removeAllChildrenOf(target:DisplayObjectContainer):void {
 			var child:Object;
 			var id:int = -1;
 			while (++id < target.numChildren) {
