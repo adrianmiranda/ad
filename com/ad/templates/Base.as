@@ -42,9 +42,7 @@
 			try {
 				this._screen.right = super.stage.stageWidth;
 				this._screen.bottom = super.stage.stageHeight;
-			} catch (event:Error) {	
-				this._screen.right = this._screen.right;
-				this._screen.bottom = this._screen.bottom;
+			} catch (event:Error) {
 				trace(this.toString(), event.message);
 			}
 			this.arrange();
