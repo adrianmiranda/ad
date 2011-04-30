@@ -10,7 +10,7 @@ package com.ad.utils {
 			var child:Object;
 			var id:int = -1;
 			while (++id < target.numChildren) {
-				child = target.removeChild(target.getChildAt(0));
+				child = target.removeChildAt(0);
 				if (child is DisplayObjectContainer) {
 					removeAllChildrensOf(child as DisplayObjectContainer);
 				}
