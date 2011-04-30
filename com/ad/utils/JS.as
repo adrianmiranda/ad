@@ -21,6 +21,14 @@ package com.ad.utils {
 			return ExternalInterface.available;
 		}
 		
+                public static function get marshallExceptions():Boolean {
+                        return ExternalInterface.marshallExceptions;
+                }
+                
+                public static function get objectID():String {
+                        return ExternalInterface.objectID;
+                }
+                
 		public static function get hasConsole():Boolean {
 			return available && (Security.sandboxType == 'remote' || Security.sandboxType == 'localTrusted');
 		}
