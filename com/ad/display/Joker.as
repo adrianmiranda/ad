@@ -148,7 +148,7 @@ package com.ad.display {
 			super.removeEventListener(Event.ENTER_FRAME, this.onUpdateFrames);
 		}
 		
-		private function onUpdateFrames(evt:Event):void {
+		private function onUpdateFrames(event:Event):void {
 			if (this.vars.onUpdate) {
 				this.vars.onUpdate.apply(null, this.vars.onUpdateParams);
 			}
