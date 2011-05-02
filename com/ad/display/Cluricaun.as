@@ -39,8 +39,14 @@ package com.ad.display {
 			return this._locked;
 		}
 		
-		public function toggleLocked():Boolean {
-			return this.locked = !this.locked;
+		public function set showRegistrationPoint(value:Boolean):void {
+			super.graphics.clear();
+			if (!value) return;
+			super.graphics.lineStyle(2, 0xFF0000);
+			super.graphics.moveTo(-5, -5);
+			super.graphics.lineTo(5, 5);
+			super.graphics.moveTo(-5, 5);
+			super.graphics.lineTo(5, -5);
 		}
 		
 		override public function addChild(child:DisplayObject):DisplayObject {
