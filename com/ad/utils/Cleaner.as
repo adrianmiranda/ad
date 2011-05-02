@@ -18,7 +18,7 @@ package com.ad.utils {
 		}
 		
 		public static function kill(target:DisplayObjectContainer):void {
-			removeAllChildrensOf(target);
+			removeAllChildrenOf(target);
 			if (target.stage && target.parent.contains(target)) {
 				target.parent.removeChild(target);
 			}
