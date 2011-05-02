@@ -1,7 +1,6 @@
 package com.ad.data {
 	import com.ad.proxy.nsmedia;
 	
-	use namespace nsmedia;
 	public final class EqualizeParse {
 		public var pan:Number;
 		public var volume:Number;

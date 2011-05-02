@@ -13,26 +13,17 @@ package com.ad.display {
 		}
 		
 		/** @private */
-                nsdisplay function setNode(node:XML):void {
+		nsdisplay function setNode(node:XML):void {
 			this._node = node;
 		}
 		
 		/** @private */
-                nsdisplay function setLocked(value:String):void {
+		nsdisplay function setLocked(value:String):void {
 			super.locked = (value == 'true' || value == '1' || value == 'yes' || value == 'y' || value == 'sim' || value == 's');
 		}
 		
-		public function showRegistrationPoint():void {
-			super.graphics.clear();
-			super.graphics.lineStyle(2, 0x000000);
-			super.graphics.moveTo(-5, -5);
-			super.graphics.lineTo(5, 5);
-			super.graphics.moveTo(-5, 5);
-			super.graphics.lineTo(5, -5);
-		}
-		
-		public function hideRegistrationPoint():void {
-			super.graphics.clear();
+		nsdisplay function set setShowRegistrationPoint(value:Boolean):void {
+			super.setShowRegistrationPoint = (value == 'true' || value == '1' || value == 'yes' || value == 'y' || value == 'sim' || value == 's');
 		}
 		
 		override public function toString():String {

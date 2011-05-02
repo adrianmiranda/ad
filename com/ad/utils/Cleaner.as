@@ -8,11 +8,10 @@ package com.ad.utils {
 		
 		public static function removeAllChildrenOf(target:DisplayObjectContainer):void {
 			var child:Object;
-			var id:int = -1;
-			while (++id < target.numChildren) {
+			while (target.numChildren > 0) {
 				child = target.removeChildAt(0);
 				if (child is DisplayObjectContainer) {
-					removeAllChildrensOf(child as DisplayObjectContainer);
+					removeAllChildrenOf(child as DisplayObjectContainer);
 				}
 				child = null;
 			}

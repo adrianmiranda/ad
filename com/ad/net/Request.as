@@ -166,7 +166,7 @@ package com.ad.net {
 		}
 		
 		public function toString():String {
-			return '[Request ' + (this._request) ? this._request.url : null + ']';
+			return '[Request ' + (this._request) ? this._request.url : '???' + ']';
 		}
 	}
 }
