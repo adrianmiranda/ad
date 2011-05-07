@@ -1,7 +1,14 @@
+//
+//  Joker
+//
+//  Created by Adrian Miranda on 2011-04-07.
+//  Copyright (c) 2011 Adrian C. Miranda. All rights reserved.
+//
 package com.ad.display {
 	import flash.events.Event;
 	import flash.events.TimerEvent;
 	import flash.display.MovieClip;
+	import flash.display.FrameLabel;
 	import flash.utils.Timer;
 	
 	dynamic public class Joker extends MovieClip {
@@ -66,27 +73,27 @@ package com.ad.display {
 			super.play();
 		}
 		
-		public function playTo(frame:Object, vars:Object):void {
+		public function playTo(frame:Object, vars:Object = null):void {
 			if (this.frameIsValid(frame)) {
 				this._vars = vars ? vars : {};
 				this._targetFrame = parseFrame(frame);
-				if (this.vars.onInit) {
-					this.vars.onInit.apply(null, this.vars.onInitParams);
+				if (this._vars.onInit) {
+					this._vars.onInit.apply(null, this._vars.onInitParams);
 				}
-				this.addDelay(Number(this.vars.delay) || 0);
+				this.addDelay(Number(this._vars.delay) || 0);
 			}
 		}
 		
-		public function playToBeginAndStop():void {
+		public function playToBeginAndStop(vars:Object = null):void {
 			this.removeDelay();
 			this.removeEnterFrame();
-			this.playTo(1);
+			this.playTo(1, vars);
 		}
 		
-		public function playToEndAndStop():void {
+		public function playToEndAndStop(vars:Object = null):void {
 			this.removeDelay();
 			this.removeEnterFrame();
-			this.playTo(super.totalFrames);
+			this.playTo(super.totalFrames, vars);
 		}
 		
 		public function loopBetween(from:Object = 1, to:Object = 0, yoyo:Boolean = false, vars:Object = null):void {
@@ -95,7 +102,7 @@ package com.ad.display {
 				this._looping = true;
 				this._yoyo = yoyo;
 				this._targetNextFrame = this.parseFrame(from);
-				if (this.parseFrame(to) == 1) {
+				if (this.parseFrame(to) == 0) {
 					to = super.totalFrames;
 				}
 				this.playTo(to, vars);
@@ -120,9 +127,9 @@ package com.ad.display {
 		public function frameIsValid(frame:Object):Boolean {
 			if (frame is uint || frame is String) {
 				if (frame is uint) {
-					return frame > 0 && frame <= super.totalFrames;
+					return uint(frame) > 0 && uint(frame) <= super.totalFrames;
 				} else {
-					return this.getFrameByLabel(frame) > -1;
+					return this.getFrameByLabel(String(frame)) > -1;
 				}
 			}
 			return false;
@@ -131,9 +138,9 @@ package com.ad.display {
 		public function parseFrame(frame:Object):int {
 			if (this.frameIsValid(frame)) {
 				if (frame is uint) {
-					return frame;
+					return uint(frame);
 				} else {
-					return this.getFrameByLabel(frame);
+					return this.getFrameByLabel(String(frame));
 				}
 			}
 			return -1;
@@ -178,14 +185,14 @@ package com.ad.display {
 		private function onDelayTimerComplete(event:TimerEvent):void {
 			this.removeDelay();
 			this.addEnterFrame();
-			if (this.vars.onStart) {
-				this.vars.onStart.apply(null, this.vars.onStartParams);
+			if (this._vars.onStart) {
+				this._vars.onStart.apply(null, this._vars.onStartParams);
 			}
 		}
 		
 		private function onUpdateFrames(event:Event):void {
-			if (this.vars.onUpdate) {
-				this.vars.onUpdate.apply(null, this.vars.onUpdateParams);
+			if (this._vars.onUpdate) {
+				this._vars.onUpdate.apply(null, this._vars.onUpdateParams);
 			}
 			if (this.currentFrame < this._targetFrame) {
 				super.nextFrame();
@@ -201,8 +208,8 @@ package com.ad.display {
 					return;
 				} else {
 					this.removeEnterFrame();
-					if (this.vars.onComplete) {
-						this.vars.onComplete.apply(null, this.vars.onCompleteParams);
+					if (this._vars.onComplete) {
+						this._vars.onComplete.apply(null, this._vars.onCompleteParams);
 					}
 				}
 			}
