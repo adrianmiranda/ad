@@ -89,7 +89,7 @@ package com.ad.display {
 			this.playTo(super.totalFrames);
 		}
 		
-		public function loopBetween(from:Object = 1, to:Object = 0, yoyo:Boolean = false):void {
+		public function loopBetween(from:Object = 1, to:Object = 0, yoyo:Boolean = false, vars:Object = null, scene:String = null):void {
 			if (this.frameIsValid(from) && this.frameIsValid(to)) {
 				this.gotoAndStop(from);
 				this._looping = true;
@@ -98,7 +98,7 @@ package com.ad.display {
 				if (parseFrame(to) == 1) {
 					to = super.totalFrames;
 				}
-				this.playTo(to);
+				this.playTo(to, vars, scene);
 			}
 		}
 		
