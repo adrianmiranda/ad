@@ -1,9 +1,3 @@
-//
-//  Joker
-//
-//  Created by Adrian Miranda on 2011-04-07.
-//  Copyright (c) 2011 Adrian C. Miranda. All rights reserved.
-//
 package com.ad.display {
 	import flash.events.Event;
 	import flash.events.TimerEvent;
@@ -199,18 +193,18 @@ package com.ad.display {
 			} else if (this.currentFrame > this._targetFrame) {
 				super.prevFrame();
 			} else if (super.currentFrame == this._targetFrame) {
+				if (this._vars.onComplete) {
+					this._vars.onComplete.apply(null, this._vars.onCompleteParams);
+				}
 				if (this._looping) {
 					if (this._yoyo) {
-						this.loopBetween(super.currentFrame, this._targetNextFrame, this._yoyo);
+						this.loopBetween(super.currentFrame, this._targetNextFrame, this._yoyo, this._vars);
 					} else {
-						this.loopBetween(this._targetNextFrame, super.currentFrame, this._yoyo);
+						this.loopBetween(this._targetNextFrame, super.currentFrame, this._yoyo, this._vars);
 					}
 					return;
 				} else {
 					this.removeEnterFrame();
-					if (this._vars.onComplete) {
-						this._vars.onComplete.apply(null, this._vars.onCompleteParams);
-					}
 				}
 			}
 		}
