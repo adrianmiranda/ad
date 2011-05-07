@@ -1,9 +1,10 @@
 package com.ad.display {
 	import flash.events.Event;
 	import flash.events.TimerEvent;
+	import flash.display.MovieClip;
 	import flash.utils.Timer;
 	
-	dynamic public class Joker extends EntityMovieClip {
+	dynamic public class Joker extends MovieClip {
 		private var _vars:Object;
 		private var _delayTimer:Timer;
 		private var _targetFrame:uint;
