@@ -1,8 +1,11 @@
 package com.ad.display {
 	import flash.events.Event;
+	import flash.events.TimerEvent;
+	import flash.utils.Timer;
 	
 	dynamic public class Joker extends EntityMovieClip {
 		private var _vars:Object;
+		private var _delayTimer:Timer;
 		private var _targetFrame:uint;
 		private var _targetNextFrame:uint;
 		private var _hasEnterFrame:Boolean;
@@ -15,65 +18,74 @@ package com.ad.display {
 		}
 		
 		override public function gotoAndStop(frame:Object, scene:String = null):void {
+			this.removeDelay();
 			this.removeEnterFrame();
 			super.gotoAndStop(frame, scene);
 		}
 		
 		override public function gotoAndPlay(frame:Object, scene:String = null):void {
+			this.removeDelay();
 			this.removeEnterFrame();
 			super.gotoAndPlay(frame, scene);
 		}
 		
 		override public function prevFrame():void {
+			this.removeDelay();
 			this.removeEnterFrame();
 			super.prevFrame();
 		}
 		
 		override public function nextFrame():void {
+			this.removeDelay();
 			this.removeEnterFrame();
 			super.nextFrame();
 		}
 		
 		override public function nextScene():void {
+			this.removeDelay();
 			this.removeEnterFrame();
 			super.nextScene();
 		}
 		
 		override public function prevScene():void {
+			this.removeDelay();
 			this.removeEnterFrame();
 			super.prevScene();
 		}
 		
 		override public function stop():void {
+			this.removeDelay();
 			this.removeEnterFrame();
 			super.stop();
 		}
 		
 		override public function play():void {
+			this.removeDelay();
 			this.removeEnterFrame();
 			super.play();
 		}
 		
-		public function playTo(frame:Object, vars:Object = null, scene:String = null):void {
+		public function playTo(frame:Object, vars:Object, scene:String = null):void {
 			if (this.frameIsValid(frame)) {
 				this._vars = vars ? vars : {};
-				this._delay = Number(this.vars.delay) || 0; // no yet implement
 				this._targetFrame = parseFrame(frame);
-				this.addEnterFrame();
-				if (this.vars.onStart) {
-					this.vars.onStart.apply(null, this.vars.onStartParams);
+				if (this.vars.onInit) {
+					this.vars.onInit.apply(null, this.vars.onInitParams);
 				}
+				this.addDelay(Number(this.vars.delay) || 0);
 			}
 		}
 		
-		public function playToBeginAndStop(vars:Object = null):void {
+		public function playToBeginAndStop():void {
+			this.removeDelay();
 			this.removeEnterFrame();
-			this.playTo(1, vars);
+			this.playTo(1);
 		}
 		
-		public function playToEndAndStop(vars:Object = null):void {
+		public function playToEndAndStop():void {
+			this.removeDelay();
 			this.removeEnterFrame();
-			this.playTo(super.totalFrames, vars);
+			this.playTo(super.totalFrames);
 		}
 		
 		public function loopBetween(from:Object = 1, to:Object = 0, yoyo:Boolean = false):void {
@@ -148,6 +160,28 @@ package com.ad.display {
 			super.removeEventListener(Event.ENTER_FRAME, this.onUpdateFrames);
 		}
 		
+		private function addDelay(delay:Number):void {
+			this.removeDelay();
+			this._delayTimer = new Timer(delay * 1000, 1);
+			this._delayTimer.addEventListener(TimerEvent.TIMER_COMPLETE, this.onDelayTimerComplete);
+			this._delayTimer.start();
+		}
+		
+		private function removeDelay():void {
+			if (!this._delayTimer) return;
+			this._delayTimer.reset();
+			this._delayTimer.removeEventListener(TimerEvent.TIMER_COMPLETE, this.onDelayTimerComplete);
+			this._delayTimer = null;
+		}
+		
+		private function onDelayTimerComplete(event:TimerEvent):void {
+			this.removeDelay();
+			this.addEnterFrame();
+			if (this.vars.onStart) {
+				this.vars.onStart.apply(null, this.vars.onStartParams);
+			}
+		}
+		
 		private function onUpdateFrames(event:Event):void {
 			if (this.vars.onUpdate) {
 				this.vars.onUpdate.apply(null, this.vars.onUpdateParams);
@@ -171,10 +205,6 @@ package com.ad.display {
 					}
 				}
 			}
-		}
-		
-		override public function toString():String {
-			return '[Joker ' + super.name + ']';
 		}
 	}
 }
