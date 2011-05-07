@@ -66,7 +66,7 @@ package com.ad.display {
 			super.play();
 		}
 		
-		public function playTo(frame:Object, vars:Object, scene:String = null):void {
+		public function playTo(frame:Object, vars:Object):void {
 			if (this.frameIsValid(frame)) {
 				this._vars = vars ? vars : {};
 				this._targetFrame = parseFrame(frame);
@@ -89,16 +89,16 @@ package com.ad.display {
 			this.playTo(super.totalFrames);
 		}
 		
-		public function loopBetween(from:Object = 1, to:Object = 0, yoyo:Boolean = false, vars:Object = null, scene:String = null):void {
+		public function loopBetween(from:Object = 1, to:Object = 0, yoyo:Boolean = false, vars:Object = null):void {
 			if (this.frameIsValid(from) && this.frameIsValid(to)) {
 				this.gotoAndStop(from);
 				this._looping = true;
 				this._yoyo = yoyo;
-				this._targetNextFrame = parseFrame(from);
-				if (parseFrame(to) == 1) {
+				this._targetNextFrame = this.parseFrame(from);
+				if (this.parseFrame(to) == 1) {
 					to = super.totalFrames;
 				}
-				this.playTo(to, vars, scene);
+				this.playTo(to, vars);
 			}
 		}
 		
@@ -206,6 +206,10 @@ package com.ad.display {
 					}
 				}
 			}
+		}
+		
+		override public function toString():String {
+			return '[Joker ' + super.name + ']';
 		}
 	}
 }
