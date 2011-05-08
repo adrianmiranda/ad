@@ -13,13 +13,13 @@ package com.ad.utils {
 				if (params.height) specs.push('height=' + params.height);
 				if (params.top) specs.push('top=' + params.top);
 				if (params.left) specs.push('left=' + params.left);
-				specs.push('scrollbars=' + (params.scrollbars ? getBooleanYesOrNo(params.scrollbars) : 'no'));
-				specs.push('status=' + (params.status ? getBooleanYesOrNo(params.status) : 'no'));
-				specs.push('resizable=' + (params.resizable ? getBooleanYesOrNo(params.resizable) : 'no'));
-				specs.push('titlebar=' + (params.titlebar ? getBooleanYesOrNo(params.titlebar) : 'no'));
-				specs.push('menubar=' + (params.menubar ? getBooleanYesOrNo(params.menubar) : 'no'));
-				specs.push('location=' + (params.location ? getBooleanYesOrNo(params.location) : 'no'));
-				if (params.toolbar) specs.push('toolbar=' + getBooleanYesOrNo(params.toolbar));
+				specs.push('scrollbars=' + (params.scrollbars ? (params.scrollbars ? 'yes' : 'no') : 'no'));
+				specs.push('status=' + (params.status ? (params.status ? 'yes' : 'no') : 'no'));
+				specs.push('resizable=' + (params.resizable ? (params.resizable ? 'yes' : 'no') : 'no'));
+				specs.push('titlebar=' + (params.titlebar ? (params.titlebar ? 'yes' : 'no') : 'no'));
+				specs.push('menubar=' + (params.menubar ? (params.menubar ? 'yes' : 'no') : 'no'));
+				specs.push('location=' + (params.location ? (params.location ? 'yes' : 'no') : 'no'));
+				if (params.toolbar) specs.push('toolbar=' + (params.toolbar ? 'yes' : 'no'));
 			}
 			call('window.open', url, name, specs.join(','));
 		}
@@ -123,10 +123,6 @@ package com.ad.utils {
 		
 		public static function timeEnd(...rest:Array):void {
 			call.apply(null, ['console.timeEnd'].concat(rest));
-		}
-		
-		private static function getBooleanYesOrNo(value:Boolean):String {
-			return value ? 'yes' : 'no';
 		}
 	}
 }
