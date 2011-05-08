@@ -52,7 +52,7 @@ package com.ad.net {
 	 */
 	[Event(name='asyncError', type='flash.events.AsyncErrorEvent')]
 	
-	public class SOL extends EventControl {
+	public final class SOL extends EventControl {
 		private static var _self:SOL = new SOL();
 		
 		private var _sol:SharedObject;
