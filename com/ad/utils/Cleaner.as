@@ -46,8 +46,8 @@ package com.ad.utils {
 		}
 		
 		public static function cleanupArray(target:Array):void {
-			var id:int = -1;
-			while (++id < target.length) {
+			var id:int = target.length;
+			while (id--) {
 				target.splice(id, 1);
 			}
 		}
@@ -60,8 +60,8 @@ package com.ad.utils {
 		}
 		
 		public static function cleanupVector(target:Vector.<*>):void {
-			var id:int = -1;
-			while (++id < target.length) {
+			var id:int = target.length;
+			while (id--) {
 				target.splice(id, 1);
 			}
 		}

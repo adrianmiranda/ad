@@ -62,7 +62,7 @@ package com.ad.net {
 		private var _data:Object;
 		
 		public function Cookie() {
-			if (_self) throw new Error('Instantiation failed: Use Cookie.cookie instead of new.');
+			if (_self) throw new Error('Instantiation failed: Use Cookie.sol instead of new.');
 		}
 		
 		public static function get sol():Cookie {
