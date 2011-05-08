@@ -52,8 +52,8 @@ package com.ad.net {
 	 */
 	[Event(name='asyncError', type='flash.events.AsyncErrorEvent')]
 	
-	public final class SOL extends EventControl {
-		private static var _self:SOL = new SOL();
+	public final class Cookie extends EventControl {
+		private static var _self:Cookie = new Cookie();
 		
 		private var _sol:SharedObject;
 		private var _localPath:String;
@@ -61,11 +61,11 @@ package com.ad.net {
 		private var _name:String;
 		private var _data:Object;
 		
-		public function SOL() {
-			if (_self) throw new Error('Instantiation failed: Use SOL.cookie instead of new.');
+		public function Cookie() {
+			if (_self) throw new Error('Instantiation failed: Use Cookie.cookie instead of new.');
 		}
 		
-		public static function get cookie():SOL {
+		public static function get sol():Cookie {
 			return _self;
 		}
 		
