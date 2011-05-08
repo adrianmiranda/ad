@@ -35,7 +35,10 @@ package com.ad.utils {
 		}
 		
 		public function clear():void {
-			
+			var id:int = this._uriCollection.length;
+			while (id--) {
+				this._uriCollection.splice(id, 1);
+			}
 		}
 		
 		override public function toString():String {
