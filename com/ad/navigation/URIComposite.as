@@ -2,7 +2,7 @@ package com.ad.utils {
 	import com.ad.events.EventControl;
 	import com.ad.data.URI;
 	
-	public final class URIComposite extends EventControl {
+	public final class URIComposite extends URIProxy {
 		private var _uriCollection:Vector.<URI> = new Vector.<URI>();
 		
 		public function URIComposite() {

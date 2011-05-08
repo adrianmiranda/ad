@@ -9,103 +9,103 @@ package com.ad.utils {
 			// no yet implement
 		}
 		
-		public static function back():void {
+		public function back():void {
 			SWFAddress.back();
 		}
 		
-		public static function forward():void {
+		public function forward():void {
 			SWFAddress.forward();
 		}
 		
-		public static function up():void {
+		public function up():void {
 			SWFAddress.up();
 		}
 		
-		public static function go(delta:int):void {
+		public function go(delta:int):void {
 			SWFAddress.go(delta);
 		}
 		
-		public static function href(url:String, target:String = '_self'):void {
+		public function href(url:String, target:String = '_self'):void {
 			SWFAddress.href(url, target);
 		}
 		
-		public static function popup(url:String, name:String='popup', options:String='""', handler:String=''):void {
+		public function popup(url:String, name:String = 'popup', options:String = '""', handler:String = ''):void {
 			SWFAddress.popup(url, name, options, handler);
 		}
 		
-		public static function getBaseURL():String {
+		public function getBaseURL():String {
 			return SWFAddress.getBaseURL();
 		}
 		
-		public static function getStrict():Boolean {
+		public function getStrict():Boolean {
 			return SWFAddress.getStrict();
 		}
 		
-		public static function setStrict(strict:Boolean):void {
+		public function setStrict(strict:Boolean):void {
 			SWFAddress.setStrict(strict);
 		}
 		
-		public static function getHistory():Boolean {
+		public function getHistory():Boolean {
 			return SWFAddress.getHistory();
 		}
 		
-		public static function setHistory(history:Boolean):void {
+		public function setHistory(history:Boolean):void {
 			SWFAddress.setHistory(history);
 		}
 		
-		public static function getTracker():String {
+		public function getTracker():String {
 			return SWFAddress.getTracker();
 		}
 		
-		public static function setTracker(tracker:String):void {
+		public function setTracker(tracker:String):void {
 			SWFAddress.setTracker(tracker);
 		}
 		
-		public static function getTitle():String {
+		public function getTitle():String {
 			return SWFAddress.getTitle();
 		}
 		
-		public static function setTitle(title:String):void {
+		public function setTitle(title:String):void {
 			SWFAddress.setTitle(title);
 		}
 		
-		public static function getStatus():String {
+		public function getStatus():String {
 			return SWFAddress.getStatus();
 		}
 		
-		public static function setStatus(status:String):void {
+		public function setStatus(status:String):void {
 			SWFAddress.setStatus(status);
 		}
 		
-		public static function resetStatus():void {
+		public function resetStatus():void {
 			SWFAddress.resetStatus();
 		}
 		
-		public static function getValue():String {
+		public function getValue():String {
 			return SWFAddress.getValue();
 		}
 		
-		public static function setValue(value:String):void {
+		public function setValue(value:String):void {
 			SWFAddress.setValue(value);
 		}
 		
-		public static function getPath():String {
+		public function getPath():String {
 			return SWFAddress.getPath();
 		}
 		
-		public static function getPathNames():Array {
+		public function getPathNames():Array {
 			return SWFAddress.getPathNames();
 		}
 		
-		public static function getQueryString():String {
+		public function getQueryString():String {
 			return SWFAddress.getQueryString();
 		}
 		
-		public static function getParameter(param:String):Object {
+		public function getParameter(param:String):Object {
 			return SWFAddress.getParameter(param);
 		}
 		
-		public static function getParameterNames():Array {
+		public function getParameterNames():Array {
 			return SWFAddress.getParameterNames();
 		}
 		
