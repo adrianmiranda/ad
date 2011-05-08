@@ -4,6 +4,26 @@ package com.ad.utils {
 	
 	public final class JS {
 		
+		public static function popup (url:String, params:Object):void {
+			var specs:Array = new Array();
+			var name:String;
+			if (params) {
+				name = params.name ? params.name : '';
+				if (params.width) specs.push('width=' + params.width);
+				if (params.height) specs.push('height=' + params.height);
+				if (params.top) specs.push('top=' + params.top);
+				if (params.left) specs.push('left=' + params.left);
+				specs.push('scrollbars=' + (params.scrollbars ? getBooleanYesOrNo(params.scrollbars) : 'no'));
+				specs.push('status=' + (params.status ? getBooleanYesOrNo(params.status) : 'no'));
+				specs.push('resizable=' + (params.resizable ? getBooleanYesOrNo(params.resizable) : 'no'));
+				specs.push('titlebar=' + (params.titlebar ? getBooleanYesOrNo(params.titlebar) : 'no'));
+				specs.push('menubar=' + (params.menubar ? getBooleanYesOrNo(params.menubar) : 'no'));
+				specs.push('location=' + (params.location ? getBooleanYesOrNo(params.location) : 'no'));
+				if (params.toolbar) specs.push('toolbar=' + getBooleanYesOrNo(params.toolbar));
+			}
+			call('window.open', url, name, specs.join(','));
+		}
+		
 		public static function addCallback(jsFunction:String, asFunction:Function):void {
 			if (available) {
 				ExternalInterface.addCallback(jsFunction, asFunction);
@@ -103,6 +123,10 @@ package com.ad.utils {
 		
 		public static function timeEnd(...rest:Array):void {
 			call.apply(null, ['console.timeEnd'].concat(rest));
+		}
+		
+		private static function getBooleanYesOrNo(value:Boolean):String {
+			return value ? 'yes' : 'no';
 		}
 	}
 }
