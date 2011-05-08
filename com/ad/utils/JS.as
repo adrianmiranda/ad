@@ -4,7 +4,7 @@ package com.ad.utils {
 	
 	public final class JS {
 		
-		public static function popup (url:String, params:Object):void {
+		public static function popup(url:String, params:Object):void {
 			var specs:Array = new Array();
 			var name:String;
 			if (params) {
