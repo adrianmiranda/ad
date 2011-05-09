@@ -1,4 +1,5 @@
 package com.ad.utils {
+	import com.ad.events.URIEvent;
 	import com.ad.events.EventControl;
 	import com.ad.interfaces.IURIProxy;
 	import com.asual.swfaddress.SWFAddress;
@@ -7,11 +8,12 @@ package com.ad.utils {
 	public final class URIProxy extends EventControl implements IURIProxy {
 		protected static var self:IURIProxy;
 		private var _onChange:Function;
+		private var _onChangeParams:Array;
 		
 		public function URIProxy() {
 			if (self) throw new Error('Instantiation failed: Use URIProxy.instance instead of new.');
-			self = this;
 			SWFAddress.addEventListener(SWFAddressEvent.CHANGE, this.onSWFAddressChange);
+			self = this;
 		}
 		
 		public static function get instance():IURIProxy {
@@ -119,9 +121,17 @@ package com.ad.utils {
 			return SWFAddress.getParameterNames();
 		}
 		
+		public function set onChange(closure:Function):void {
+			this._onChange = closure;
+		}
+		
+		public function set onChangeParams(value:Array):void {
+			this._onChangeParams = value;
+		}
+		
 		private function onSWFAddressChange(event:SWFAddressEvent):void {
 			if (this._onChange != null) {
-				this._onChange();
+				this._onChange.apply(null, this._onChangeParams);
 			}
 			super.dispatchEvent(new URIEvent(URIEvent.CHANGE));
 		}
