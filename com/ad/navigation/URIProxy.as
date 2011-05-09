@@ -136,6 +136,10 @@ package com.ad.utils {
 			super.dispatchEvent(new URIEvent(URIEvent.CHANGE));
 		}
 		
+		protected function onURIChange(event:URIEvent):void {
+			// to override
+		}
+		
 		override public function toString():String {
 			return '[URIProxy]';
 		}

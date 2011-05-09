@@ -1,5 +1,6 @@
 package com.ad.utils {
 	import com.ad.data.URI;
+	import com.ad.events.URIEvent;
 	
 	import __AS3__.vec.Vector;
 	
@@ -89,6 +90,10 @@ package com.ad.utils {
 				}
 			}
 			return null;
+		}
+		
+		override protected function onURIChange(event:URIEvent):void {
+			super.dispatchEvent(event.clone());
 		}
 		
 		override public function toString():String {

@@ -16,7 +16,7 @@ package com.ad.utils {
 			return self as URIManager;
 		}
 		
-		private function onURIChange(event:URIEvent):void {
+		override protected function onURIChange(event:URIEvent):void {
 			super.dispatchEvent(event.clone());
 		}
 	}
