@@ -7,7 +7,13 @@ package com.ad.utils {
 	public final class URIManager extends URIComposite {
 		
 		public function URIManager() {
-			// no yet implement
+			if (self) throw new Error('Instantiation failed: Use URIManager.instance instead of new.');
+			self = this as URIManager;
+		}
+		
+		public static function get instance():URIManager {
+			if (!self) self = new URIManager();
+			return self as URIManager;
 		}
 		
 		private function onURIChange(event:URIEvent):void {

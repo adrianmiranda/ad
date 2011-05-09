@@ -1,13 +1,22 @@
 package com.ad.utils {
 	import com.ad.events.EventControl;
+	import com.ad.interfaces.IURIProxy;
 	import com.asual.swfaddress.SWFAddress;
 	import com.asual.swfaddress.SWFAddressEvent;
 	
-	public final class URIProxy extends EventControl {
+	public final class URIProxy extends EventControl implements IURIProxy {
+		protected static var self:IURIProxy;
 		private var _onChange:Function;
 		
 		public function URIProxy() {
+			if (self) throw new Error('Instantiation failed: Use URIProxy.instance instead of new.');
+			self = this;
 			SWFAddress.addEventListener(SWFAddressEvent.CHANGE, this.onSWFAddressChange);
+		}
+		
+		public static function get instance():IURIProxy {
+			if (self == null) self = new URIProxy();
+			return self;
 		}
 		
 		public function back():void {

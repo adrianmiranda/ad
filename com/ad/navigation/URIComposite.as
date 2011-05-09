@@ -10,7 +10,13 @@ package com.ad.utils {
 		private var _uriError:URI;
 		
 		public function URIComposite() {
-			// no yet implement
+			if (self) throw new Error('Instantiation failed: Use URIComposite.instance instead of new.');
+			self = this as URIComposite;
+		}
+		
+		public static function get instance():URIComposite {
+			if (!self) self = new URIComposite();
+			return self as URIComposite;
 		}
 		
 		public function attachURIDefault(value:URI):void {
