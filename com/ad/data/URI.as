@@ -2,12 +2,12 @@ package com.ad.data {
 		
 	public final class URI {
 		public var id:String;
-		public var deeplink:String;
+		public var uri:String;
 		public var source:String;
 		
-		public function URI(id:String = null, deeplink:String = null, source:String = null) {
+		public function URI(id:String = null, uri:String = null, source:String = null) {
 			this.id = id;
-			this.deeplink = deeplink;
+			this.uri = uri;
 			this.source = source;
 		}
 		

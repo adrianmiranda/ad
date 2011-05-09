@@ -34,6 +34,31 @@ package com.ad.utils {
 			return this._uriCollection[index];
 		}
 		
+		public function getURIByValue(value:String):URI {
+			var id:int = this._uriCollection.length;
+			while (id--) {
+				if (this._uriCollection[id].id == value) {
+					return this._uriCollection[id];
+				}
+				if (this._uriCollection[id].uri == value) {
+					return this._uriCollection[id];
+				}
+				if (this._uriCollection[id].source == value) {
+					return this._uriCollection[id];
+				}
+			}
+			return null;
+		}
+		
+		public function getURI(value:Object):URI {
+			if (value is uint) {
+				return this.getURIByIndex(uint(value));
+			} else if (value is String) {
+				return this.getURIByValue(String(value));
+			}
+			return null;
+		}
+		
 		public function clear():void {
 			var id:int = this._uriCollection.length;
 			while (id--) {

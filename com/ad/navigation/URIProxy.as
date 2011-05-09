@@ -4,9 +4,10 @@ package com.ad.utils {
 	import com.asual.swfaddress.SWFAddressEvent;
 	
 	public final class URIProxy extends EventControl {
+		private var _onChange:Function;
 		
 		public function URIProxy() {
-			// no yet implement
+			SWFAddress.addEventListener(SWFAddressEvent.CHANGE, this.onSWFAddressChange);
 		}
 		
 		public function back():void {
@@ -107,6 +108,13 @@ package com.ad.utils {
 		
 		public function getParameterNames():Array {
 			return SWFAddress.getParameterNames();
+		}
+		
+		private function onSWFAddressChange(event:SWFAddressEvent):void {
+			if (this._onChange != null) {
+				this._onChange();
+			}
+			super.dispatchEvent(new URIEvent(URIEvent.CHANGE));
 		}
 		
 		override public function toString():String {
