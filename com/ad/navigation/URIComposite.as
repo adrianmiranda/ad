@@ -1,14 +1,29 @@
 package com.ad.utils {
-	import com.ad.events.EventControl;
 	import com.ad.data.URI;
+	
+	import __AS3__.vec.Vector;
 	
 	public final class URIComposite extends URIProxy {
 		private var _uriCollection:Vector.<URI> = new Vector.<URI>();
+		private var _uriCurrent:URI;
 		private var _uriDefault:URI;
 		private var _uriError:URI;
 		
 		public function URIComposite() {
 			// no yet implement
+		}
+		
+		public function attachURIDefault(value:URI):void {
+			if (!this._uriDefault) {
+				this._uriDefault = value;
+				this._uriCurrent = value;
+			}
+		}
+		
+		public function detachURIError(value:URI):void {
+			if (!this._uriError) {
+				this._uriError = value;
+			}
 		}
 		
 		public function attachURI(value:URI):void {
@@ -28,7 +43,25 @@ package com.ad.utils {
 			this._uriCollection.splice(index, 1);
 		}
 		
-		public function getURIByIndex(index:uint):URI {
+		public function clear():void {
+			this._uriDefault = null;
+			this._uriError = null;
+			var id:int = this._uriCollection.length;
+			while (id--) {
+				this._uriCollection.splice(id, 1);
+			}
+		}
+		
+		public function getURI(value:Object):URI {
+			if (value is uint) {
+				return this.getURIByIndex(uint(value));
+			} else if (value is String) {
+				return this.getURIByValue(String(value));
+			}
+			return null;
+		}
+		
+		private function getURIByIndex(index:uint):URI {
 			if (index >= this._uriCollection.length) {
 				trace(this.toString(), index, 'isn\'t a valid index.');
 				return null;
@@ -36,7 +69,7 @@ package com.ad.utils {
 			return this._uriCollection[index];
 		}
 		
-		public function getURIByValue(value:String):URI {
+		private function getURIByValue(value:String):URI {
 			var id:int = this._uriCollection.length;
 			while (id--) {
 				if (this._uriCollection[id].id == value) {
@@ -50,36 +83,6 @@ package com.ad.utils {
 				}
 			}
 			return null;
-		}
-		
-		public function getURI(value:Object):URI {
-			if (value is uint) {
-				return this.getURIByIndex(uint(value));
-			} else if (value is String) {
-				return this.getURIByValue(String(value));
-			}
-			return null;
-		}
-		
-		public function attachURIDefault(value:URI):void {
-			if (!this._uriDefault) {
-				// no yet implement
-			}
-		}
-		
-		public function detachURIError(value:URI):void {
-			if (!this._uriError) {
-				// no yet implement
-			}
-		}
-		
-		public function clear():void {
-			this._uriDefault = null;
-			this._uriError = null;
-			var id:int = this._uriCollection.length;
-			while (id--) {
-				this._uriCollection.splice(id, 1);
-			}
 		}
 		
 		override public function toString():String {
