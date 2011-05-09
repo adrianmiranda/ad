@@ -4,6 +4,8 @@ package com.ad.utils {
 	
 	public final class URIComposite extends URIProxy {
 		private var _uriCollection:Vector.<URI> = new Vector.<URI>();
+		private var _uriDefault:URI;
+		private var _uriError:URI;
 		
 		public function URIComposite() {
 			// no yet implement
@@ -59,7 +61,21 @@ package com.ad.utils {
 			return null;
 		}
 		
+		public function attachURIDefault(value:URI):void {
+			if (!this._uriDefault) {
+				// no yet implement
+			}
+		}
+		
+		public function detachURIError(value:URI):void {
+			if (!this._uriError) {
+				// no yet implement
+			}
+		}
+		
 		public function clear():void {
+			this._uriDefault = null;
+			this._uriError = null;
 			var id:int = this._uriCollection.length;
 			while (id--) {
 				this._uriCollection.splice(id, 1);
