@@ -12,7 +12,6 @@ package com.ad.utils {
 		
 		private function onURIChange(event:URIEvent):void {
 			super.dispatchEvent(event.clone());
-			super.dispatchEvent(new URIEvent(URIEvent.CHANGE));
 		}
 	}
 }
