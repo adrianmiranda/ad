@@ -1,10 +1,11 @@
 ﻿package com.ad.display {
 	import com.ad.utils.Cleaner;
 	
-	import flash.display.DisplayObject;
 	import flash.events.Event;
+	import flash.display.DisplayObject;
+	import flash.display.Sprite;
 	
-	public class Leprechaun extends EntitySprite {
+	public class Leprechaun extends Sprite {
 		private var _locked:Boolean = true;
 		private var _dead:Boolean;
 		

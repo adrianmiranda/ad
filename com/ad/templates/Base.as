@@ -3,6 +3,8 @@
 	
 	import flash.events.Event;
 	import flash.geom.Rectangle;
+	import flash.display.StageAlign;
+	import flash.display.StageScaleMode;
 	
 	public class Base extends Fairy {
 		private var _screen:Rectangle = new Rectangle();
@@ -21,6 +23,10 @@
 			this._flashVars = super.stage.loaderInfo.parameters;
 			this._screen.right = super.stage.stageWidth;
 			this._screen.bottom = super.stage.stageHeight;
+			if (this._resizable) {
+				super.stage.align = StageAlign.TOP_LEFT;
+				super.stage.scaleMode = StageScaleMode.NO_SCALE;
+			}
 			this.initialize();
 			if (this._resizable) {
 				super.stage.addEventListener(Event.RESIZE, this.onStageResize, false, 0, true);

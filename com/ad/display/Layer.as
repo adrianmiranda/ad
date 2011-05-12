@@ -19,11 +19,16 @@ package com.ad.display {
 		
 		/** @private */
 		nsdisplay function setLocked(value:String):void {
-			super.locked = (value == 'true' || value == '1' || value == 'yes' || value == 'y' || value == 'sim' || value == 's');
+			super.locked = this.parseBoolean(value);
 		}
 		
-		nsdisplay function set setShowRegistrationPoint(value:Boolean):void {
-			super.setShowRegistrationPoint = (value == 'true' || value == '1' || value == 'yes' || value == 'y' || value == 'sim' || value == 's');
+		/** @private */
+		nsdisplay function showRegistrationPoint(value:String):void {
+			super.setShowRegistrationPoint = this.parseBoolean(value);
+		}
+		
+		private function parseBoolean(value:String):Boolean {
+			return(value == 'true' || value == '1' || value == 'yes' || value == 'y' || value == 'sim' || value == 's');
 		}
 		
 		override public function toString():String {
