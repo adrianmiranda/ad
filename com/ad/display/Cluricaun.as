@@ -2,6 +2,7 @@ package com.ad.display {
 	import com.ad.utils.Cleaner;
 	
 	import flash.events.Event;
+	import flash.display.DisplayObject;
 	
 	dynamic public class Cluricaun extends Joker {
 		private var _dead:Boolean;

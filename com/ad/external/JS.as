@@ -1,4 +1,4 @@
-package com.ad.utils {
+package com.ad.external {
 	import flash.system.Security;
 	import flash.external.ExternalInterface;
 	
