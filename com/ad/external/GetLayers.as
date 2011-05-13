@@ -87,38 +87,11 @@ package com.ad.external {
 					layer.y = parseFloat(node.@y || node.y || '0'); // temporary
 					container.addChild(layer);
 					this._layerDictionary[layer.name] = layer;
-					this.arrange(layer, node);
 				}
 				if (node.hasOwnProperty('layer')) {
 					this.layersFromXML(node, layer);
 				}
 			}
-		}
-		
-		private function arrange(layer:Sprite, node:XML):void {
-			/*var anchors:uint = 0;
-			var align:String = String(node.@align).toLowerCase();
-			var props:Object = new Object();
-			
-			if (Rope.trim(align) != '') {
-				if (align.indexOf('top') != -1) anchors += Align.TOP;
-				if (align.indexOf('bottom') != -1) anchors += Align.BOTTOM;
-				if (align.indexOf('middle') != -1) anchors += Align.MIDDLE;
-				if (align.indexOf('left') != -1) anchors += Align.LEFT;
-				if (align.indexOf('center') != -1) anchors += Align.CENTER;
-				if (align.indexOf('right') != -1) anchors += Align.RIGHT;
-				if (align.indexOf('none') != -1) anchors += Align.NONE;
-				
-				if (Rope.trim(node.@marginLeft) != '') props.marginLeft = parseFloat(this._app.getParsedValueOf(node.@marginLeft));
-				if (Rope.trim(node.@marginRight) != '') props.marginRight = parseFloat(this._app.getParsedValueOf(node.@marginRight));
-				if (Rope.trim(node.@marginTop) != '') props.marginTop = parseFloat(this._app.getParsedValueOf(node.@marginTop));
-				if (Rope.trim(node.@marginBottom) != '') props.marginBottom = parseFloat(this._app.getParsedValueOf(node.@marginBottom));
-				
-				if (Rope.trim(node.@width)) props.width = parseFloat(this._app.getParsedValueOf(node.@width));
-				if (Rope.trim(node.@height)) props.height = parseFloat(this._app.getParsedValueOf(node.@height));
-				
-				Align.add(layer, anchors, props);
-			}*/
 		}
 	}
 }
