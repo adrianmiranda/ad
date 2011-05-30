@@ -5,23 +5,23 @@ package com.ad.external {
 	public final class JS {
 		
 		public static function popup(url:String, params:Object):void {
-			var specs:Array = new Array();
+			var arguments:Array = new Array();
 			var name:String;
 			if (params) {
 				name = params.name ? params.name : '';
-				if (params.width) specs.push('width=' + params.width);
-				if (params.height) specs.push('height=' + params.height);
-				if (params.top) specs.push('top=' + params.top);
-				if (params.left) specs.push('left=' + params.left);
-				specs.push('scrollbars=' + (params.scrollbars ? (params.scrollbars ? 'yes' : 'no') : 'no'));
-				specs.push('status=' + (params.status ? (params.status ? 'yes' : 'no') : 'no'));
-				specs.push('resizable=' + (params.resizable ? (params.resizable ? 'yes' : 'no') : 'no'));
-				specs.push('titlebar=' + (params.titlebar ? (params.titlebar ? 'yes' : 'no') : 'no'));
-				specs.push('menubar=' + (params.menubar ? (params.menubar ? 'yes' : 'no') : 'no'));
-				specs.push('location=' + (params.location ? (params.location ? 'yes' : 'no') : 'no'));
-				if (params.toolbar) specs.push('toolbar=' + (params.toolbar ? 'yes' : 'no'));
+				if (params.width) arguments.push('width=' + params.width);
+				if (params.height) arguments.push('height=' + params.height);
+				if (params.top) arguments.push('top=' + params.top);
+				if (params.left) arguments.push('left=' + params.left);
+				arguments.push('scrollbars=' + (params.scrollbars ? (params.scrollbars ? 'yes' : 'no') : 'no'));
+				arguments.push('status=' + (params.status ? (params.status ? 'yes' : 'no') : 'no'));
+				arguments.push('resizable=' + (params.resizable ? (params.resizable ? 'yes' : 'no') : 'no'));
+				arguments.push('titlebar=' + (params.titlebar ? (params.titlebar ? 'yes' : 'no') : 'no'));
+				arguments.push('menubar=' + (params.menubar ? (params.menubar ? 'yes' : 'no') : 'no'));
+				arguments.push('location=' + (params.location ? (params.location ? 'yes' : 'no') : 'no'));
+				if (params.toolbar) arguments.push('toolbar=' + (params.toolbar ? 'yes' : 'no'));
 			}
-			call('window.open', url, name, specs.join(','));
+			call('window.open', url, name, arguments.join(','));
 		}
 		
 		public static function addCallback(jsFunction:String, asFunction:Function):void {

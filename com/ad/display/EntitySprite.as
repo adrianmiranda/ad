@@ -5,7 +5,8 @@ package com.ad.display {
 	public class EntitySprite extends Sprite {
 		
 		public function EntitySprite() {
-			super();
+			super.focusRect = false;
+			super.tabEnabled = false;
 		}
 		
 		public function moveForward(shapeToMove:DisplayObject):void {

@@ -79,14 +79,14 @@ package com.ad.net {
 				this.close(true);
 			}
 		}
-
+		
 		public function onRequestProgress(event:ProgressEvent):void {
 			this._percentage = int(event.bytesLoaded / event.bytesTotal);
 			if (this._onProgress != null) {
 				this._onProgress();
 			}
 		}
-
+		
 		public function onRequestFault(event:ErrorEvent):void {
 			this._error = event.text;
 			if (this._onFault != null) {
@@ -159,7 +159,7 @@ package com.ad.net {
 				trace('method:', this._request.method);
 				trace('variables:');
 				for (var key:String in this._request.data) {
-					trace('   -', key, this._request.data[key]);
+					trace('   -', key + ':', this._request.data[key]);
 				}
 				trace('******** #!# ******');
 			}

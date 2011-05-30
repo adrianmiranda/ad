@@ -10,6 +10,8 @@ package com.ad.display {
 		private var _holder:Sprite;
 		
 		public function BitmapFill(bmpData:BitmapData, width:int = 1, heigth:int = 1) {
+			super.focusRect = false;
+			super.tabEnabled = false;
 			this._width = width;
 			this._heigth = heigth;
 			this._bmpData = bmpData;

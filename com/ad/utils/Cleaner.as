@@ -1,5 +1,6 @@
 package com.ad.utils {
 	import flash.display.DisplayObjectContainer;
+	import flash.display.DisplayObject;
 	import flash.net.LocalConnection;
 	import flash.utils.Dictionary;
 	import flash.system.System;
@@ -7,17 +8,22 @@ package com.ad.utils {
 	public final class Cleaner {
 		
 		public static function removeAllChildrenOf(target:DisplayObjectContainer):void {
-			var child:Object;
+			if (!target) return;
+			var child:DisplayObject;
 			while (target.numChildren > 0) {
-				child = target.removeChildAt(0);
-				if (child is DisplayObjectContainer) {
-					removeAllChildrenOf(child as DisplayObjectContainer);
+				child = target.getChildAt(0);
+				if (child) {
+					target.removeChild(child);
+					if (child is DisplayObjectContainer) {
+						removeAllChildrenOf(child as DisplayObjectContainer);
+					}
 				}
 				child = null;
 			}
 		}
 		
 		public static function kill(target:DisplayObjectContainer):void {
+			if (!target) return;
 			removeAllChildrenOf(target);
 			if (target.stage && target.parent.contains(target)) {
 				target.parent.removeChild(target);

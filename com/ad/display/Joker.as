@@ -17,6 +17,8 @@ package com.ad.display {
 		public function Joker() {
 			this.stop();
 			this.loopBetween();
+			super.focusRect = false;
+			super.tabEnabled = false;
 		}
 		
 		override public function gotoAndStop(frame:Object, scene:String = null):void {

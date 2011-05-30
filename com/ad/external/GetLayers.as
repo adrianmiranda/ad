@@ -1,6 +1,8 @@
 package com.ad.external {
+	import com.ad.common.parseBoolean;
 	import com.ad.display.Layer;
 	import com.ad.proxy.nsdisplay;
+	import com.ad.utils.Display;
 	import com.ad.utils.Rope;
 	
 	import flash.utils.Proxy;
@@ -16,14 +18,14 @@ package com.ad.external {
 		private var _multitonKey:String;
 		
 		public function GetLayers(key:String) {
-			if (instanceCollection[key]) throw new Error('Instantiation failed: Use GetLayers.instance instead of new.');
+			if (instanceCollection[key]) throw new Error('Instantiation failed: Use GetLayers.fromFileID(key) instead of new.');
 			instanceCollection[this._multitonKey] = this;
 			this._layerDictionary = new Dictionary(true);
 		}
 		
-		public static function appendLayers(value:*, container:Sprite, at:String = 'default'):void {
+		public static function appendLayers(value:XML, container:Sprite, at:String = 'default'):void {
 			holder = container;
-			GetLayers.fromFileID('layers_' + at).layersFromXML(XML(value), container);
+			GetLayers.fromFileID('layers_' + at).layersFromXML(value, container);
 		}
 		
 		public static function removeLayers(at:String = 'default'):void {
@@ -37,7 +39,7 @@ package com.ad.external {
 		}
 		
 		override flash_proxy function callProperty(name:*, ...rest):* {
-			throw new Error('WARNING: There is no method called: ' + name + ' in GetLayers[' + this._multitonKey + ']');
+			throw new Error('There is no method called: \'' + name + '\' in GetLayers[' + this._multitonKey + '].');
 			return null;
 		}
 		
@@ -62,7 +64,7 @@ package com.ad.external {
 		
 		public function getLayer(name:String):* {
 			if (!this._layerDictionary[name]) {
-				throw new Error('Layer: ' + name + ' doesn\'t exist');
+				throw new Error('Layer \'' + name + '\' doesn\'t exist.');
 			}
 			return this._layerDictionary[name];
 		}
@@ -81,16 +83,64 @@ package com.ad.external {
 					layer = new Layer();
 					layer.name = id;
 					(layer as Layer).setNode(node);
-					(layer as Layer).setLocked(node.@locked);
-					(layer as Layer).setShowRegistrationPoint(node.@showRegistrationPoint);
-					layer.x = parseFloat(node.@x || node.x || '0'); // temporary
-					layer.y = parseFloat(node.@y || node.y || '0'); // temporary
+					(layer as Layer).locked = parseBoolean(node.@locked);
+					(layer as Layer).showRegistrationPoint = parseBoolean(node.@showRegistrationPoint);
+					layer.x = Number(node.@x || node.x || '0'); // temporary
+					layer.y = Number(node.@y || node.y || '0'); // temporary
 					container.addChild(layer);
 					this._layerDictionary[layer.name] = layer;
+					this.arrange(layer as Layer);
 				}
 				if (node.hasOwnProperty('layer')) {
 					this.layersFromXML(node, layer);
 				}
+			}
+		}
+		
+		private function arrange(layer:Layer):void {
+			var state:uint;
+			var node:XML = layer.getNode();
+			var align:String = Rope.trim(node.@align).toLowerCase();
+			var params:Object = new Object();
+			if (align) {
+				if (align.search('top') != -1) state += Display.TOP;
+				if (align.search('center') != -1) state += Display.CENTER;
+				if (align.search('bottom') != -1) state += Display.BOTTOM;
+				if (align.search('middle') != -1) state += Display.MIDDLE;
+				if (align.search('right') != -1) state += Display.RIGHT;
+				if (align.search('left') != -1) state += Display.LEFT;
+				if (align.search('none') != -1) state += Display.NONE;
+				if (align.length == 2) {
+					if (align.search('tl') != -1) {
+						state += Display.TOP;
+						state += Display.LEFT;
+					}
+					if (align.search('tr') != -1) {
+						state += Display.TOP;
+						state += Display.RIGHT;
+					}
+					if (align.search('cl') != -1) {
+						state += Display.CENTER;
+						state += Display.LEFT;
+					}
+					if (align.search('cr') != -1) {
+						state += Display.CENTER;
+						state += Display.RIGHT;
+					}
+					if (align.search('bl') != -1) {
+						state += Display.BOTTOM;
+						state += Display.LEFT;
+					}
+					if (align.search('br') != -1) {
+						state += Display.BOTTOM;
+						state += Display.RIGHT;
+					}
+				}
+				if (Rope.trim(node.@marginLeft)) params.marginLeft = Number(Rope.trim(node.@marginLeft));
+				if (Rope.trim(node.@marginRight)) params.marginRight = Number(Rope.trim(node.@marginRight));
+				if (Rope.trim(node.@marginTop)) params.marginTop = Number(Rope.trim(node.@marginTop));
+				if (Rope.trim(node.@marginBottom)) params.marginBottom = Number(Rope.trim(node.@marginBottom));
+				Display.attach(layer, state, params);
 			}
 		}
 	}

@@ -2,9 +2,9 @@
 	
 	public final class Validation {
 		
-		public static function isEmail(email:String):Boolean {
+		public static function isEmail(value:String):Boolean {
 			var emailExpression:RegExp = /^[a-z][\w.-]+@\w[\w.-]+\.[\w.-]*[a-z][a-z]$/i;
-			return emailExpression.test(email);
+			return emailExpression.test(value);
 		}
 		
 		public static function isEmpty(value:String, trim:Boolean = true):Boolean {
@@ -15,6 +15,7 @@
 		
 		public static function isCPF(value:String, required:Boolean=true):Boolean {
 			if (required && isEmpty(value)) return false;
+			value = value.split('.').join('').replace('-', '');//@new
 			var result:Boolean = true;
 			var total:int = value.length;
 			if (total < 11) {
@@ -112,9 +113,38 @@
 			return false;
 		}
 		
-		public static function isDate(date:String):Boolean {
-			var dateExpression:RegExp = /(0[1-9]|1[012])[\/](0[1-9]|[12][0-9]|3[01])[\/](19|20)[0-9]{2}/;
-			return dateExpression.test(date);
+		public static function isDate(value:String, required:Boolean = true):Boolean {
+			if (required && isEmpty(value)) return false;
+			var inputDate:Array = value.split('/');
+			if (inputDate.length != 3) return false;
+			for (var id:Number = 0; id < inputDate.length; id++) {
+				inputDate[id] = parseInt(inputDate[id]);
+			}
+			inputDate[1] = inputDate[1] - 1;
+			var date:Date = new Date(inputDate[2], inputDate[1], inputDate[0]);
+			return ((date.getFullYear() == inputDate[2]) && (date.getMonth() == inputDate[1]) && (date.getDate() == inputDate[0]));
+		}
+		
+		public static function isAMinor(value:String, required:Boolean = true):Boolean
+		{
+			if (required && isEmpty(value)) return false;
+			if (!isDate(value)) return false;
+			var date:Date = new Date();
+			var fullDay:uint = date.getDate();
+			var fullMonth:uint = date.month + 1;
+			var fullYear:uint = date.getFullYear();
+			var inputDay:uint = Number(value.substr(0, 2));
+			var inputMonth:uint = Number(value.substr(value.indexOf('/') + 1, 2));
+			var inputYear:uint = Number(value.substr(value.lastIndexOf('/') + 1, value.length));
+			var isAMinorMonth:Boolean;
+			if (fullMonth >= inputMonth) isAMinorMonth = true;
+			if (isAMinorMonth && fullDay >= inputDay) inputYear -= 1;
+			return (fullYear - inputYear) < 18;
+		}
+		
+		public static function isDefaultLabel(value:String, label:String, required:Boolean = true):Boolean {
+			if (required && isEmpty(value)) return false;
+			return(value == label);
 		}
 	}
 }

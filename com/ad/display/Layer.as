@@ -2,8 +2,8 @@ package com.ad.display {
 	import com.ad.display.Leprechaun;
 	import com.ad.proxy.nsdisplay;
 	
-	import flash.display.DisplayObject;
 	import flash.events.Event;
+	import flash.display.DisplayObject;
 	
 	public class Layer extends Leprechaun {
 		private var _node:XML;
@@ -18,17 +18,12 @@ package com.ad.display {
 		}
 		
 		/** @private */
-		nsdisplay function setLocked(value:String):void {
-			super.locked = this.parseBoolean(value);
+		nsdisplay function getNode():XML {
+			return this._node;
 		}
 		
-		/** @private */
-		nsdisplay function showRegistrationPoint(value:String):void {
-			super.setShowRegistrationPoint = this.parseBoolean(value);
-		}
-		
-		private function parseBoolean(value:String):Boolean {
-			return(value == 'true' || value == '1' || value == 'yes' || value == 'y' || value == 'sim' || value == 's');
+		public function get(name:String):DisplayObject {
+			return super.getChildByName(name);
 		}
 		
 		override public function toString():String {

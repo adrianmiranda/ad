@@ -10,6 +10,8 @@
 		private var _dead:Boolean;
 		
 		public function Leprechaun() {
+			super.focusRect = false;
+			super.tabEnabled = false;
 			super.addEventListener(Event.REMOVED_FROM_STAGE, this.onRemovedFromStage, false, 0, true);
 		}
 		

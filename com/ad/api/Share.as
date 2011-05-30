@@ -14,7 +14,7 @@ package com.ad.api {
 		public static const REDDIT:Object = { name:'reddit', url:'http://reddit.com/submit?url=' + link + '&title=' + title };
 		public static const STUMPLEEUP:Object = { name:'stumpleeup', url:'http://www.stumbleupon.com/submit?url=' + link + '&title=' + title };
 		public static const TECHNORATI:Object = { name:'technorati', url:'http://technorati.com/faves?add=' + link + ' ' + title };
-		public static const TWITTER:Object = { name:'twitter', url:'http://twitter.com/home?status='+title+'%20-%20' + link + '' };
+		public static const TWITTER:Object = { name:'twitter', url:'http://twitter.com/intent/tweet?status='+title+'%20-%20' + link + '' };
 		public static const YAHOOBOOKMARKS:Object = { name:'yahoobookmarks', url:'http://bookmarks.yahoo.com/toolbar/savebm?u=' + link + '&t=' + title + '&opener=bm&ei=UTF-8&d=' + description };
 		public static const YAHOOBUZZ:Object = { name:'yahoobuzz', url:'http://buzz.yahoo.com/submit/?submitUrl=' + link + '&submitHeadline=&submitSummary=' + description + '&submitCategory=science&submitAssetType=text' };
 		public static const ORKUT:Object = { name:'orkut', url:'http://promote.orkut.com/preview?nt=orkut.com&tt=' + title + '&du=' + link + '&cn=' + description };
@@ -28,7 +28,7 @@ package com.ad.api {
 			try {            
 				navigateToURL(request, '_blank');
 			} catch (event:Error) {
-				trace('ERROR: navigateToURL >', request.url);
+				trace('[Share error] navigateToURL >', request.url);
 			}
 		}
 		

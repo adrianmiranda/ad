@@ -1,5 +1,5 @@
 package com.ad.common {
-	import com.ad.utils.JS;
+	import com.ad.external.JS;
 	
 	public function applyDeflexion(localPath:String = '../', browserPath:String = ''):String {
 		var protocol:String, hostname:String, port:String, pathname:String, filepath:String;

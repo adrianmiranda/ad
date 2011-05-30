@@ -1,29 +1,26 @@
-package com.ad.external
-{
+package com.ad.external {
 	import flash.utils.Proxy;
 	import flash.utils.flash_proxy;
 	import flash.utils.Dictionary;
 	import com.ad.utils.Rope;
 	
-	public class GetValues extends Proxy
-	{
+	public class GetValues extends Proxy {
 		private static var instanceCollection:Array = new Array();
 		private static var jsFunction:String;
 		private var _valueDictionary:Dictionary;
 		private var _multitonKey:String;
 		
-		public function GetValues(key:String)
-		{
-			if (instanceCollection[key]) throw new Error('Instantiation failed: Use GetValues.instance instead of new.');
+		public function GetValues(key:String) {
+			if (instanceCollection[key]) throw new Error('Instantiation failed: Use GetValues.fromFileID(key) instead of new.');
 			this._multitonKey = key;
 			instanceCollection[this._multitonKey] = this;
-			this._valueDictionary = new Dictionary(true);
+			this._valueDictionary = new Dictionary();
 		}
 		
 		public static function appendTrack(value:XML, at:String = 'default'):void {
 			jsFunction = value.@['jsFunction'];
-			GetValues.fromFileID('track_' + at).trackFromXML(value);
-			GetValues.fromFileID('track_' + at).parseBindings();
+			GetValues.fromFileID('tracks_' + at).trackFromXML(value);
+			GetValues.fromFileID('tracks_' + at).parseBindings();
 		}
 		
 		public static function appendTexts(value:XML, at:String = 'default'):void {
@@ -58,7 +55,8 @@ package com.ad.external
 		}
 		
 		override flash_proxy function setProperty(name:*, propertyValue:*):void {
-			this._valueDictionary[name] = propertyValue;
+			if (!propertyValue) delete this._valueDictionary[name];
+			else this._valueDictionary[name] = propertyValue;
 		}
 		
 		override flash_proxy function getProperty(name:*):* {
@@ -94,7 +92,7 @@ package com.ad.external
 					tag = (child.text() || child.@value);
 					code = String(child.@code || child.code);
 					jsMethod = String(child.@['jsFunction'] || child['jsFunction']);
-					if (id) {
+					if (Rope.trim(id)) {
 						instanceCollection[this._multitonKey][id] = { code:code, tag:tag, jsFunction:(jsMethod || jsFunction) };
 					}
 				}
@@ -117,13 +115,8 @@ package com.ad.external
 		private function parseBindings():void {
 			var key:String;
 			for (key in this._valueDictionary) {
-				if (Rope.hasBinding(this._valueDictionary[key])) {
-					if (!Rope.isInvalidBinding(this._valueDictionary[key])) {
-						// TODO: properly implement
-						var substitutions:Object = getSubstitutions(Rope.getBindingSubstitutions(this._valueDictionary[key]));
-						Rope.binding(this._valueDictionary[key], substitutions);
-					}
-				}
+				var substitutions:Object = getSubstitutions(Rope.getBindingSubstitutions(this._valueDictionary[key]));
+				Rope.binding(this._valueDictionary[key], substitutions);
 			}
 		}
 		
@@ -131,7 +124,7 @@ package com.ad.external
 			var key:String;
 			var id:int = list.length;
 			var data:Object = new Object();
-			for (id--) {
+			while (id--) {
 				key = list[id];
 				if (this._valueDictionary[key]) {
 					data[key] = this._valueDictionary[key];
