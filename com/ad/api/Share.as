@@ -6,14 +6,14 @@ package com.ad.api {
 		public static const SPHINN:Object = { name:'sphinn', url:'http://sphinn.com/index.php?c=post&m=submit&link=' + link };
 		public static const DELICIOUS:Object = { name:'delicious', url:'http://delicious.com/post?url=' + link + '&title=' + title };
 		public static const FACEBOOK:Object = { name:'facebook', url:'http://www.facebook.com/share.php?u=' + link + '&t=' + title };
-		public static const GOOGLEBOOKMARKS:Object = { name:'googlebookmarks', url:'http://www.google.com/bookmarks/mark?op=edit&bkmk=' + link + '&title='+title+'&annotation='+description };
-		public static const LINKEDIN:Object = { name:'linkedin', url:'http://www.linkedin.com/shareArticle?mini=true&url='+link+'&title=' + title + '&source='+description };
+		public static const GOOGLEBOOKMARKS:Object = { name:'googlebookmarks', url:'http://www.google.com/bookmarks/mark?op=edit&bkmk=' + link + '&title=' + title + '&annotation=' + description };
+		public static const LINKEDIN:Object = { name:'linkedin', url:'http://www.linkedin.com/shareArticle?mini=true&url='+link+'&title=' + title + '&source=' + description };
 		public static const MYSPACE:Object = { name:'myspace', url:'http://www.myspace.com/Modules/PostTo/Pages/?u=' + link + '&t=' + title };
 		public static const NETVIBES:Object = { name:'netvibes', url:'http://www.netvibes.com/share?title=' + title + '&url=' + link };
 		public static const REDDIT:Object = { name:'reddit', url:'http://reddit.com/submit?url=' + link + '&title=' + title };
 		public static const STUMPLEEUP:Object = { name:'stumpleeup', url:'http://www.stumbleupon.com/submit?url=' + link + '&title=' + title };
 		public static const TECHNORATI:Object = { name:'technorati', url:'http://technorati.com/faves?add=' + link + ' ' + title };
-		public static const TWITTER:Object = { name:'twitter', url:'http://twitter.com/intent/tweet?status=' + title + '%20-%20' + link + '' };
+		public static const TWITTER:Object = { name:'twitter', url:'http://twitter.com/intent/tweet?status=' + title + '%20-%20' + link };
 		public static const YAHOOBOOKMARKS:Object = { name:'yahoobookmarks', url:'http://bookmarks.yahoo.com/toolbar/savebm?u=' + link + '&t=' + title + '&opener=bm&ei=UTF-8&d=' + description };
 		public static const YAHOOBUZZ:Object = { name:'yahoobuzz', url:'http://buzz.yahoo.com/submit/?submitUrl=' + link + '&submitHeadline=&submitSummary=' + description + '&submitCategory=science&submitAssetType=text' };
 		public static const ORKUT:Object = { name:'orkut', url:'http://promote.orkut.com/preview?nt=orkut.com&tt=' + title + '&du=' + link + '&cn=' + description };
