@@ -1,8 +1,24 @@
 package com.ad.external {
+	import flash.net.URLRequest;
 	import flash.system.Security;
+	import flash.net.navigateToURL;
 	import flash.external.ExternalInterface;
 	
 	public final class JS {
+		
+		public static function gotoURL(url:*, window:String = '_self'):void {
+			var request:URLRequest = url is String ? new URLRequest(url) : url;
+			if (!available) {
+				navigateToURL(request, window);
+			} else {
+				var userAgentValue:String = userAgent.toLowerCase();
+				if (userAgentValue.indexOf('firefox') > -1 || (userAgentValue.indexOf('msie') > -1 && uint(userAgentValue.substr(userAgentValue.indexOf('msie') + 5, 3)) >= 7)) {
+					call('window.open', request.url, window);
+				} else {
+					navigateToURL(request, window);
+				}
+			}
+		}
 		
 		public static function popup(url:String, params:Object):void {
 			var arguments:Array = new Array();
