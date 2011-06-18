@@ -2,22 +2,22 @@ package com.ad.api {
 	import com.ad.utils.Rope;
 	import com.ad.external.JS;
 	import com.ad.common.getTrack;
-	//import com.google.analytics.AnalyticsTracker;
-	//import com.google.analytics.GATracker;
+	import com.google.analytics.AnalyticsTracker;
+	import com.google.analytics.GATracker;
 	
 	import flash.display.Stage;
 	import flash.display.Loader;
 	import flash.net.URLRequest;
 	
 	public final class Tracking {
-		//private static var tracker:AnalyticsTracker;
+		private static var tracker:AnalyticsTracker;
 		
 		public function Tracking() {
 			throw new Error('Instantiation failed: Tracking is a static class');
 		}
 		
-		public static function initialize(stage:Stage):void {
-			//tracker = new GATracker(stage, 'UA-22082745-1', 'AS3', false);
+		public static function initialize(stage:Stage, userAccountID:String, debug:Boolean = false):void {
+			tracker = new GATracker(stage, userAccountID, 'AS3', debug);
 		}
 		
 		public static function tag(id:String):void {
@@ -30,7 +30,7 @@ package com.ad.api {
 				var code:String = Rope.trim(data.code);
 				var tag:String = Rope.trim(data.tag);
 				if (code && tag) {
-					gaTracker(code, tag, jsFunction);
+					gaPostTag(code, tag, jsFunction);
 					adWords(code, tag);
 				} else if (code) {
 					eyeBlaster(code);
@@ -42,15 +42,15 @@ package com.ad.api {
 			}
 		}
 		
-		public static function gaTracker(tag:String, code:String, jsFunction:String = null):void {
+		public static function gaPostTag(tag:String, code:String, jsFunction:String = null):void {
 			if (JS.available) {
-				var gaTrackerRandom:int = Math.floor(Math.random() * 10000000));
-				var request:URLRequest = new URLRequest('http://ia.nspmotion.com//ptag/?pt=' + code + '&value=[number]&cvalues=[key|value,key|value]&r=' + gaTrackerRandom;
+				var gaPostTagRandom:int = Math.floor(Math.random() * 10000000));
+				var request:URLRequest = new URLRequest('http://ia.nspmotion.com//ptag/?pt=' + code + '&value=[number]&cvalues=[key|value,key|value]&r=' + gaPostTagRandom;
 				var loader:Loader = new Loader();
 				try {
 					loader.load(request);
 					ga(tag, jsFunction);
-					//tracker.trackPageview(tag);
+					tracker.trackPageview(tag);
 				} catch (event:Error) {
 					trace('[Tracking googleAnalytics]', event.message);
 				}
