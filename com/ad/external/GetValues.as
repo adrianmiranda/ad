@@ -55,24 +55,34 @@ package com.ad.external {
 		}
 		
 		override flash_proxy function setProperty(name:*, propertyValue:*):void {
-			if (!propertyValue) delete this._valueDictionary[name];
-			else this._valueDictionary[name] = propertyValue;
+			if (propertyValue == null) {
+				delete this._valueDictionary[name];
+			} else {
+				this._valueDictionary[name] = propertyValue;
+			}
 		}
 		
 		override flash_proxy function getProperty(name:*):* {
-			return this._valueDictionary[name] || '??? ' + name;
+			var vo:* = this._valueDictionary[name];
+			return (vo == undefined || vo == null || vo == '') ? '??? ' + name : vo;
 		}
 		
 		private function valuesFromXML(xml:*):void {
 			var child:XML;
 			var id:String;
+			var value:String;
+			var window:String;
+			var method:String;
 			for each (child in xml.children()) {
 				if (child.hasComplexContent()) {
 					this.valuesFromXML(child);
 				} else {
 					id = String(child.@id || child.id);
 					if (id) {
-						instanceCollection[this._multitonKey][id] = String(child.text() || child.@value);
+						value = String(child.text() || child.@value);
+						method = String(child.@method || child.method) || 'get';
+						window = String(child.@window || child.window) || '_blank';
+						instanceCollection[this._multitonKey][id] = { value:value, method:method, target:window };
 					}
 				}
 			}

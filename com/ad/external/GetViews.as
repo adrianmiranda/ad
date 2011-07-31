@@ -1,6 +1,7 @@
 package com.ad.external {
 	import com.ad.data.URI;
 	import com.ad.common.parseBoolean;
+	import com.ad.common.parseNumber;
 	
 	import flash.utils.Proxy;
 	import flash.utils.flash_proxy;
@@ -42,23 +43,34 @@ package com.ad.external {
 		private function viewsFromXML(xml:*):void {
 			var count:int;
 			var section:XML;
+			var hasDefault:Boolean;
 			this._title = String(xml.@title || xml.title);
 			for each (section in xml.section) {
-				this._deeplink += String(section.@uri || section.uri);
+				
 				var defaultSection:Boolean = parseBoolean(String(section.@default || section.default));
 				var errorSection:Boolean = parseBoolean(String(section.@error || section.error));
+				
 				var data:URI = new URI();
 				data.id = String(section.@id || section.id);
 				data.label = String(section.@label || section.label);
-				data.uri = this._deeplink;
-				data.source = String(section.@['class'] || section['class']);
 				data.window = String(section.@['window'] || section['window']);
+				data.source = String(section.@['class'] || section['class']);
+				data.phase = Math.max(1, parseNumber(section.@phase || section.phase));
+				
+				if (data.window) {
+					data.uri = String(section.@uri || section.uri);
+				} else {
+					this._deeplink += String(section.@uri || section.uri);
+					data.uri = this._deeplink;
+				}
 				data.layer = String(section.@layer || section.layer);
 				data.menu = String(section.@menu || section.menu) ? parseBoolean(String(section.@menu || section.menu)) : true;
 				data.contextMenu = parseBoolean(String(section.@contextMenu || section.contextMenu));
-				if (!count) {
+				
+				if (!hasDefault && data.window == '') {
 					data.isUriError = true;
 					data.isUriDefault = true;
+					hasDefault = true;
 				}
 				if (defaultSection) {
 					for each (var uris:URI in this._menuArray) {
@@ -69,11 +81,16 @@ package com.ad.external {
 				if (errorSection) {
 					data.isUriError = true;
 				}
+				
 				this._menuArray.push(data);
 				count++;
+				
 				if (section.hasOwnProperty('section')) {
 					this.viewsFromXML(section);
+				} else {
+					// no yet implemented
 				}
+				
 				this._deeplink = this._deeplink.substring(0, this._deeplink.lastIndexOf('/'));
 			}
 		}
