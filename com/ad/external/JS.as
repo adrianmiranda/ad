@@ -1,8 +1,10 @@
 package com.ad.external {
-	import flash.net.URLRequest;
 	import flash.system.Security;
-	import flash.net.navigateToURL;
 	import flash.external.ExternalInterface;
+	import flash.net.sendToURL;
+	import flash.net.URLRequest;
+	import flash.net.URLVariables;
+	import flash.net.navigateToURL;
 	
 	public final class JS {
 		
@@ -16,6 +18,18 @@ package com.ad.external {
 					call('window.open', request.url, window);
 				} else {
 					navigateToURL(request, window);
+				}
+			}
+		}
+		
+		public static function mailTo(email:String, subject:String = '', body:String = ''):void {
+			subject = encodeURIComponent(subject);
+			body = encodeURIComponent(body);
+			if (available) {
+				if (appName == 'Microsoft Internet Explorer') {
+					sendToURL(new URLRequest('mailto:' + email + '?subject=' + subject + '&body=' + body));
+				} else {
+					gotoURL('mailto:' + email + '?subject=' + subject + '&body=' + body, '_parent');
 				}
 			}
 		}
@@ -69,6 +83,12 @@ package com.ad.external {
 			return ExternalInterface.objectID;
 		}
 		
+		public static function get queryString():Object {
+			var queryString:String = call('window.location.search.toString');
+			if (queryString) return new URLVariables(queryString.substring(1, queryString.length));
+			else return new Object();
+		}
+		
 		public static function get userAgent():String {
 			return call('navigator.userAgent.toString');
 		}
@@ -79,6 +99,10 @@ package com.ad.external {
 		
 		public static function get host():String {
 			return call('window.location.host.toString');
+		}
+		
+		public static function get appName():String {
+			return call('navigator.appName.toString');
 		}
 		
 		public static function get hostname():String {
@@ -99,10 +123,6 @@ package com.ad.external {
 		
 		public static function get hash():String {
 			return call('window.location.hash.toString');
-		}
-		
-		public static function get search():String {
-			return call('window.location.search.toString');
 		}
 		
 		public static function alert(...rest:Array):void {
