@@ -8,7 +8,7 @@ package com.ad.net {
 	import flash.events.SecurityErrorEvent;
 	import flash.events.ErrorEvent;
 	import flash.events.TimerEvent;
-	//import flash.net.URLRequestMethod;
+	import flash.net.URLRequestMethod;
 	import flash.net.URLVariables;
 	import flash.net.URLRequest;
 	import flash.net.URLLoader;
@@ -18,38 +18,35 @@ package com.ad.net {
 		private var _request:URLRequest;
 		private var _data:Object;
 		private var _weak:Boolean;
-		private var _timeout:Number;
 		private var _loader:URLLoader;
-		private var _timerout:Timer;
+		private var _timeout:Timer;
 		private var _onProgress:Function;
 		private var _onResult:Function;
 		private var _onFault:Function;
 		private var _onTimeout:Function;
 		private var _percentage:Number;
-		private var _error:String;
 		
-		public function Request(url:String, data:Object = null, method:String = 'GET', timeout:Number = 30, weak:Boolean = true, noCache:Boolean = false) {
-			if (url) {
-				var variables:URLVariables = new URLVariables();
-				if (data) {
-					for (var key:String in data) {
-						variables[key] = data[key];
-					}
+		public function Request(url:String, data:Object = null, method:String = 'GET', timeout:Number = 30, noCache:Boolean = false, weak:Boolean = true) {
+			this._weak = weak;
+			if (url == null) return;
+			var variables:URLVariables = new URLVariables();
+			var key:String;
+			if (data) {
+				for (key in data) {
+					variables[key] = data[key];
 				}
-				method = method.toUpperCase();
-				url = noCache ? applyCacheBuster(url) : url;
-				this._request = new URLRequest(url);
-				this._request.method = method;
-				this._request.data = variables;
-				this._timeout = timeout || 0;
-				this._weak = weak;
-				var key:String;
-				for (key in variables) {
-					delete variables[key];
-				}
-				variables = null;
-				key = null;
 			}
+			url = noCache ? applyCacheBuster(url) : url;
+			this._timeout = new Timer((timeout || 0) * 1000, 1);
+			this._request = new URLRequest(url);
+			this._request.method = URLRequestMethod[method.toUpperCase()];
+			this._request.data = variables;
+			key = null;
+			for (key in variables) {
+				delete variables[key];
+			}
+			variables = null;
+			key = null;
 		}
 		
 		public function send():void {
@@ -60,19 +57,18 @@ package com.ad.net {
 				this._loader.addEventListener(ProgressEvent.PROGRESS, this.onRequestProgress, false, 0, this._weak);
 				this._loader.addEventListener(IOErrorEvent.IO_ERROR, this.onRequestFault, false, 0, this._weak);
 				this._loader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, this.onRequestFault, false, 0, this._weak);
-				this._timerout = new Timer(this._timeout * 1000, 0);
-				this._timerout.addEventListener(TimerEvent.TIMER_COMPLETE, this.onRequestTimedOut, false, 0, this._weak);
-				this._timerout.start();
+				this._timeout.addEventListener(TimerEvent.TIMER_COMPLETE, this.onRequestTimedOut, false, 0, this._weak);
+				this._timeout.start();
 			} else {
-				this.toString();
+				this.debug();
 			}
 		}
 		
 		public function close(flush:Boolean = false):void {
 			if (this._request && this._loader) {
-				this._timerout.stop();
-				this._timerout.reset();
-				this._timerout.removeEventListener(TimerEvent.TIMER_COMPLETE, this.onRequestTimedOut);
+				this._timeout.stop();
+				this._timeout.reset();
+				this._timeout.removeEventListener(TimerEvent.TIMER_COMPLETE, this.onRequestTimedOut);
 				this._loader.removeEventListener(Event.COMPLETE, this.onRequestResult);
 				this._loader.removeEventListener(ProgressEvent.PROGRESS, this.onRequestProgress);
 				this._loader.removeEventListener(IOErrorEvent.IO_ERROR, this.onRequestFault);
@@ -80,7 +76,7 @@ package com.ad.net {
 				try {
 					this._loader.close();
 				} catch(event:Error) {
-					trace(this.toString(), event.message);
+					// no yet implements
 				}
 				if (flush) {
 					var key:String;
@@ -90,12 +86,10 @@ package com.ad.net {
 					key = null;
 					this._data = null;
 					this._loader = null;
-					this._timerout = null;
 					this._percentage = NaN;
-					this._error = null;
 				}
 			} else {
-				this.toString();
+				this.debug();
 			}
 		}
 		
@@ -117,7 +111,6 @@ package com.ad.net {
 		}
 		
 		private function onRequestFault(event:ErrorEvent):void {
-			this._error = event.text;
 			if (this._onFault != null) {
 				this._onFault();
 			}
@@ -127,14 +120,11 @@ package com.ad.net {
 		}
 		
 		private function onRequestTimedOut(event:TimerEvent):void {
-			this._error = 'Request timed out.';
+			this.close(true);
 			if (this._onTimeout != null) {
 				this._onTimeout();
 			} else {
 				this._onFault();
-			}
-			if (this._weak) {
-				this.close(true);
 			}
 		}
 		
@@ -184,22 +174,29 @@ package com.ad.net {
 		}
 		
 		public function debug():void {
-			if (this._request) {
-				trace('> Request ---------------------------------------------------');
-				trace('- url:', this._request.url);
-				trace('- method:', this._request.method);
-				trace('- variables:');
-				var key:String;
-				for (key in this._request.data) {
-					trace('\t>', key + ':', this._request.data[key]);
-				}
-				key = null;
-				trace('-------------------------------------------------------------');
-			}
+			trace(this.toString());
 		}
 		
 		public function toString():String {
-			return '[Request ' + (this._request ? this._request.url : '???') + ']';
+			var output:String = new String();
+			output += '\n> Request ------------------------------------------------------------------\n';
+			output += '- url: ' + String(this._request ? this._request.url : '??? url') + '\n';
+			output += '- method: ' + String(this._request ? this._request.method : '??? method') + '\n';
+			output += '- weak: ' + this._weak + '\n';
+			if (this._request) {
+				var key:String;
+				var variables:String = new String();
+				for (key in this._request.data) {
+					variables += '\t> ' + key + ': ' + this._request.data[key] + '\n';
+				}
+				if (variables) {
+					output += '\t- variables:\n' + variables + '\n';
+				}
+			}
+			variables = null;
+			key = null;
+			output += '----------------------------------------------------------------------------';
+			return output;
 		}
 	}
 }
