@@ -1,4 +1,5 @@
 package com.ad.net {
+	import com.ad.common.applyCacheBuster;
 	import com.adobe.serialization.json.JSON;
 	
 	import flash.events.Event;
@@ -7,70 +8,98 @@ package com.ad.net {
 	import flash.events.SecurityErrorEvent;
 	import flash.events.ErrorEvent;
 	import flash.events.TimerEvent;
-	import flash.net.URLLoader;
-	import flash.net.URLRequestMethod;
+	//import flash.net.URLRequestMethod;
 	import flash.net.URLVariables;
 	import flash.net.URLRequest;
+	import flash.net.URLLoader;
 	import flash.utils.Timer;
 	
-	public class Request {
+	public final class Request {
 		private var _request:URLRequest;
+		private var _data:Object;
+		private var _weak:Boolean;
+		private var _timeout:Number;
 		private var _loader:URLLoader;
+		private var _timerout:Timer;
 		private var _onProgress:Function;
 		private var _onResult:Function;
 		private var _onFault:Function;
 		private var _onTimeout:Function;
-		private var _timeout:Timer;
-		private var _data:Object;
-		private var _weak:Boolean;
 		private var _percentage:Number;
 		private var _error:String;
 		
-		public function Request(url:String, data:Object = null, method:String = 'GET', weak:Boolean = true, timeout:int = 15) {
-			var variables:URLVariables = new URLVariables();
-			if (data) {
-				for (var key:String in data) {
-					variables[key] = data[key];
+		public function Request(url:String, data:Object = null, method:String = 'GET', timeout:Number = 30, weak:Boolean = true, noCache:Boolean = false) {
+			if (url) {
+				var variables:URLVariables = new URLVariables();
+				if (data) {
+					for (var key:String in data) {
+						variables[key] = data[key];
+					}
 				}
+				method = method.toUpperCase();
+				url = noCache ? applyCacheBuster(url) : url;
+				this._request = new URLRequest(url);
+				this._request.method = method;
+				this._request.data = variables;
+				this._timeout = timeout || 0;
+				this._weak = weak;
+				var key:String;
+				for (key in variables) {
+					delete variables[key];
+				}
+				variables = null;
+				key = null;
 			}
-			this._timeout = new Timer(timeout * 1000, 0);
-			this._request = new URLRequest(url);
-			this._request.method = method;
-			this._request.data = variables;
-			this._weak = weak;
 		}
 		
-		public function load():void {
-			this._loader = new URLLoader(this._request);
-			this._loader.addEventListener(Event.COMPLETE, this.onRequestResult, false, 0, this._weak);
-			this._loader.addEventListener(ProgressEvent.PROGRESS, this.onRequestProgress, false, 0, this._weak);
-			this._loader.addEventListener(IOErrorEvent.IO_ERROR, this.onRequestFault, false, 0, this._weak);
-			this._loader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, this.onRequestFault, false, 0, this._weak);
-			this._timeout.addEventListener(TimerEvent.TIMER_COMPLETE, this.onRequestTimedOut, false, 0, this._weak);
-			this._timeout.start();
+		public function send():void {
+			if (this._request) {
+				this.close(true);
+				this._loader = new URLLoader(this._request);
+				this._loader.addEventListener(Event.COMPLETE, this.onRequestResult, false, 0, this._weak);
+				this._loader.addEventListener(ProgressEvent.PROGRESS, this.onRequestProgress, false, 0, this._weak);
+				this._loader.addEventListener(IOErrorEvent.IO_ERROR, this.onRequestFault, false, 0, this._weak);
+				this._loader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, this.onRequestFault, false, 0, this._weak);
+				this._timerout = new Timer(this._timeout * 1000, 0);
+				this._timerout.addEventListener(TimerEvent.TIMER_COMPLETE, this.onRequestTimedOut, false, 0, this._weak);
+				this._timerout.start();
+			} else {
+				this.toString();
+			}
 		}
 		
 		public function close(flush:Boolean = false):void {
-			if (this._loader) {
-				this._timeout.stop();
-				this._timeout.reset();
+			if (this._request && this._loader) {
+				this._timerout.stop();
+				this._timerout.reset();
+				this._timerout.removeEventListener(TimerEvent.TIMER_COMPLETE, this.onRequestTimedOut);
 				this._loader.removeEventListener(Event.COMPLETE, this.onRequestResult);
 				this._loader.removeEventListener(ProgressEvent.PROGRESS, this.onRequestProgress);
 				this._loader.removeEventListener(IOErrorEvent.IO_ERROR, this.onRequestFault);
 				this._loader.removeEventListener(SecurityErrorEvent.SECURITY_ERROR, this.onRequestFault);
-				this._timeout.removeEventListener(TimerEvent.TIMER_COMPLETE, this.onRequestTimedOut);
 				try {
 					this._loader.close();
 				} catch(event:Error) {
 					trace(this.toString(), event.message);
 				}
 				if (flush) {
+					var key:String;
+					for (key in this._data) {
+						delete this._data[key];
+					}
+					key = null;
+					this._data = null;
 					this._loader = null;
+					this._timerout = null;
+					this._percentage = NaN;
+					this._error = null;
 				}
+			} else {
+				this.toString();
 			}
 		}
 		
-		public function onRequestResult(event:Event):void {
+		private function onRequestResult(event:Event):void {
 			this._data = this._loader.data;
 			if (this._onResult != null) {
 				this._onResult();
@@ -80,14 +109,14 @@ package com.ad.net {
 			}
 		}
 		
-		public function onRequestProgress(event:ProgressEvent):void {
+		private function onRequestProgress(event:ProgressEvent):void {
 			this._percentage = int(event.bytesLoaded / event.bytesTotal);
 			if (this._onProgress != null) {
 				this._onProgress();
 			}
 		}
 		
-		public function onRequestFault(event:ErrorEvent):void {
+		private function onRequestFault(event:ErrorEvent):void {
 			this._error = event.text;
 			if (this._onFault != null) {
 				this._onFault();
@@ -97,10 +126,12 @@ package com.ad.net {
 			}
 		}
 		
-		public function onRequestTimedOut(event:TimerEvent):void {
+		private function onRequestTimedOut(event:TimerEvent):void {
 			this._error = 'Request timed out.';
 			if (this._onTimeout != null) {
 				this._onTimeout();
+			} else {
+				this._onFault();
 			}
 			if (this._weak) {
 				this.close(true);
@@ -123,8 +154,8 @@ package com.ad.net {
 			this._onTimeout = closure;
 		}
 		
-		public function get rawData():Object {
-			return this._data;
+		public function get raw():String {
+			return String(this._data);
 		}
 		
 		public function get xml():XML {
@@ -154,19 +185,21 @@ package com.ad.net {
 		
 		public function debug():void {
 			if (this._request) {
-				trace('******** TRACEVARS ******');
-				trace('url:', this._request.url);
-				trace('method:', this._request.method);
-				trace('variables:');
-				for (var key:String in this._request.data) {
-					trace('   -', key + ':', this._request.data[key]);
+				trace('> Request ---------------------------------------------------');
+				trace('- url:', this._request.url);
+				trace('- method:', this._request.method);
+				trace('- variables:');
+				var key:String;
+				for (key in this._request.data) {
+					trace('\t>', key + ':', this._request.data[key]);
 				}
-				trace('******** #!# ******');
+				key = null;
+				trace('-------------------------------------------------------------');
 			}
 		}
 		
 		public function toString():String {
-			return '[Request ' + (this._request) ? this._request.url : '???' + ']';
+			return '[Request ' + (this._request ? this._request.url : '???') + ']';
 		}
 	}
 }
