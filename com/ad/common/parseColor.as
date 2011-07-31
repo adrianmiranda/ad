@@ -7,7 +7,7 @@ package com.ad.common {
 		if (value.charAt(1) == 'x') {
 			value = value.substr(2);
 		}
-		if (value.length <= 3) {
+		if (value.length == 1) {
 			var color:String = '';
 			while (color.length < 6) {
 				color += value;
