@@ -8,7 +8,7 @@ package com.ad.net {
 	import flash.events.SecurityErrorEvent;
 	import flash.events.ErrorEvent;
 	import flash.events.TimerEvent;
-	//import flash.net.URLRequestMethod;
+	import flash.net.URLRequestMethod;
 	import flash.net.URLVariables;
 	import flash.net.URLRequest;
 	import flash.net.URLLoader;
@@ -36,10 +36,9 @@ package com.ad.net {
 						variables[key] = data[key];
 					}
 				}
-				method = method.toUpperCase();
 				url = noCache ? applyCacheBuster(url) : url;
 				this._request = new URLRequest(url);
-				this._request.method = method;
+				this._request.method = URLRequestMethod[method.toUpperCase()];
 				this._request.data = variables;
 				this._timeout = timeout || 0;
 				this._weak = weak;
