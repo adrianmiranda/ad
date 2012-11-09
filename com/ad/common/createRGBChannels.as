@@ -5,6 +5,9 @@ package com.ad.common {
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
+	/**
+	 * @author Adrian Miranda
+	 */
 	public function createRGBChannels(bmp:Bitmap):Array {
 		var r:BitmapData = new BitmapData(bmp.width, bmp.height, true, 0xFF000000);
 		var g:BitmapData = new BitmapData(bmp.width, bmp.height, true, 0xFF000000);

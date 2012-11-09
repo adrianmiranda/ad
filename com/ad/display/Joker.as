@@ -1,72 +1,97 @@
 package com.ad.display {
+	import com.ad.interfaces.IMovieClip;
+	
 	import flash.events.Event;
+	import flash.media.SoundTransform;
 	import flash.events.TimerEvent;
 	import flash.display.MovieClip;
 	import flash.display.FrameLabel;
 	import flash.utils.Timer;
 	
-	dynamic public class Joker extends MovieClip {
+	/**
+	 * @see http://gamedev.michaeljameswilliams.com/2009/04/03/extends-override-and-super/
+	 * @see http://flash-creations.com/notes/actionscript_controlsound.php
+	 */
+	dynamic public class Joker extends Fairy implements IMovieClip {
+		private var _movie:MovieClip;
 		private var _vars:Object;
 		private var _delayTimer:Timer;
 		private var _targetFrame:uint;
 		private var _targetNextFrame:uint;
 		private var _hasEnterFrame:Boolean;
+		private var _running:Boolean;
 		private var _looping:Boolean;
 		private var _yoyo:Boolean;
 		
-		public function Joker() {
+		public function Joker(target:MovieClip = null) {
+			super();
+			this._movie = target;
 			this.stop();
 			this.loopBetween();
-			super.focusRect = false;
-			super.tabEnabled = false;
 		}
 		
 		override public function gotoAndStop(frame:Object, scene:String = null):void {
 			this.removeDelay();
 			this.removeEnterFrame();
 			super.gotoAndStop(frame, scene);
+			this._running = false;
 		}
 		
 		override public function gotoAndPlay(frame:Object, scene:String = null):void {
 			this.removeDelay();
 			this.removeEnterFrame();
 			super.gotoAndPlay(frame, scene);
+			this._running = true;
 		}
 		
 		override public function prevFrame():void {
 			this.removeDelay();
 			this.removeEnterFrame();
 			super.prevFrame();
+			this._running = false;
 		}
 		
 		override public function nextFrame():void {
 			this.removeDelay();
 			this.removeEnterFrame();
 			super.nextFrame();
+			this._running = false;
 		}
 		
 		override public function nextScene():void {
 			this.removeDelay();
 			this.removeEnterFrame();
 			super.nextScene();
+			this._running = false;
 		}
 		
 		override public function prevScene():void {
 			this.removeDelay();
 			this.removeEnterFrame();
 			super.prevScene();
+			this._running = false;
 		}
 		
 		override public function stop():void {
 			this.removeDelay();
 			this.removeEnterFrame();
 			super.stop();
+			this._running = false;
 		}
 		
 		override public function play():void {
 			this.removeDelay();
 			this.removeEnterFrame();
 			super.play();
+			this._running = true;
+		}
+
+		override public function addFrameScript(...rest:Array):void {
+			super.addFrameScript.apply(super, rest);
+		}
+
+		public function removeFrameScript(frame:Object):void {
+			this.addFrameScript(frame, null);
 		}
 		
 		public function playTo(frame:Object, vars:Object = null):void {
@@ -141,13 +166,22 @@ package com.ad.display {
 			}
 			return -1;
 		}
-		
-		public function get timeTotalFrames():Number {
-			return Math.abs(super.totalFrames - super.currentFrame) / super.stage.frameRate;
+
+		public function get timeElapsedFrame():Number {
+			return Math.abs(this._targetFrame - super.currentFrame) / super.stage.frameRate;
+		}
+
+		public function get duration():Number {
+			return super.totalFrames / super.stage.frameRate;
 		}
 		
-		public function get timeCurrentFrame():Number {
-			return Math.abs(this._targetFrame - super.currentFrame) / super.stage.frameRate;
+		public function get position():Number {
+			return super.currentFrame / super.stage.frameRate;
+		}
+		
+		public function set onCompleteFrame(closure:Function):void {
+			this._vars = this._vars ? this._vars : {};
+			this._vars.onComplete = closure;
 		}
 		
 		private function addEnterFrame():void {
@@ -166,6 +200,7 @@ package com.ad.display {
 		
 		private function addDelay(delay:Number):void {
 			this.removeDelay();
+			this._running = true;
 			this._delayTimer = new Timer(delay * 1000, 1);
 			this._delayTimer.addEventListener(TimerEvent.TIMER_COMPLETE, this.onDelayTimerComplete);
 			this._delayTimer.start();
@@ -173,6 +208,7 @@ package com.ad.display {
 		
 		private function removeDelay():void {
 			if (!this._delayTimer) return;
+			this._running = false;
 			this._delayTimer.reset();
 			this._delayTimer.removeEventListener(TimerEvent.TIMER_COMPLETE, this.onDelayTimerComplete);
 			this._delayTimer = null;
@@ -209,6 +245,22 @@ package com.ad.display {
 					this.removeEnterFrame();
 				}
 			}
+		}
+
+		public function setVolume(value:Number):void {
+			super.soundTransform = new SoundTransform(value, 0);
+		}
+
+		public function getVolume():Number {
+			return super.soundTransform.volume;
+		}
+
+		public function get running():Boolean {
+			return this._running;
+		}
+
+		public function get target():MovieClip {
+			return this._movie;
 		}
 		
 		override public function toString():String {

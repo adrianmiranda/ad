@@ -41,9 +41,9 @@ package com.ad.core {
 			super.startup(this._container = DisplayObjectContainer(binding));
 		}
 		
-		public function run(sectionLayerId:String = null):void {
+		public function run(sectionLayerId:String = null, firstView:String = null):void {
 			this._sectionLayerId = sectionLayerId;
-			Deeplink.registerViews(super.header);
+			Deeplink.registerViews(super.header, firstView);
 			Deeplink.addEventListener(DeeplinkEvent.INIT, this.onInitDeeplink);
 			Deeplink.addEventListener(DeeplinkEvent.CHANGE, this.onChangeDeeplink);
 			Deeplink.addEventListener(DeeplinkEvent.CHANGE_VIEW, this.onChangeView);

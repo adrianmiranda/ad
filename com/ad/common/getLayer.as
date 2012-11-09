@@ -1,8 +1,9 @@
 package com.ad.common {
-	import com.ad.external.GetLayers;
+	import com.ad.data.Layers;
 	import com.ad.display.Layer;
 	
-	public function getLayer(id:String, at:String = 'default'):Layer {
-		return GetLayers.fromFileID('layers_' + at)[id];
+	public function getLayer(id:String = null):* {
+		if (id == null) return Layers.shortcutTarget;
+		return Layers.shortcutTarget[id];
 	}
 }

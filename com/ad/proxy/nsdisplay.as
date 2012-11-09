@@ -1,4 +1,3 @@
-package com.ad {
-		
-	public namespace nsdisplay = 'http://www.adrianmiranda.com.br/com/ad/nsdisplay';
+﻿package com.ad.proxy {
+	public namespace nsdisplay = 'www.adrianmiranda.com.br/com/ad/proxy/nsdisplay';
 }

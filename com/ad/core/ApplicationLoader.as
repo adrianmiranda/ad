@@ -8,6 +8,7 @@ package com.ad.core {
 	import com.greensock.events.LoaderEvent;
 	import com.greensock.plugins.TweenPlugin;
 	import com.greensock.loading.core.LoaderCore;
+	import com.greensock.loading.core.LoaderItem;
 	import com.greensock.loading.LoaderMax;
 	import com.greensock.loading.MP3Loader;
 	
@@ -90,8 +91,8 @@ package com.ad.core {
 				this.removeLoaderListeners();
 				if (flush) {
 					this.unload();
+					this._loader = null;
 				}
-				this._loader = null;
 			}
 		}
 		
@@ -119,25 +120,53 @@ package com.ad.core {
 		}
 		
 		public function appendFiles(files:Vector.<File>):void {
+			trace('-');
 			for each (var file:File in files) {
 				this.appendFile(file);
 			}
 		}
 		
-		public function appendFile(file:File):void {
+		public function appendFile(file:*):void {
 			if (this._loader) {
-				trace('-------->', file.url);
-				var core:LoaderCore = LoaderMax.parse(file.url, { name:file.id, noCache:file.noCache } );
-				core.vars.context = core is MP3Loader ? this._soundLoaderContext : this._loaderContext;
-				core.vars.estimatedBytes = file.bytes;
-				this._loader.append(core);
+				var core:LoaderCore;
+				if (file is File) {
+					trace("File '"+ file.id +"' ({"+ file.url +"})"+ (!file.preload ? " stopped" : ""));
+					core = this.parseFile(file.url, { name:file.id, noCache:file.noCache });
+					core.vars.integrateProgress = file.preload;
+					core.vars.estimatedBytes = file.bytes;
+				} else if (file is LoaderItem) {
+					file.url = super.bind(file.url);
+					file.vars.name = file.vars.name || file.url;
+					trace("Item '"+ file.vars.name +"' ({"+ file.url +"})");
+					core = file;
+				}
+				if (core && file) {
+					file.runInBackground && core.load();
+					file.preload && this._loader.append(core);
+				}
 			} else {
 				throw new ADError('*Invalid View Loader* ApplicationLoader call \'prepareViewLoader\' before departure');
 			}
 		}
+
+		public function parseFile(url:String, params:Object = null):LoaderCore {
+			var core:LoaderCore = LoaderMax.parse(url, params);
+			core.vars.context = core is MP3Loader ? this._soundLoaderContext : this._loaderContext;
+			return core;
+		}
+
+		public function getLazyLoader(url:String, params:Object = null):LoaderMax {
+			var lazyloader:LoaderMax = new LoaderMax({ maxConnections:2 });
+			lazyloader.append(this.parseFile(url, params));
+			return lazyloader;
+		}
 		
 		public function getContent(nameOrURL:String):* {
 			return LoaderMax.getContent(nameOrURL);
+		}
+
+		public function getLoader(nameOrURL:String):* {
+			return LoaderMax.getLoader(nameOrURL);
 		}
 		
 		protected function onHeaderComplete(event:LoaderEvent):void {
@@ -179,6 +208,7 @@ package com.ad.core {
 		}
 		
 		protected function onComplete(event:LoaderEvent):void {
+			trace('-');
 			super.dispatchEvent(event.clone());
 		}
 		
@@ -206,8 +236,7 @@ package com.ad.core {
 			super.dispatchEvent(event.clone());
 		}
 		
-		// ao invés de usar dois métodos, um pra remover outro pra adicionar, resumir pra uma usando listeners(boolean);
-		// nas chamadas
+		// FIXME: ao invés de usar dois métodos, um pra remover outro pra adicionar, resumir pra uma usando listeners(boolean); nas chamadas
 		private function addLoaderListeners():void {
 			if (this._loader && !this._loader.hasEventListener(LoaderEvent.COMPLETE)) {
 				this._loader.addEventListener(LoaderEvent.CHILD_PROGRESS, this.onViewChildProgress);

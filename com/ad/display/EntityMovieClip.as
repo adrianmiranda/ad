@@ -5,7 +5,8 @@ package com.ad.display {
 	dynamic public class EntityMovieClip extends MovieClip {
 		
 		public function EntityMovieClip() {
-			super();
+			super.focusRect = false;
+			super.tabEnabled = false;
 		}
 		
 		public function moveForward(shapeToMove:DisplayObject):void {

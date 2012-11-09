@@ -137,49 +137,5 @@ package com.ad.core {
 		override public function toString():String {
 			return '[ApplicationRequest ' + super.apiKey + ']';
 		}
-		
-		private function encodeHTMLTags(value:String):String {
-			var collection:Array = [
-				{ pattern:/[<]/g, char:'&lt;' }, { pattern:/[>]/g, char:'&gt;' },
-				{ pattern:/[Á]/g, char:'&Aacute;' }, { pattern:/[á]/g, char:'&aacute;' },
-				{ pattern:/[Â]/g, char:'&Acirc;' }, { pattern:/[â]/g, char:'&acirc;' },
-				{ pattern:/[À]/g, char:'&Agrave;' }, { pattern:/[à]/g, char:'&agrave;' },
-				{ pattern:/[Å]/g, char:'&Aring;' }, { pattern:/[å]/g, char:'&aring;' },
-				{ pattern:/[Ã]/g, char:'&Atilde;' }, { pattern:/[ã]/g, char:'&atilde;' },
-				{ pattern:/[Ä]/g, char:'&Auml;' }, { pattern:/[ä]/g, char:'&auml;' },
-				{ pattern:/[Æ]/g, char:'&AElig;' }, { pattern:/[æ]/g, char:'&aelig;' },
-				{ pattern:/[É]/g, char:'&Eacute;' }, { pattern:/[é]/g, char:'&eacute;' },
-				{ pattern:/[Ê]/g, char:'&Ecirc;' }, { pattern:/[ê]/g, char:'&ecirc;' },
-				{ pattern:/[È]/g, char:'&Egrave;' }, { pattern:/[è]/g, char:'&egrave;' },
-				{ pattern:/[Ë]/g, char:'&Euml;' }, { pattern:/[ë]/g, char:'&euml;' },
-				{ pattern:/[Ð]/g, char:'&ETH;' }, { pattern:/[ð]/g, char:'&eth;' },
-				{ pattern:/[Í]/g, char:'&Iacute;' }, { pattern:/[í]/g, char:'&iacute;' },
-				{ pattern:/[Î]/g, char:'&Icirc;' }, { pattern:/[î]/g, char:'&icirc;' },
-				{ pattern:/[Ì]/g, char:'&Igrave;' }, { pattern:/[ì]/g, char:'&igrave;' },
-				{ pattern:/[Ï]/g, char:'&Iuml;' }, { pattern:/[ï]/g, char:'&iuml;' },
-				{ pattern:/[Ó]/g, char:'&Oacute;' }, { pattern:/[ó]/g, char:'&oacute;' },
-				{ pattern:/[Ô]/g, char:'&Ocirc;' }, { pattern:/[ô]/g, char:'&ocirc;' },
-				{ pattern:/[Ò]/g, char:'&Ograve;' }, { pattern:/[ò]/g, char:'&ograve;' },
-				{ pattern:/[Ø]/g, char:'&Oslash;' }, { pattern:/[ø]/g, char:'&oslash;' },
-				{ pattern:/[Õ]/g, char:'&Otilde;' }, { pattern:/[õ]/g, char:'&otilde;' },
-				{ pattern:/[Ö]/g, char:'&Ouml;' }, { pattern:/[ö]/g, char:'&ouml;' },
-				{ pattern:/[Ú]/g, char:'&Uacute;' }, { pattern:/[ú]/g, char:'&uacute;' },
-				{ pattern:/[Û]/g, char:'&Ucirc;' }, { pattern:/[û]/g, char:'&ucirc;' },
-				{ pattern:/[Ù]/g, char:'&Ugrave;' }, { pattern:/[ù]/g, char:'&ugrave;' },
-				{ pattern:/[Ü]/g, char:'&Uuml;' }, { pattern:/[ü]/g, char:'&uuml;' },
-				{ pattern:/[Ç]/g, char:'&Ccedil;' }, { pattern:/[ç]/g, char:'&ccedil;' },
-				{ pattern:/[Ñ]/g, char:'&Ntilde;' }, { pattern:/[ñ]/g, char:'&ntilde;' },
-				{ pattern:/[&]/g, char:'&amp;' }, { pattern:/["]/g, char:'&quot;' },
-				{ pattern:/[®]/g, char:'&reg;' }, { pattern:/[©]/g, char:'&copy;' },
-				{ pattern:/[Ý]/g, char:'&Yacute;' }, { pattern:/[ý]/g, char:'&yacute;' },
-				{ pattern:/[Þ]/g, char:'&THORN;' }, { pattern:/[þ]/g, char:'&thorn;' },
-				{ pattern:/[ß]/g, char:'&szlig;' }
-			];
-			for (var id:int; id < collection.length; id++) {
-				value = value.replace(collection[id].pattern, collection[id].char);
-			}
-			collection = null;
-			return value;
-		}
 	}
 }

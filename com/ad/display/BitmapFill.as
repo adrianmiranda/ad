@@ -9,14 +9,15 @@ package com.ad.display {
 		private var _bmpData:BitmapData;
 		private var _holder:Sprite;
 		
-		public function BitmapFill(bmpData:BitmapData, width:int = 1, heigth:int = 1) {
+		public function BitmapFill(bmpData:BitmapData, width:int = 1, height:int = 1) {
 			super.focusRect = false;
 			super.tabEnabled = false;
 			this._width = width;
-			this._heigth = heigth;
+			this._heigth = height;
 			this._bmpData = bmpData;
 			this._holder = new Sprite();
 			super.addEventListener(Event.REMOVED_FROM_STAGE, this.onRemovedFromStage, false, 0, true);
+			super.addChild(this._holder);
 			this.draw();
 		}
 		
@@ -26,8 +27,8 @@ package com.ad.display {
 			super.removeChild(this._holder);
 			this._bmpData = null;
 			this._holder = null;
-			this._width = 0;
-			this._heigth = 0;
+			this._width = NaN;
+			this._heigth = NaN;
 		}
 		
 		private function draw():void {
@@ -39,7 +40,7 @@ package com.ad.display {
 		
 		public function bitmapResize(width:int, height:int):void {
 			this._width = width;
-			this._heigth = heigth;
+			this._heigth = height;
 			this.draw();
 		}
 		

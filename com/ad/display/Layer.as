@@ -2,7 +2,6 @@ package com.ad.display {
 	import com.ad.display.Leprechaun;
 	import com.ad.proxy.nsdisplay;
 	
-	import flash.events.Event;
 	import flash.display.DisplayObject;
 	
 	public class Layer extends Leprechaun {
@@ -22,8 +21,11 @@ package com.ad.display {
 			return this._node;
 		}
 		
-		public function get(name:String):DisplayObject {
-			return super.getChildByName(name);
+		public function get(value:Object):DisplayObject {
+			var child:DisplayObject;
+			if (value is String) child = super.getChildByName(String(value));
+			else if (value is int) child = super.getChildAt(int(value));
+			return child;
 		}
 		
 		override public function toString():String {
