@@ -1,5 +1,4 @@
 package com.ad.core {
-<<<<<<< HEAD
 	import com.ad.events.TransitionEvent;
 	import com.ad.interfaces.ISection;
 	import com.ad.data.Language;
@@ -102,22 +101,6 @@ package com.ad.core {
 				this._section = null;
 			}
 			super.dispose(flush);
-=======
-	import com.ad.data.Language;
-	
-	public final class Navigation {
-		
-		public function Navigation() {
-			
-		}
-		
-		public static function createTree(map:XML, stage:Stage, loaderSite:AbstractLoader, asset:Object = null):void {
-			
-		}
-		
-		public static function goto(value:String, parameters:Object = null, subTitle:String = null):void {
-			
->>>>>>> 6d24762ad105ee7f06a1f61f06a3ac62b339d17f
 		}
 	}
 }

@@ -3,11 +3,7 @@ package com.ad.templates {
 	import com.ad.data.File;
 	import com.ad.data.Language;
 	import com.ad.data.View;
-<<<<<<< HEAD
 	import com.ad.events.ApplicationEvent;
-=======
-	import com.ad.events.DeeplinkEvent;
->>>>>>> 6d24762ad105ee7f06a1f61f06a3ac62b339d17f
 	import com.ad.interfaces.ISection;
 	import com.ad.proxy.nsapplication;
 	
@@ -28,13 +24,8 @@ package com.ad.templates {
 		public function set apiKey(key:String):void {
 			if (!this._application) {
 				this._application = Application.getInstance(key);
-<<<<<<< HEAD
 				this._application.addEventListener(ApplicationEvent.CHANGE_VIEW, this.onChangeView);
 				this._application.addEventListener(ApplicationEvent.CHANGE_LANGUAGE, this.onChangeLanguage);
-=======
-				this._application.addEventListener(DeeplinkEvent.CHANGE_VIEW, this.onChangeView);
-				this._application.addEventListener(DeeplinkEvent.CHANGE_LANGUAGE, this.onChangeLanguage);
->>>>>>> 6d24762ad105ee7f06a1f61f06a3ac62b339d17f
 			}
 		}
 		
@@ -47,30 +38,17 @@ package com.ad.templates {
 		override protected function onRemovedFromStage(event:Event):void {
 			super.onRemovedFromStage(event);
 			if (this._application) {
-<<<<<<< HEAD
 				this._application.removeEventListener(ApplicationEvent.CHANGE_LANGUAGE, this.onChangeLanguage);
 				this._application.removeEventListener(ApplicationEvent.CHANGE_VIEW, this.onChangeView);
-=======
-				this._application.removeEventListener(DeeplinkEvent.CHANGE_LANGUAGE, this.onChangeLanguage);
-				this._application.removeEventListener(DeeplinkEvent.CHANGE_VIEW, this.onChangeView);
->>>>>>> 6d24762ad105ee7f06a1f61f06a3ac62b339d17f
 				this._application = null;
 			}
 		}
 		
-<<<<<<< HEAD
 		private function onChangeLanguage(event:ApplicationEvent):void {
 			this.localize();
 		}
 		
 		private function onChangeView(event:ApplicationEvent):void {
-=======
-		private function onChangeLanguage(event:DeeplinkEvent):void {
-			this.localize();
-		}
-		
-		private function onChangeView(event:DeeplinkEvent):void {
->>>>>>> 6d24762ad105ee7f06a1f61f06a3ac62b339d17f
 			this.change();
 		}
 		
@@ -110,19 +88,11 @@ package com.ad.templates {
 		}
 		
 		public function setLanguage(value:*):void {
-<<<<<<< HEAD
 			this._application.navigateTo(value);
 		}
 		
 		public function navigateTo(value:*):void {
 			this._application.navigateTo(value);
-=======
-			this._application.goto(value);
-		}
-		
-		public function goto(value:*):void {
-			this._application.goto(value);
->>>>>>> 6d24762ad105ee7f06a1f61f06a3ac62b339d17f
 		}
 		
 		public function go(delta:int):void {

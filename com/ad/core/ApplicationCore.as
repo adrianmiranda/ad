@@ -1,12 +1,8 @@
 package com.ad.core {
 	import com.ad.events.EventControl;
-<<<<<<< HEAD
 	import com.ad.proxy.nsapplication;
 
 	use namespace nsapplication;
-=======
-	
->>>>>>> 6d24762ad105ee7f06a1f61f06a3ac62b339d17f
 	public class ApplicationCore extends EventControl {
 		protected const MULTITON_MESSAGE:String = 'ApplicationCore instance for this API key already initialised!';
 		protected static var instances:Array = new Array();

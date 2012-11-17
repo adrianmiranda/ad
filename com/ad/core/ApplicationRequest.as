@@ -6,17 +6,11 @@ package com.ad.core {
 	import com.ad.net.Request;
 	import com.ad.utils.Binding;
 	import com.ad.errors.ADError;
-<<<<<<< HEAD
 	import com.ad.proxy.nsapplication;
 	
 	import flash.display.DisplayObject;
 	
 	use namespace nsapplication;
-=======
-	
-	import flash.display.DisplayObject;
-	
->>>>>>> 6d24762ad105ee7f06a1f61f06a3ac62b339d17f
 	public class ApplicationRequest extends ApplicationCore {
 		private var _binding:DisplayObject;
 		private var _request:Request;
