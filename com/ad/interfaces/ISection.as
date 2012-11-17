@@ -1,0 +1,44 @@
+package com.ad.interfaces {
+	
+	public interface ISection extends IBase {
+		/*
+			function get children():Object;
+			function get route():String;
+			function get branch():String;
+			function get external():Boolean;
+			function get copy():Object;
+			
+			function set assetPath(value:String):void;
+			function get assetPath():String;
+			
+			function set assets(value:Object):void;
+			function get assets():Object;
+			function get assetArray():Array;
+			
+			function get menu():Boolean;
+			function set menu(value:Boolean):void;
+			
+			function get flow():String;
+			function set flow(value:String):void;
+			
+			function get defaultChild():String;
+			function set defaultChild(value:String):void;
+			
+			function set window(value:String):void;
+			function get window():String;
+			
+			function setParent(page:IPageAsset):void;
+			function getParent():IPageAsset;
+			
+			function gotoStep(value:String):void;
+		*/
+		
+		function set apiKey(key:String):void;
+<<<<<<< HEAD
+		function navigateTo(value:*):void;
+=======
+		function goto(value:*):void;
+>>>>>>> 6d24762ad105ee7f06a1f61f06a3ac62b339d17f
+		function localize():void;
+	}
+}
