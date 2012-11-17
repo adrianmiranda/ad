@@ -1,139 +1,193 @@
 package com.ad.media {
-	import com.ad.interfaces.IMedia;
-	import com.ad.display.Leprechaun;
-	import com.ad.controls.MediaControl;
-	import com.ad.controls.MasterEqualizer;
-	import com.ad.data.EqualizeParse;
-	import com.ad.proxy.nsmedia;
-	
-	import flash.events.AsyncErrorEvent;
+	import com.ad.common.num;
+	import com.ad.common.clamp;
+	import com.ad.data.CuePoint;
+	import com.ad.events.MediaEvent;
+	import com.ad.net.NetStreamExpert;
+
 	import flash.events.NetStatusEvent;
-	import flash.events.IOErrorEvent;
+	import flash.events.AsyncErrorEvent;
+	import flash.events.ProgressEvent;
 	import flash.events.Event;
-	import flash.media.SoundLoaderContext;
-	import flash.media.SoundTransform;
-	import flash.media.SoundChannel;
 	import flash.media.Video;
-	import flash.net.NetConnection;
-	import flash.net.URLRequest;
-	import flash.net.NetStream;
 	
-	use namespace nsmedia;
-	public class Video extends Leprechaun implements IMedia {
-		protected var isLoaded:Boolean = false;
-		protected var isPlaying:Boolean = false;
-		protected var url:String;
-		protected var video:flash.media.Video;
-		protected var duration:Number;
-		protected var netStream:NetStream;
-		protected var currentPosition:Number = 0;
-		protected var soundChannel:SoundChannel;
-		protected var netConnection:NetConnection;
+	/**
+	 * @tips To use video steps just player 10.1 or older and
+	 * Export video with key frame distance: 1
+	 */
+	public class Video extends flash.media.Video {
+		public static const MIN_SPEED:Number = 0.02;
+		public static const MAX_SPEED:Number = 0.4;
+		private var _stream:NetStreamExpert;
+		private var _percentLoaded:Number = 0;
+		private var _cuepoint:CuePoint;
+		private var _duration:Number = 0;
+		private var _frames:Number = 0;
+		private var _speed:Number = 0;
 		
-		public function Video(width:int = 320, height:int = 240) {
-			super.graphics.beginFill(0, 0);
-			super.graphics.drawRect(0, 0, width, height);
-			super.graphics.endFill();
-			this.video = new flash.media.Video(width, height);
-			super.addChild(this.video);
-			MediaControl.addMedia(this);
+		public function Video(videoURL:String):void {
+			super.smoothing = true;
+			this.connectVideo(videoURL);
+			this.addEventListener(Event.REMOVED_FROM_STAGE, this.removeVideo);
 		}
 		
-		public function setBackground(color:uint, alpha:Number):void {
-			super.graphics.clear();
-			super.graphics.beginFill(color, alpha);
-			super.graphics.drawRect(0, 0, super.width, super.height);
-			super.graphics.endFill();
+		private function connectVideo(url:String):void {
+			this._stream = new NetStreamExpert();
+			super.attachNetStream(this._stream);
+			var client:Object = new Object();
+			client.onMetaData = this.onMetaData;
+			client.onCuePoint = this.onCuePoint;
+			client.onXMPData = this.onXMPData;
+			this._stream.client = client;
+			this._stream.bufferTime = 0;
+			this._stream.play(url);
+			this._stream.addEventListener(AsyncErrorEvent.ASYNC_ERROR, this.onAsyncError);
+			this._stream.addEventListener(NetStatusEvent.NET_STATUS, this.onNetStatus);
+			super.addEventListener(Event.ENTER_FRAME, this.updatePreloader);
 		}
 		
-		public function load(stream:URLRequest, context:SoundLoaderContext = null):void {
-			if (this.isLoaded) return;
-			this.url = stream.url;
-			this.netConnection = new NetConnection();
-			this.netConnection.connect(null);
-			this.isLoaded = true;
-			this.netStream = new NetStream(this.netConnection);
-			this.netStream.addEventListener(AsyncErrorEvent.ASYNC_ERROR, this.nsErrorEventHandler);
-			this.netStream.addEventListener(IOErrorEvent.IO_ERROR, this.nsStatusEventHandler);
-			this.netStream.client = { onMetaData:this.onMetaData, onXMPData:this.onXMPData };
-			this.video.attachNetStream(this.netStream);
-			this.netStream.play(this.url);
-			this.netStream.pause();
-			this.netStream.addEventListener(NetStatusEvent.NET_STATUS, this.netStatusHandler);
-		}
-		
-		private function netStatusHandler(event:NetStatusEvent):void {
-			if (event.info.code == 'NetStream.Play.Stop' && this.netStream.time >= duration) {
-				super.dispatchEvent(new Event(Event.COMPLETE));
-			}
-		}
-		
-		private function nsErrorEventHandler(event:AsyncErrorEvent):void {
-			trace(this + event);
-		}
-		
-		private function nsStatusEventHandler(event:NetStatusEvent):void
-		{
-			trace(this + event);
-		}
-		
-		private function onMetaData(param:Object):void {
-			duration = param.duration;
-		}
-		
-		public function onXMPData(parameters:Object):void {
-			// no yet implement
-		}
-		
-		public function play(startTime:Number = -1, loops:int = 0, soundTransform:SoundTransform = null):SoundChannel {
-			this.isPlaying = true;
-			this.netStream.resume();
-			if (startTime > -1) {
-				this.netStream.seek(startTime);
-			}
-			this.netStream.soundTransform = sondTransform;
-			this.soundChannel = new SoundChannel();
-			this.soundChannel.soundTransform = this.netStream.soundTransform;
-			this.update();
-			return this.soundChannel;
+		public function play(uri:String = null):void {
+			this._stream.play(uri);
 		}
 		
 		public function pause():void {
-			this.isPlaying = false;
-			this.currentPosition = this.netStream.time;
-			this.netStream.pause();
+			this._stream.pause();
 		}
 		
-		public function stop(close:Boolean = true):void {
-			this.currentPosition = 0;
-			if (this.isPlaying) this.netStream.pause();
-			if (this.netStream.bytesLoaded != this.netStream.bytesTotal && close) this.netStream.close();
-			this.isPlaying = false;
+		public function resume():void {
+			this._stream.resume();
 		}
 		
-		public function set volume(value:Number):void {
-			var transform:SoundTransform = this.soundChannel.soundTransform;
-			transform.volume = value;
-			this.soundChannel.soundTransform = transform;
-			this.update();
+		public function stop():void {
+			this._frames = 0;
+			this._stream.stop();
 		}
 		
-		public function get volume():Number {
-			return this.soundChannel.soundTransform.volume;
+		public function close():void {
+			this._frames = 0;
+			this._stream.close();
 		}
 		
+		public function seek(second:Number):void {
+			this._stream.seek(clamp(num(second), 0, this._duration));
+		}
+		
+		public function step(frame:Number, loop:Boolean = false):void {
+			if (!this._stream.paused) {
+				if (Math.abs(frame) >= MAX_SPEED) {
+					frame = MAX_SPEED;
+				}
+				if (Math.abs(frame) <= MIN_SPEED) {
+					frame = MIN_SPEED;
+				}
+				this._speed = frame;
+				this._frames += this._speed;
+				this.seek(Math.max(0, Math.min(this._frames, this._duration)));
+				if (loop) {
+					this.stepLoop();
+				} else {
+					if (this._frames < 0) {
+						this._frames = 0;
+					}
+					if (this._frames > this._duration) {
+						this._frames = this._duration;
+					}
+				}
+			}
+		}
+		
+		private function stepLoop():void {
+			if (this._stream.time <= (Math.abs(this._speed))) {
+				this._frames = this._duration - (Math.abs(this._speed) * 1.75) - 0.005;
+			}
+			if (this._stream.time > (this._duration) - (Math.abs(this._speed) * 1.75) - 0.05) {
+				this._frames = (Math.abs(this._speed)) + 0.005;
+			}
+		}
+		
+		private function onAsyncError(event:AsyncErrorEvent):void {
+			this._stream.removeEventListener(AsyncErrorEvent.ASYNC_ERROR, this.onAsyncError);
+		}
+		
+		private function onNetStatus(event:NetStatusEvent):void {
+			switch (event.info.code) {
+				case 'NetStream.Play.StreamNotFound':
+					trace('Video file passed, not available!');
+					break;
+				case 'NetStream.Play.Stop':
+				case 'NetStream.Play.Complete':
+					if (Math.ceil(this._stream.time) >= Math.floor(this._duration)) {
+						super.dispatchEvent(new MediaEvent(MediaEvent.COMPLETE, this, '', null));
+					}
+					break;
+			}
+		}
+		
+		private function onCuePoint(info:Object):void {
+			trace('cuepoint: time=' + info.time + ' name=' + info.name + ' type=' + info.type);
+			this._cuepoint = new CuePoint(info);
+			super.dispatchEvent(new MediaEvent(MediaEvent.CUE_POINT, this, '', this._cuepoint));
+		}
+		
+		private function onMetaData(info:Object):void {
+			this._duration = info.duration;
+		}
+		
+		private function onXMPData(info:Object):void {
+			var onXMPXML:XML = new XML(info.data);
+			trace(onXMPXML);
+		}
+		
+		private function updatePreloader(event:Event):void {
+			if (this._percentLoaded >= 100) {
+				if (this._duration) {
+					//this._stream.pause();
+					super.dispatchEvent(new Event(Event.COMPLETE));
+					this.removeEventListener(Event.ENTER_FRAME, this.updatePreloader);
+				}
+			} else {
+				this._percentLoaded = this._stream.bytesPercent;
+				super.dispatchEvent(new ProgressEvent(ProgressEvent.PROGRESS));
+			}
+		}
+		
+		private function removeVideo(event:Event):void {
+			super.removeEventListener(Event.REMOVED_FROM_STAGE, this.removeVideo);
+			this._stream.removeEventListener(AsyncErrorEvent.ASYNC_ERROR, this.onAsyncError);
+			this._stream.close();
+			this._stream = null;
+		}
+
 		public function get position():Number {
-			return this.netStream.time;
+			return Math.ceil(this.time);
 		}
 		
-		/** @private */
-		nsmedia function update(equalizeParse:EqualizeParse = null):void {
-			if (!this.soundChannel) return;
-			equalizeParse = equalizeParse ? equalizeParse : MasterEqualizer.getInstance().equalize;
-			var transform:SoundTransform = new SoundTransform(this.soundChannel.soundTransform.volume * equalizeParse.volume, this.soundChannel.soundTransform.pan * equalizeParse.pan);
-			this.transform.leftToLeft = this.soundChannel.soundTransform.leftToLeft * equalizeParse.leftSpeak;
-			this.transform.rightToRight = this.soundChannel.soundTransform.rightToRight * equalizeParse.rightSpeak;
-			this.netStream.soundTransform = transform;
+		public function get duration():Number {
+			return Math.round(this.length);
+		}
+
+		public function get time():Number {
+			return stream ? stream.time : 0;
+		}
+
+		public function get length():Number {
+			return this._duration;
+		}
+		
+		public function get speed():Number {
+			return this._speed;
+		}
+		
+		public function get paused():Boolean {
+			return this._stream.paused;
+		}
+		
+		public function get percentLoaded():Number {
+			return this._percentLoaded;
+		}
+		
+		public function get stream():NetStreamExpert {
+			return this._stream;
 		}
 	}
 }

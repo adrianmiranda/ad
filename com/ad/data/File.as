@@ -1,7 +1,7 @@
 package com.ad.data {
 	import com.ad.utils.Binding;
-	import com.ad.common.number;
-	import com.ad.common.boolean;
+	import com.ad.common.num;
+	import com.ad.common.bool;
 	import com.ad.errors.ADError;
 	
 	import flash.display.DisplayObject;
@@ -12,6 +12,7 @@ package com.ad.data {
 	public final class File {
 		private var _binding:DisplayObject;
 		private var _parent:View;
+		private var _runInBackground:Boolean;
 		private var _preload:Boolean;
 		private var _noCache:Boolean;
 		private var _bytes:uint;
@@ -27,9 +28,14 @@ package com.ad.data {
 			this._id = xml.@id.toString();
 			this._url = this.bind(xml.@url.toString());
 			this._type = xml.@type.toString() || this._url.substring(this._url.lastIndexOf('.') + 1, this._url.length);
-			this._bytes = ((number(xml.@kb) || 20000 / 1024) * 1024);
-			this._preload = xml.@preload != undefined ? boolean(xml.@preload) : true;
-			this._noCache = xml.@noCache != undefined ? boolean(xml.@noCache) : true;
+			this._bytes = ((num(xml.@kb) || 20000 / 1024) * 1024);
+			this._preload = xml.@preload != undefined ? bool(xml.@preload) : true;
+			this._noCache = xml.@noCache != undefined ? bool(xml.@noCache) : true;
+			if (xml.attribute('run-in-background') != undefined){
+				this._preload = false;
+				this._runInBackground = bool(xml.attribute('run-in-background'));
+				trace("Warning: '"+ this._id +"' file is running in the background.");
+			}
 		}
 		
 		private function validateFileNode(node:XML):void {
@@ -80,6 +86,10 @@ package com.ad.data {
 		
 		public function get noCache():Boolean {
 			return this._noCache;
+		}
+
+		public function get runInBackground():Boolean {
+			return this._runInBackground;
 		}
 		
 		public function get bytes():uint {

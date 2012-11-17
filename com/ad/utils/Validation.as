@@ -3,7 +3,9 @@
 	public final class Validation {
 		
 		public static function isEmail(value:String):Boolean {
-			var emailExpression:RegExp = /^[a-z][\w.-]+@\w[\w.-]+\.[\w.-]*[a-z][a-z]$/i;
+			var emailExpression:RegExp = /^([-\w.])+@\w([-\w.]+)\.([\w]{2,4})$/i;
+			//var emailDotExpression:RegExp = /(\.){2,}/gi;
+			//value.replace(emailDotExpression, '.');
 			return emailExpression.test(value);
 		}
 		
@@ -125,8 +127,7 @@
 			return ((date.getFullYear() == inputDate[2]) && (date.getMonth() == inputDate[1]) && (date.getDate() == inputDate[0]));
 		}
 		
-		public static function isAMinor(value:String, required:Boolean = true):Boolean
-		{
+		public static function isAMinor(value:String, required:Boolean = true):Boolean {
 			if (required && isEmpty(value)) return false;
 			if (!isDate(value)) return false;
 			var date:Date = new Date();
@@ -145,6 +146,11 @@
 		public static function isDefaultLabel(value:String, label:String, required:Boolean = true):Boolean {
 			if (required && isEmpty(value)) return false;
 			return(value == label);
+		}
+		
+		public static function isLink(value:String, required:Boolean = true):Boolean {
+			if (required && isEmpty(value)) return false;
+			return true;
 		}
 	}
 }

@@ -1,5 +1,5 @@
 package com.ad.data {
-	import com.ad.common.boolean;
+	import com.ad.common.bool;
 	import com.ad.proxy.nsdisplay;
 	import com.ad.display.Layer;
 	//import com.ad.utils.StringUtil;
@@ -55,8 +55,8 @@ package com.ad.data {
 					layer = new Layer();
 					layer.name = id;
 					(layer as Layer).setNode(node);
-					(layer as Layer).locked = boolean(node.@locked);
-					(layer as Layer).showRegistrationPoint = boolean(node.@showRegistrationPoint);
+					(layer as Layer).locked = bool(node.@locked);
+					(layer as Layer).showRegistrationPoint = bool(node.@showRegistrationPoint);
 					layer.x = Number(node.@x || node.x || '0'); // temporary
 					layer.y = Number(node.@y || node.y || '0'); // temporary
 					layer.alpha = 1;

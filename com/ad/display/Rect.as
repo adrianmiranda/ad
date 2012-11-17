@@ -29,14 +29,14 @@ package com.ad.display {
 			super.graphics.endFill();
 		}
 		
-		override public function size(width:Number, height:Number):void {
-			this._width = width;
-			this._height = height;
+		public function set color(color:uint):void {
+			this._color = color;
 			this.draw();
 		}
 		
-		override public function set color(color:uint):void {
-			this._color = color;
+		override public function size(width:Number, height:Number):void {
+			this._width = width;
+			this._height = height;
 			this.draw();
 		}
 		

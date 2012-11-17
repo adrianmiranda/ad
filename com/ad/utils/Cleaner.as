@@ -1,21 +1,28 @@
 package com.ad.utils {
+	import __AS3__.vec.Vector;
 	import flash.display.DisplayObjectContainer;
 	import flash.display.DisplayObject;
 	import flash.net.LocalConnection;
 	import flash.utils.Dictionary;
 	import flash.system.System;
+	import flash.display.Loader;
 	
 	public final class Cleaner {
 		
-		public static function removeAllChildrenOf(target:DisplayObjectContainer):void {
+		public static function removeChildrenOf(target:DisplayObjectContainer):void {
 			if (!target) return;
 			var child:DisplayObject;
 			while (target.numChildren > 0) {
 				child = target.getChildAt(0);
 				if (child) {
+					if (child is Loader) {
+						continue;
+					}
 					target.removeChild(child);
-					if (child is DisplayObjectContainer) {
-						removeAllChildrenOf(child as DisplayObjectContainer);
+					if (!child is Loader) {
+						if (child is DisplayObjectContainer) {
+							removeChildrenOf(child as DisplayObjectContainer);
+						}
 					}
 				}
 				child = null;
@@ -24,51 +31,9 @@ package com.ad.utils {
 		
 		public static function kill(target:DisplayObjectContainer):void {
 			if (!target) return;
-			removeAllChildrenOf(target);
-			if (target.stage && target.parent.contains(target)) {
+			removeChildrenOf(target);
+			if (target.stage && target.parent && target.parent.contains(target)) {
 				target.parent.removeChild(target);
-			}
-		}
-		
-		public static function cleanupDictionary(target:Dictionary):void {
-			var key:String;
-			for (key in target) {
-				delete target[key];
-			}
-		}
-		
-		public static function cleanupObject(target:Object):void {
-			var key:String;
-			for (key in target) {
-				delete target[key];
-			}
-		}
-		
-		public static function removeValueFromArray(target:Array, value:Object):void {
-			var index:int = target.indexOf(value);
-			if (index != -1) {
-				target.splice(index, 1);
-			}
-		}
-		
-		public static function cleanupArray(target:Array):void {
-			var id:int = target.length;
-			while (id--) {
-				target.splice(id, 1);
-			}
-		}
-		
-		public static function removeValueFromVector(target:Vector.<*>, value:*):void {
-			var index:int = target.indexOf(value);
-			if (index != -1) {
-				target.splice(index, 1);
-			}
-		}
-		
-		public static function cleanupVector(target:Vector.<*>):void {
-			var id:int = target.length;
-			while (id--) {
-				target.splice(id, 1);
 			}
 		}
 		

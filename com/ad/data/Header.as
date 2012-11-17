@@ -1,6 +1,6 @@
 package com.ad.data {
-	import com.ad.common.number;
-	import com.ad.common.boolean;
+	import com.ad.common.num;
+	import com.ad.common.bool;
 	import com.ad.errors.ADError;
 	
 	import __AS3__.vec.Vector;
@@ -25,13 +25,13 @@ package com.ad.data {
 			this._binding = binding;
 			this._title = xml.@title.toString();
 			this._track = xml.@track.toString();
-			this._strict = xml.@strict != undefined ? boolean(xml.@strict.toString()) : true;
+			this._strict = xml.@strict != undefined ? bool(xml.@strict.toString()) : true;
 			this._flow = xml.@flow.toString() || 'normal';
 			this._languages = new Language(this.parseLanguages(xml), this._binding);
 			this._views = new View(this.parseTreeBase(xml), binding);
-			this._files = parseFiles(xml);
-			this._history = xml.@history != undefined ? boolean(xml.@history.toString()) : true;
-			this._connections = number(xml.@connections.toString()) || 2;
+			this._files = this.parseFiles(xml);
+			this._history = xml.@history != undefined ? bool(xml.@history.toString()) : true;
+			this._connections = num(xml.@connections.toString()) || 2;
 		}
 		
 		private function validateHeader(node:XML):void {

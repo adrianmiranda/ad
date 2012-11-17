@@ -1,6 +1,5 @@
 package com.ad.data {
-	import com.ad.common.number;
-	import com.ad.common.boolean;
+	import com.ad.common.bool;
 	import com.ad.utils.Binding;
 	import com.ad.utils.BranchUtils;
 	import com.ad.errors.ADError;
@@ -57,12 +56,12 @@ package com.ad.data {
 			if (xml.hasOwnProperty('view')) {
 				this.validateViewNode(xml.view[0]);
 				this.validateBaseNode(xml);
-				if (xml.@enabled != undefined ? !boolean(xml.@enabled) : false) return;
+				if (xml.@enabled != undefined ? !bool(xml.@enabled) : false) return;
 				this._standard = xml.view.length() > 1 ? xml.@standard : xml.view[0].@id;
 				this._mistake = xml.@mistake;
 				this._views = new Vector.<View>();
 				for each (var child:XML in xml.elements('view')) {
-					if (child.@enabled != undefined ? !boolean(child.@enabled) : false) continue;
+					if (child.@enabled != undefined ? !bool(child.@enabled) : false) continue;
 					var view:View = new View(child as XML, binding);
 					view.nsarmored::parent = this;
 					this._views.push(view);
@@ -82,7 +81,7 @@ package com.ad.data {
 			else if (node.@['class'] == undefined) {
 				throw new ADError(error + node.@id + ' node missing required attribute \'class\'');
 			}
-			else if ((boolean(node.@menu) || boolean(node.@landing)) && (node.@title == undefined || !node.@title.length)) {
+			else if ((bool(node.@menu) || bool(node.@landing)) && (node.@title == undefined || !node.@title.length)) {
 				throw new ADError(error + node.@id + ' missing required attribute \'title\'');
 			}
 			else if (node.@window != undefined && !BranchUtils.isValidWindow(node.@window)) {

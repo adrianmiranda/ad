@@ -35,23 +35,17 @@
 			}
 		}
 		
-		public function removeAllEventListener(die:Boolean = false):void {
+		public function removeAllEventListener():void {
 			var numTypes:int = this._types.length;
-			if (numTypes > 0) {				
+			if (numTypes) {
 				var id:int = numTypes;
 				while (id--) {
 					this._dispatcher.removeEventListener(this._types[id], this._listeners[id]);
 					this._types.splice(id, 1);
 					this._listeners.splice(id, 1);
 				}
-				if (!die) {
-					this._types = new Vector.<String>();
-					this._listeners = new Vector.<Function>();
-				} else {
-					this._types = null;
-					this._listeners = null;
-					this._dispatcher = null;
-				}
+				this._types = new Vector.<String>();
+				this._listeners = new Vector.<Function>();
 			}
 		}
 		

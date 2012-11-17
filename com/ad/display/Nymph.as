@@ -1,11 +1,17 @@
 ﻿package com.ad.display {
+	import com.ad.interfaces.IEventControl;
 	
-	dynamic public class Nymph extends Leprechaun {
+	import __AS3__.vec.Vector;
+	import flash.display.Sprite;
+	import flash.events.Event;
+	
+	dynamic public class Nymph extends Sprite implements IEventControl {
 		private var _types:Vector.<String> = new Vector.<String>();
 		private var _listeners:Vector.<Function> = new Vector.<Function>();
 		
 		public function Nymph() {
-			super();
+			super.focusRect = false;
+			super.tabEnabled = false;
 		}
 		
 		override public function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = true):void {
@@ -40,13 +46,16 @@
 			}
 		}
 		
-		override public function die():void {
-			super.die();
-			this.removeAllEventListener();
-			
-			// TODO: implementar de forma que mate as variáveis sem afetar futuros usos do objeto Nymph
-			//this._listeners = null;
-			//this._types = null;
+		override public function dispatchEvent(event:Event):Boolean {
+			return super.dispatchEvent(event);
+		}
+		
+		override public function hasEventListener(type:String):Boolean {
+			return super.hasEventListener(type);
+		}
+		
+		override public function willTrigger(type:String):Boolean {
+			return super.willTrigger(type);
 		}
 		
 		override public function toString():String {

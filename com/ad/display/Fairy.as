@@ -1,11 +1,17 @@
 ﻿package com.ad.display {
+	import com.ad.interfaces.IEventControl;
 	
-	dynamic public class Fairy extends Cluricaun {
+	import __AS3__.vec.Vector;
+	import flash.display.MovieClip;
+	import flash.events.Event;
+	
+	dynamic public class Fairy extends MovieClip implements IEventControl {
 		private var _types:Vector.<String> = new Vector.<String>();
 		private var _listeners:Vector.<Function> = new Vector.<Function>();
 		
 		public function Fairy() {
-			super();
+			super.focusRect = false;
+			super.tabEnabled = false;
 		}
 		
 		override public function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = true):void {
@@ -40,13 +46,16 @@
 			}
 		}
 		
-		override public function die():void {
-			super.die();
-			this.removeAllEventListener();
-			
-			// TODO: implementar de forma que mate as variáveis sem afetar futuros usos do objeto Fairy
-			//this._listeners = null;
-			//this._types = null;
+		override public function dispatchEvent(event:Event):Boolean {
+			return super.dispatchEvent(event);
+		}
+		
+		override public function hasEventListener(type:String):Boolean {
+			return super.hasEventListener(type);
+		}
+		
+		override public function willTrigger(type:String):Boolean {
+			return super.willTrigger(type);
 		}
 		
 		override public function toString():String {

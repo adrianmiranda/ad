@@ -1,5 +1,5 @@
 package com.ad.data {
-	import com.ad.common.boolean;
+	import com.ad.common.bool;
 	import com.ad.utils.Binding;
 	import com.ad.errors.ADError;
 	import com.ad.utils.BranchUtils;
@@ -46,7 +46,7 @@ package com.ad.data {
 				this._standard = BranchUtils.arrange(this.branch + '/' + this._standard);
 				this._languages = new Vector.<Language>();
 				for each (var child:XML in xml.children()) {
-					if (child.@enabled != undefined ? !boolean(child.@enabled) : false) continue;
+					if (child.@enabled != undefined ? !bool(child.@enabled) : false) continue;
 					var language:Language = new Language(child, this._binding);
 					language.nsarmored::parent = this;
 					this._languages.push(language);
