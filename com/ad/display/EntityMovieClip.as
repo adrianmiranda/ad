@@ -2,6 +2,9 @@ package com.ad.display {
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	
+	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 */
 	dynamic public class EntityMovieClip extends MovieClip {
 		
 		public function EntityMovieClip() {

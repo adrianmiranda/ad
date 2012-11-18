@@ -1,5 +1,8 @@
 package com.ad.interfaces {
 	
+	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 */
 	public interface IButton extends IDisplay {
 		function get params():Object;
 		function get selected():Boolean;

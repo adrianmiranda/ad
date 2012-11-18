@@ -5,6 +5,7 @@ package com.ad.utils {
 	import flash.utils.ByteArray;
 	
 	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
 	 * @see http://labs.influxis.com/wp-content/uploads/huw_column1.pdf
 	 */
 	final public class ObjectUtil {

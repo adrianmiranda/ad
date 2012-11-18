@@ -3,6 +3,9 @@ package com.ad.display {
 	import flash.display.Sprite;
 	import flash.events.Event;
 	
+	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 */
 	public class BitmapFill extends Sprite {
 		private var _width:int;
 		private var _heigth:int;

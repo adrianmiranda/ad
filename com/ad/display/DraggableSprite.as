@@ -6,6 +6,9 @@
 	import flash.geom.Rectangle;
 	import flash.geom.Point;
 	
+	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 */
 	public class DraggableSprite extends SpriteBase {
 		private var _bounds:Rectangle;
 		private var _offset:Point;

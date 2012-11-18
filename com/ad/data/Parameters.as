@@ -7,6 +7,7 @@ package com.ad.data {
 	import printf;
 	
 	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
 	 * @xml
 	 *	<parameters>
 	 *		<output>

@@ -3,6 +3,9 @@
 	import flash.events.EventDispatcher;
 	import flash.events.Event;
 	
+	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 */
 	public class EventControl implements IEventDispatcher {
 		private var _types:Vector.<String> = new Vector.<String>();
 		private var _listeners:Vector.<Function> = new Vector.<Function>();

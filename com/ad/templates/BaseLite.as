@@ -6,6 +6,9 @@
 	import flash.geom.Rectangle;
 	import flash.system.Capabilities;
 	
+	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 */
 	public class BaseLite extends ViewerLite implements IBase {
 		private var _margin:Rectangle = new Rectangle();
 		private var _resolution:Point = new Point();

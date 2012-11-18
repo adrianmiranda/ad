@@ -7,6 +7,9 @@ package com.ad.display {
 	import flash.display.DisplayObjectContainer;
 	import flash.geom.Point;
 	
+	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 */
 	dynamic public class Cluricaun extends Joker implements IDisplay {
 		private var _registrationPoint:Point;
 		private var _locked:Boolean;

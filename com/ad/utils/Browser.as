@@ -6,19 +6,20 @@ package com.ad.utils {
 	import flash.net.URLVariables;
 	import flash.net.navigateToURL;
 	
+	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 */
 	public final class Browser {
 		
 		public static function gotoURL(url:*, window:String = '_self'):void {
 			var request:URLRequest = url is String ? new URLRequest(url) : url;
 			if (!available) {
 				navigateToURL(request, window);
-			}
-			else {
+			} else {
 				var userAgentValue:String = userAgent.toLowerCase();
 				if (userAgentValue.indexOf('firefox') > -1 || (userAgentValue.indexOf('msie') > -1 && uint(userAgentValue.substr(userAgentValue.indexOf('msie') + 5, 3)) >= 7)) {
 					call('window.open', request.url, window);
-				}
-				else {
+				} else {
 					navigateToURL(request, window);
 				}
 			}
@@ -30,8 +31,7 @@ package com.ad.utils {
 			if (available) {
 				if (appName == 'Microsoft Internet Explorer') {
 					sendToURL(new URLRequest('mailto:' + email + '?cc=' + cc + '&bcc' + cco + '&subject=' + subject + '&body=' + body));
-				}
-				else {
+				} else {
 					gotoURL('mailto:' + email + '?cc=' + cc + '&bcc' + cco + '&subject=' + subject + '&body=' + body, '_parent');
 				}
 			}

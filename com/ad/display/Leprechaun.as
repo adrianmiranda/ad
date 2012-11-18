@@ -8,6 +8,9 @@
 	import flash.display.DisplayObjectContainer;
 	import flash.geom.Point;
 	
+	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 */
 	public class Leprechaun extends Nymph implements IDisplay {
 		private var _registrationPoint:Point;
 		private var _locked:Boolean;

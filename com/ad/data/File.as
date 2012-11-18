@@ -7,7 +7,7 @@ package com.ad.data {
 	import flash.display.DisplayObject;
 	
 	/**
-	 * @author Adrian C. Miranda
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br> 
 	 */
 	public final class File {
 		private var _binding:DisplayObject;

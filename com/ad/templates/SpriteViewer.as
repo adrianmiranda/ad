@@ -9,6 +9,9 @@ package com.ad.templates {
 	[Event(name = 'TransitionEvent.TRANSITION_IN_COMPLETE', type = 'com.ad.events.TransitionEvent')]
 	[Event(name = 'TransitionEvent.TRANSITION_OUT_COMPLETE', type = 'com.ad.events.TransitionEvent')]
 	
+	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 */
 	public class SpriteViewer extends Sprite {
 		public var onTransitionIn:Function;
 		public var onTransitionOut:Function;

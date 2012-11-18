@@ -7,6 +7,9 @@ package com.ad.templates {
 	import flash.display.StageScaleMode;
 	import flash.display.Sprite;
 	
+	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 */
 	public class SpriteBase extends Sprite {
 		private var _margin:Rectangle = new Rectangle();
 		private var _resolution:Point = new Point();

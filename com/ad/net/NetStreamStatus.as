@@ -1,9 +1,10 @@
-package com.ad.net
-{
+package com.ad.net {
 	import flash.utils.Dictionary;
 	
-	public final class NetStreamStatus
-	{
+	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 */
+	public final class NetStreamStatus {
 		private static var $map:Dictionary = new Dictionary(true);
 		
 		public static const WARNING:String = 'warning';
@@ -53,25 +54,21 @@ package com.ad.net
 		public var level:String;
 		public var code:String;
 		
-		public function NetStreamStatus(code:String, level:String)
-		{
+		public function NetStreamStatus(code:String, level:String) {
 			this.code = code;
 			this.level = level;
 			$map[this.code] = this;
 		}
 		
-		public static function get(code:String):NetStreamStatus
-		{
+		public static function get(code:String):NetStreamStatus {
 			return contains(code) ? $map[code] : null;
 		}
 		
-		public static function contains(code:String):Boolean
-		{
+		public static function contains(code:String):Boolean {
 			return $map[code] ? true : false;
 		}
 		
-		public function toString():String
-		{
+		public function toString():String {
 			return this.code;
 		}
 	}

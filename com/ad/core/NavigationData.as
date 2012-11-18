@@ -4,7 +4,13 @@ package com.ad.core {
 	import com.ad.data.Language;
 	import com.ad.errors.ADError;
 	import com.ad.utils.BranchUtils;
+	import com.ad.proxy.nsapplication;
+	import com.ad.events.ApplicationEvent;
 	
+	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 */
+	use namespace nsapplication;
 	public class NavigationData extends NavigationCore {
 		private var _header:Header;
 		private var _lastLanguage:Language;
@@ -44,10 +50,10 @@ package com.ad.core {
 		public function isHomePage(value:*):Boolean {
 			this.validateHeader(this.header);
 			if (value && value is String) {
-				//value = value.split(this.language.branch).join('');
+				value = value.split(this.language.branch).join('');
 				value = BranchUtils.arrange(value, false).toLowerCase();
 			}
-			return (value == this.view || value == this.views.root.branch || value == '/home/' || value == '/' || value == '');
+			return (value == this.view || value == this.views.root.branch || value == '/' || value == '');
 		}
 
 		public function createViews(xml:XML):void {
@@ -95,12 +101,30 @@ package com.ad.core {
 		}
 
 		public function setLanguage(value:*):Language {
+			var locale:Language;
 			if (value) {
 				this.validateHeader(this.header);
-				//this._lastLanguage = this._language;
-				//this._language = value;
+				locale = this.languages.getLanguage(value);
+				if (locale) {
+					locale = locale.tree;
+					if (this.language) {
+						if (locale.branch != language.branch) {
+							this._lastLanguage = this._language;
+							this._language = locale;
+							super.dispatchEvent(new ApplicationEvent(ApplicationEvent.CHANGE_LANGUAGE, this.apiKey));
+						}
+					} else {
+						this._lastLanguage = this._language;
+						this._language = locale;
+						super.dispatchEvent(new ApplicationEvent(ApplicationEvent.CHANGE_LANGUAGE, this.apiKey));
+					}
+				} else {
+					super.setHistory(false);
+					super.navigateTo(BranchUtils.arrange(this.language.branch + '/' + this.view.branch));
+					super.setHistory(header.history);
+				}
 			}
-			return this._language;
+			return locale;
 		}
 
 		public function setView(value:*):View {
@@ -116,6 +140,11 @@ package com.ad.core {
 			// to override.
 		}
 
+		override public function navigateTo(value:*, query:Object = null):void {
+			this.setLanguage(value);
+			super.navigateTo(value, query);
+		}
+
 		override protected function startup():void {
 			this.validateHeader(this.header);
 			var params:Object = super.getParameterNames().length ? super.parameters : null;
@@ -127,6 +156,7 @@ package com.ad.core {
 				if (view) {
 					this.setView(view);
 					super.setTitle(view.title);
+					this.setLanguage(view.branch);
 					this.stackTransition(view, params);
 				} else {
 					super.navigateTo(this.standardView.branch, params);
@@ -141,8 +171,8 @@ package com.ad.core {
 			var view:View = this.header.getView(path);
 			if (view) {
 				this.setView(view);
-				this.setLanguage(view.branch);
 				super.setTitle(view.title);
+				this.setLanguage(view.branch);
 				this.stackTransition(view, params);
 			} else {
 				this.setView(this.mistakeView);
@@ -151,13 +181,17 @@ package com.ad.core {
 
 		override public function dispose(flush:Boolean = false):void {
 			if (flush) {
-				_header = null;
-				_lastLanguage = null;
-				_language = null;
-				_lastView = null;
-				_view = null;
+				this._header = null;
+				this._lastLanguage = null;
+				this._language = null;
+				this._lastView = null;
+				this._view = null;
 			}
 			super.dispose(flush);
+		}
+
+		override public function toString():String {
+			return '[NavigationData ' + super.apiKey + ']';
 		}
 	}
 }

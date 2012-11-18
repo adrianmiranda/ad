@@ -4,6 +4,10 @@ package com.ad.events {
 	
 	import flash.events.Event;
 	
+	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * TODO: 
+	 */
 	public final class ApplicationEvent extends Event {
 		public static const EXTERNAL_CHANGE:String = 'ApplicationEvent.EXTERNAL_CHANGE';
 		public static const INTERNAL_CHANGE:String = 'ApplicationEvent.INTERNAL_CHANGE';

@@ -4,6 +4,9 @@ package com.ad.display {
 	
 	import flash.display.DisplayObject;
 	
+	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 */
 	public class Layer extends Leprechaun {
 		private var _node:XML;
 		

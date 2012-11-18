@@ -1,5 +1,8 @@
 package com.ad.interfaces {
 	
+	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 */
 	public interface ISection extends IBase {
 		/*
 			function get children():Object;

@@ -6,6 +6,9 @@ package com.ad.templates {
 	import flash.geom.Rectangle;
 	import flash.system.Capabilities;
 	
+	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 */
 	public class BaseMax extends ViewerMax implements IBase {
 		private var _margin:Rectangle = new Rectangle();
 		private var _resolution:Point = new Point();

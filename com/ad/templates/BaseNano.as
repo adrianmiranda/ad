@@ -5,6 +5,9 @@ package com.ad.templates {
 	import flash.display.Sprite;
 	import flash.geom.Rectangle;
 	
+	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 */
 	public class BaseNano extends Sprite {
 		private var _margin:Rectangle = new Rectangle();
 		private var _screen:Rectangle = new Rectangle();

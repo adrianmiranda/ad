@@ -10,6 +10,9 @@ package com.ad.core {
 	
 	import flash.display.DisplayObject;
 	
+	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 */
 	use namespace nsapplication;
 	public class ApplicationRequest extends ApplicationCore {
 		private var _binding:DisplayObject;

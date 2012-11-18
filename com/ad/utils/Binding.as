@@ -2,6 +2,9 @@ package com.ad.utils {
 	import flash.display.DisplayObject;
 	import flash.display.Stage;
 	
+	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 */
 	public final class Binding {
 		
 		public static function bind(raw:String, data:Object):String {

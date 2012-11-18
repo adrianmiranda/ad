@@ -1,15 +1,20 @@
 package com.ad.core {
-	import com.ad.events.TransitionEvent;
-	import com.ad.interfaces.ISection;
 	import com.ad.data.Language;
 	import com.ad.data.View;
 	import com.ad.utils.Cleaner;
+	import com.ad.events.TransitionEvent;
+	import com.ad.interfaces.ISection;
+	import com.ad.proxy.nsapplication;
 	import com.greensock.TweenLite;
 	import com.greensock.TweenMax;
 	
 	import flash.display.DisplayObjectContainer;
 	import flash.display.DisplayObject;
 
+	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 */
+	use namespace nsapplication;
 	public final class Navigation extends NavigationData {
 		private var _isInterrupted:Boolean;
 		private var _transitionState:int;
@@ -24,8 +29,13 @@ package com.ad.core {
 			return instances[key] as Navigation;
 		}
 
+		public static function classes(...rest:Array):void {
+			// no need to do anything - we just want to force the classes to get compiled in the swf.
+		}
+
 		override protected function stackTransition(view:View, params:Object = null):void {
 			try {
+				trace('flow:', super.header.flow);
 				if (this._section) {
 					//super.stop(true);
 					this._section.transitionOut();
@@ -43,7 +53,7 @@ package com.ad.core {
 					this._section.transitionIn();
 				}
 			} catch(event:Error) {
-				trace('[ApplicationFacade]::makeSection:', event.message);
+				trace('[ApplicationFacade]::stackTransition:', event.message);
 			}
 		}
 		
@@ -98,9 +108,16 @@ package com.ad.core {
 
 		override public function dispose(flush:Boolean = false):void {
 			if (flush) {
-				this._section = null;
+				if (this._section) {
+					this._section.die();
+					this._section = null;
+				}
 			}
 			super.dispose(flush);
+		}
+		
+		override public function toString():String {
+			return '[Navigation ' + super.apiKey + ']';
 		}
 	}
 }

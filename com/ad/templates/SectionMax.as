@@ -11,6 +11,9 @@ package com.ad.templates {
 	import flash.events.Event;
 	import flash.geom.Rectangle;
 	
+	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 */
 	public class SectionMax extends BaseMax implements ISection {
 		private var _application:Application;
 		private var _childParentView:ISection;

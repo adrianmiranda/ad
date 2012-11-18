@@ -3,6 +3,9 @@ package com.ad.display {
 	import com.ad.external.GetLayers;
 	import com.ad.display.Leprechaun;
 	
+	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 */
 	public class Timeline extends Leprechaun {
 		protected var APIKey:String;
 		

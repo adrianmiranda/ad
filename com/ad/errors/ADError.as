@@ -1,4 +1,9 @@
 ﻿package com.ad.errors {
+	
+	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * TODO: 
+	 */
 	public class ADError extends Error {
 		public function ADError(message:String = '', id:int = 0, index:int = -1) {
 			super(this.getMethodByIndex(index) + ' ' + id + ': ' + message, id);

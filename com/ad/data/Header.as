@@ -6,6 +6,9 @@ package com.ad.data {
 	import __AS3__.vec.Vector;
 	import flash.display.DisplayObject;
 	
+	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 */
 	public final class Header {
 		private var _binding:DisplayObject;
 		private var _files:Vector.<File>;

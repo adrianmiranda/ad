@@ -1,5 +1,8 @@
 ﻿package com.ad.utils {
 	
+	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 */
 	public final class Validation {
 		
 		public static function isEmail(value:String):Boolean {

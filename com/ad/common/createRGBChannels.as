@@ -6,7 +6,7 @@ package com.ad.common {
 	import flash.geom.Rectangle;
 	
 	/**
-	 * @author Adrian Miranda
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
 	 */
 	public function createRGBChannels(bmp:Bitmap):Array {
 		var r:BitmapData = new BitmapData(bmp.width, bmp.height, true, 0xFF000000);

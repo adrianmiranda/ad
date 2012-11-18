@@ -4,6 +4,9 @@ package com.ad.templates {
 	import flash.geom.Rectangle;
 	import flash.utils.getTimer;
 	
+	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 */
 	public class BaseLoaderLite extends BaseLite implements IBaseLoader {
 		private var _bytesLoaded:Number = 0;
 		private var _bytesTotal:Number = 0;

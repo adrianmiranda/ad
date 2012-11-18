@@ -1,6 +1,9 @@
 package com.ad.utils {
 	
-	final public class ArrayUtil {
+	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 */
+	public final class ArrayUtil {
 		
 		public static function shuffle(instance:Array):Array {
 			return instance.sort(function(...args):Number { return Math.round(Math.random() * 2) - 1; });

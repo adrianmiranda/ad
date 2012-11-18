@@ -1,7 +1,10 @@
-package com.ad.data
-{
-	public class MetaData extends ValueObject
-	{
+package com.ad.data {
+
+	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * TODO: 
+	 */
+	public class MetaData extends ValueObject {
 		public var _aacaot:int;
 		public var _avclevel:Number;
 		public var _avcprofile:Number;

@@ -13,6 +13,9 @@ package com.ad.templates {
 	import flash.errors.IllegalOperationError;
 	import flash.utils.ByteArray;
 	
+	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 */
 	public class ThumbnailLite extends ButtonLite implements IThumb {
 		private var _content:DisplayObject;
 		private var _url:String;

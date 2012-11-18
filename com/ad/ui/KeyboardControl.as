@@ -14,6 +14,9 @@ package com.ad.ui {
 	[Event(name = 'KeyComboEvent.KEY_DOWN', type = 'com.ad.events.KeyComboEvent')]
 	[Event(name = 'KeyComboEvent.KEY_UP', type = 'com.ad.events.KeyComboEvent')]
 	
+	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 */
 	public class KeyboardControl extends EventControl {
 		public static var shortcutTarget:KeyboardControl = new KeyboardControl();
 		protected var stage:Stage;

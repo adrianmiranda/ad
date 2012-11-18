@@ -1,6 +1,9 @@
 ﻿package com.ad.events {
 	import flash.events.Event;
 	
+	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 */
 	public class TransitionEvent extends Event {
 		public static const BEFORE_PRELOAD:String = 'TransitionEvent.BEFORE_PRELOAD';
 		public static const AFTER_PRELOAD:String = 'TransitionEvent.AFTER_PRELOAD';

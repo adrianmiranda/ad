@@ -3,6 +3,9 @@ package com.ad.display {
 	import flash.display.Shape;
 	import flash.display.DisplayObject;
 	
+	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 */
 	public class Fig extends Shape {
 		
 		public function Fig() {

@@ -1,7 +1,8 @@
 package com.ad.common {
 	
 	/**
-	 * TODO: Implementar para usar como no c:
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * TODO: Implementar para usar como no c/php:
 	 * sprintf('%03d', value);
 	 */
 	public function sprintf(value:uint, length:uint = 2):String {

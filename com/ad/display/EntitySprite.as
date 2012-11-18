@@ -2,6 +2,9 @@ package com.ad.display {
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	
+	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 */
 	public class EntitySprite extends Sprite {
 		
 		public function EntitySprite() {

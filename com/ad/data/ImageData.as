@@ -1,14 +1,15 @@
-package com.ad.data
-{
+package com.ad.data {
 	import flash.utils.ByteArray;
 	
-	public class ImageData extends ValueObject
-	{
+	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * TODO: 
+	 */
+	public class ImageData extends ValueObject {
 		private var _data:ByteArray;
 		private var _trackid:*;
 		
-		public function ImageData(vars:Object = null)
-		{
+		public function ImageData(vars:Object = null) {
 			super(vars);
 		}
 		

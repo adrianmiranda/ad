@@ -1,5 +1,8 @@
 package com.ad.display {
 	
+	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 */
 	public class Circle extends Leprechaun {
 		private var _color:uint;
 		private var _radius:Number;

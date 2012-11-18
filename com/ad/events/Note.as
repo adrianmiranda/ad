@@ -1,9 +1,10 @@
-package com.ad.events
-{
+package com.ad.events {
 	import flash.events.Event;
 	
-	public class Note extends Event
-	{
+	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 */
+	public class Note extends Event {
 		/** @Animation */
 		public static const ANIMATION_IN:String = 'Note.ANIMATION_IN';
 		public static const ANIMATION_IN_COMPLETE:String = 'Note.ANIMATION_IN_COMPLETE';
@@ -35,33 +36,26 @@ package com.ad.events
 		
 		public var data:Object;
 		
-		public function Note(type:String, target:Object, data:Object = null, bubbles:Boolean = false, cancelable:Boolean = false)
-		{
+		public function Note(type:String, target:Object, data:Object = null, bubbles:Boolean = false, cancelable:Boolean = false) {
 			super(type, bubbles, cancelable);
 			this._target = target;
 			this.data = data;
 		}
 		
-		override public function get target():Object
-		{
-			if (this._ready)
-			{
+		override public function get target():Object {
+			if (this._ready) {
 				return this._target;
-			}
-			else
-			{
+			} else {
 				this._ready = true;
 			}
 			return null;
 		}
 		
-		override public function clone():Event
-		{
+		override public function clone():Event {
 			return new Note(this.type, this.data, super.bubbles, super.cancelable);
 		}
 		
-		override public function toString():String
-		{
+		override public function toString():String {
 			return super.formatToString('Note', 'type', 'target', 'data', 'eventPhase'); 
 		}
 	}

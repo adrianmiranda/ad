@@ -1,6 +1,9 @@
 package com.ad.events  {
 	import flash.events.Event;
 	
+	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 */
 	final public class Notifier {
 		protected static var notification:Note;
 		protected static var dispatcher:EventControl;

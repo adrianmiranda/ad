@@ -9,6 +9,10 @@ package com.ad.data {
 	import flash.utils.flash_proxy;
 	import flash.utils.Proxy;
 	
+	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * TODO: 
+	 */
 	use namespace nsdisplay;
 	final public class Layers extends Proxy {
 		public static var shortcutTarget:Layers = new Layers();

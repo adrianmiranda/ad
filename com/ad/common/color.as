@@ -1,5 +1,8 @@
 package com.ad.common {
 	
+	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 */
 	public function color(value:String):* {
 		if (value.charAt(0) == '#') {
 			value = value.substr(1);

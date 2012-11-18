@@ -19,6 +19,9 @@ package com.ad.core {
 	import flash.media.SoundLoaderContext;
 	import flash.system.LoaderContext;
 	
+	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 */
 	use namespace nsapplication;
 	public class ApplicationLoader extends ApplicationRequest {
 		private var _soundLoaderContext:SoundLoaderContext;
@@ -33,10 +36,6 @@ package com.ad.core {
 		public static function getInstance(key:String = null):ApplicationLoader {
 			if (!hasInstance(key)) instances[key] = new ApplicationLoader(key);
 			return instances[key] as ApplicationLoader;
-		}
-		
-		public function classes(...rest:Array):void {
-			// no need to do anything - we just want to force the classes to get compiled in the swf.
 		}
 		
 		public function loaders(...rest:Array):void {

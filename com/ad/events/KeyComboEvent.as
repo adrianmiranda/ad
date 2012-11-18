@@ -4,6 +4,9 @@ package com.ad.events {
 	import flash.events.KeyboardEvent;
 	import flash.events.Event;
 	
+	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 */
 	public final class KeyComboEvent extends KeyboardEvent {
 		public static const KEY_COMBO_TYPED:String = 'KeyComboEvent.KEY_COMBO_TYPED';
 		public static const KEY_COMBO_DOWN:String = 'KeyComboEvent.KEY_COMBO_DOWN';

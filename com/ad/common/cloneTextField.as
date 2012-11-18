@@ -2,6 +2,9 @@ package com.ad.common {
 	import flash.text.TextField;
 	import flash.utils.describeType;
 
+	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 */
 	public function cloneTextField(textField:TextField, replace:Boolean = false):TextField {
 		var clone:TextField = new TextField();
 		var description:XML = describeType(textField);

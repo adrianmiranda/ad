@@ -4,8 +4,9 @@ package com.ad.misc {
 	import flash.geom.Point;
 	
 	/**
-	 * @author Adrian C. Miranda
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
 	 * @see http://en.wikipedia.org/wiki/Radian#Advantages_of_measuring_in_radians
+	 * TODO: 
 	 */
 	public final class Angle {
 		private const PI:Number = Math.PI;

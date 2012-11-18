@@ -1,7 +1,10 @@
 package com.ad.utils {
 	import __AS3__.vec.Vector;
 	
-	final public class VectorUtil {
+	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 */
+	public final class VectorUtil {
 		
 		public static function isVector(vector:*):Boolean {
 			try {

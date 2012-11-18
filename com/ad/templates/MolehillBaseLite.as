@@ -13,6 +13,9 @@ package com.ad.templates {
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
 	
+	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 */
 	public class MolehillBaseLite extends ViewerLite implements IBase {
 		private var _margin:Rectangle = new Rectangle();
 		private var _resolution:Point = new Point();

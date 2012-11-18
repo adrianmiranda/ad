@@ -1,6 +1,9 @@
 ﻿package com.ad.events {
 	import flash.events.Event;
 	
+	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 */
 	public class MediaEvent extends Event {
 		public static const CUE_POINT:String = 'MediaEvent.onCuePoint';
 		public static const STREAM_NOT_FOUND:String = 'NetStream.Play.StreamNotFound';

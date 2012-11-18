@@ -1,12 +1,13 @@
-﻿package com.ad.common
-{
+﻿package com.ad.common {
 	import flash.text.TextFieldType;
 	import flash.text.AntiAliasType;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
 	
-	public function createTextField(textformat:TextFormat = null, autoSize:String = 'left', type:String = 'dynamic'):TextField
-	{
+	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 */
+	public function createTextField(textformat:TextFormat = null, autoSize:String = 'left', type:String = 'dynamic'):TextField {
 		var textField:TextField = new TextField();
 		if (textformat) applyTextFormat(textField, textformat);
 		textField.autoSize = autoSize;

@@ -7,6 +7,9 @@ package com.ad.utils {
 	import flash.system.System;
 	import flash.display.Loader;
 	
+	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 */
 	public final class Cleaner {
 		
 		public static function removeChildrenOf(target:DisplayObjectContainer):void {

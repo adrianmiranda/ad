@@ -1,5 +1,4 @@
-package com.ad.media
-{
+package com.ad.media {
 	import com.ad.templates.BaseNano;
 	
 	import flash.events.Event;
@@ -8,8 +7,10 @@ package com.ad.media
 	import flash.system.Security;
 	import flash.net.URLRequest;
 	
-	public class YouTubePlayer extends BaseNano
-	{
+	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 */
+	public class YouTubePlayer extends BaseNano {
 		private static const YOUTUBE_EMBEDDED_PLAYER_URL:String = 'http://www.youtube.com/v/VIDEO_ID?version=3&rel=0';
 		
 		public static const PLAYER_READY:String = 'playerReady';
@@ -26,8 +27,7 @@ package com.ad.media
 		private var _width:Number;
 		private var _height:Number;
 		
-		public function YouTubePlayer(width:int = 320, height:int = 240, resizable:Boolean = false)
-		{
+		public function YouTubePlayer(width:int = 320, height:int = 240, resizable:Boolean = false) {
 			Security.allowDomain('*');
 			Security.allowDomain('http://ppivot-win.com.br/');
 			Security.allowDomain('www.youtube.com');
@@ -39,8 +39,7 @@ package com.ad.media
 			Security.loadPolicyFile('http://i.ytimg.com/crossdomain.xml');
 			Security.loadPolicyFile('http://s.ytimg.com/crossdomain.xml');
 
-			for (var id:int = 1; id < 5; id++)
-			{
+			for (var id:int = 1; id < 5; id++) {
 				Security.loadPolicyFile('http://i' + id + '.ytimg.com/crossdomain.xml');
 			}
 			
@@ -56,37 +55,30 @@ package com.ad.media
 		// SETUP
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
-		public function startup(videoId:String):void
-		{
+		public function startup(videoId:String):void {
 			var url:String = YOUTUBE_EMBEDDED_PLAYER_URL.split('VIDEO_ID').join(videoId);
 			_loader.load(new URLRequest(url));
 		}
 		
-		override protected function initialize():void
-		{
+		override protected function initialize():void {
 			// no yet implemented
 		}
 		
-		override protected function finalize():void
-		{
-			if (_player)
-			{
+		override protected function finalize():void {
+			if (_player) {
 				_player.destroy();
 				_player = null;
 			}
-			if (_loader)
-			{
+			if (_loader) {
 				_loader.unload();
-				if (contains(_loader))
-				{
+				if (contains(_loader)) {
 					removeChild(_loader);
 				}
 				_loader = null;
 			}
 		}
 
-		override public function arrange():void
-		{
+		override public function arrange():void {
 			setSize(screen.width, screen.height);
 		}
 		
@@ -94,8 +86,7 @@ package com.ad.media
 		// LOAD
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
-		private function onLoaderInit(event:Event):void
-		{
+		private function onLoaderInit(event:Event):void {
 			addChild(_loader);
 			_loader.content.addEventListener('onReady', onPlayerReady);
 			_loader.content.addEventListener('onError', onPlayerError);
@@ -127,35 +118,29 @@ package com.ad.media
 		// UTILS
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
-		public function setSize(width:int, height:int):void
-		{
+		public function setSize(width:int, height:int):void {
 			_width = width;
 			_height = height;
 			_player && _player.setSize(_width, _height);
 		}
 		
-		public function queueVideoById(videoID:String, quality:String = QUALITY_DEFAULT):void
-		{
+		public function queueVideoById(videoID:String, quality:String = QUALITY_DEFAULT):void {
 			_player && _player.cueVideoById(videoID, 0, quality);
 		}
 		
-		public function loadVideoById(videoID:String, quality:String = QUALITY_DEFAULT):void
-		{
+		public function loadVideoById(videoID:String, quality:String = QUALITY_DEFAULT):void {
 			_player && _player.loadVideoById(videoID, 0, quality);
 		}
 		
-		public function queueVideoByUrl(url:String, quality:String = QUALITY_DEFAULT):void
-		{
+		public function queueVideoByUrl(url:String, quality:String = QUALITY_DEFAULT):void {
 			_player && _player.cueVideoByUrl(url, 0, quality);
 		}
 		
-		public function loadVideoByUrl(url:String, quality:String = QUALITY_DEFAULT):void
-		{
+		public function loadVideoByUrl(url:String, quality:String = QUALITY_DEFAULT):void {
 			_player && _player.loadVideoByUrl(url, 0, quality);
 		}
 		
-		public static function getIdFromURL(url:String):String
-		{
+		public static function getIdFromURL(url:String):String {
 			var parts:Array = [];
 			if (url.indexOf('watch?v=') != -1) {
 				parts = url.split('watch?v=');
@@ -167,8 +152,7 @@ package com.ad.media
 			return String(parts[1]).split('/').join('');
 		}
 		
-		public static function getThumbnail(videoId:String):URLRequest
-		{
+		public static function getThumbnail(videoId:String):URLRequest {
 			return new URLRequest('http://img.youtube.com/vi/' + videoId + '/0.jpg');
 		}
 		
@@ -176,13 +160,11 @@ package com.ad.media
 		// PATTERN
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
-		override public function get width():Number
-		{
+		override public function get width():Number {
 			return _width;
 		}
 		
-		override public function get height():Number
-		{
+		override public function get height():Number {
 			return _height;
 		}
 	}

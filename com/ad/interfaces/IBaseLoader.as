@@ -1,5 +1,8 @@
 package com.ad.interfaces {
 	
+	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 */
 	public interface IBaseLoader extends IBase {
 		function get bytesLoaded():Number;
 		function get bytesTotal():Number;

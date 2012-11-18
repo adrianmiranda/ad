@@ -5,6 +5,9 @@
 	import flash.display.MovieClip;
 	import flash.events.Event;
 	
+	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 */
 	dynamic public class Fairy extends MovieClip implements IEventControl {
 		private var _types:Vector.<String> = new Vector.<String>();
 		private var _listeners:Vector.<Function> = new Vector.<Function>();

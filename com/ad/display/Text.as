@@ -3,6 +3,9 @@ package com.ad.display {
 	import flash.text.TextFieldAutoSize;
 	import flash.utils.describeType;
 
+	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 */
 	public class Text extends TextField {
 		private var _recordedHeight:Number;
 		private var _heightLock:Boolean; 

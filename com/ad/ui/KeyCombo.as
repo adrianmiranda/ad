@@ -1,6 +1,9 @@
 package com.ad.ui {
 	import com.ad.utils.ArrayUtil;
 	
+	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 */
 	public final class KeyCombo {
 		private var _keyCodes:Array;
 		private var _id:String;

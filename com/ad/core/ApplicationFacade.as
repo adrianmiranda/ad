@@ -12,6 +12,9 @@ package com.ad.core {
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Stage;
 	
+	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 */
 	use namespace nsapplication;
 	public class ApplicationFacade extends ApplicationLoader {
 		private var _container:DisplayObjectContainer;
@@ -26,6 +29,10 @@ package com.ad.core {
 			return instances[key] as ApplicationFacade;
 		}
 		
+		public function classes(...rest:Array):void {
+			Navigation.classes(rest.slice());
+		}
+
 		override public function startup(binding:DisplayObject = null):void {
 			this.validateContainer(binding);
 			super.startup(this._container = DisplayObjectContainer(binding));
@@ -47,17 +54,109 @@ package com.ad.core {
 			}
 			this._navigation.run(this._container);
 		}
-		
-		public function setTitle(value:String):void {
-			this._navigation.setTitle(value);
+
+		public function get parameters():Object {
+			return this._navigation.parameters;
+		}
+
+		public function call(jsFunction:String, ...rest:Array):* {
+			this._navigation.call.apply(null, [jsFunction].concat(rest));
 		}
 		
-		public function setLanguage(value:*):void {
-			this._navigation.setLanguage(value);
+		public function href(url:String, target:String = '_self'):void {
+			this._navigation.href(url, target);
+		}
+
+		public function popup(url:String, name:String = 'popup', options:String = '""', handler:String = ''):void {
+			this._navigation.popup(url, name, options, handler);
+		}
+
+		public function getBaseURL():String {
+			return this._navigation.getBaseURL();
+		}
+
+		public function getStrict():Boolean {
+			return this._navigation.getStrict();
 		}
 		
-		public function navigateTo(value:*):void {
-			this._navigation.navigateTo(value);
+		public function setStrict(strict:Boolean):void {
+			this._navigation.setStrict(strict);
+		}
+
+		public function getHistory():Boolean {
+			return this._navigation.getHistory();
+		}
+
+		public function setHistory(history:Boolean):void {
+			this._navigation.setHistory(history);
+		}
+
+		public function getTracker():String {
+			return this._navigation.getTracker();
+		}
+
+		public function setTracker(tracker:String):void {
+			return this._navigation.setTracker(tracker);
+		}
+
+		public function getTitle():String {
+			return this._navigation.getTitle();
+		}
+
+		public function getStatus():String {
+			return this._navigation.getStatus();
+		}
+
+		public function setStatus(status:String):void {
+			this._navigation.setStatus(status);
+		}
+
+		public function resetStatus():void {
+			this._navigation.resetStatus();
+		}
+
+		public function getValue():String {
+			return this._navigation.getValue();
+		}
+
+		public function getPath():String {
+			return this._navigation.getPath();
+		}
+
+		public function getQueryString(path:String = null):String {
+			return this._navigation.getQueryString(path);
+		}
+
+		public function hasQueryString(path:String = null):Boolean {
+			return this._navigation.hasQueryString(path);
+		}
+
+		public function getParameter(param:String):Object {
+			return this._navigation.getParameter(param);
+		}
+
+		public function getParameterNames():Array {
+			return this._navigation.getParameterNames();
+		}
+
+		public function get history():Array {
+			return this._navigation.history;
+		}
+		
+		public function setTitle(value:String, delimiter:String = null):void {
+			this._navigation.setTitle(value, delimiter);
+		}
+		
+		public function setLanguage(value:*):Language {
+			return this._navigation.setLanguage(value);
+		}
+
+		public function setView(value:*):View {
+			return this._navigation.setView(value);
+		}
+		
+		public function navigateTo(value:*, query:Object = null):void {
+			this._navigation.navigateTo(value, query);
 		}
 		
 		public function go(delta:int):void {
@@ -79,15 +178,43 @@ package com.ad.core {
 		public function clearHistory():void {
 			this._navigation.clearHistory();
 		}
-		
-		public function get view():View {
-			return this._navigation.view;
+
+		public function get mistakeView():View {
+			return this._navigation.mistakeView;
+		}
+
+		public function get standardLanguage():Language {
+			return this._navigation.standardLanguage;
+		}
+
+		public function get standardView():View {
+			return this._navigation.standardView;
+		}
+
+		public function get lastLanguage():Language {
+			return this._navigation.lastLanguage;
+		}
+
+		public function get lastView():View {
+			return this._navigation.lastView;
 		}
 		
 		public function get language():Language {
 			return this._navigation.language;
 		}
+
+		public function get view():View {
+			return this._navigation.view;
+		}
 		
+		public function get languages():Language {
+			return this._navigation.languages;
+		}
+
+		public function get views():View {
+			return this._navigation.views;
+		}
+
 		public function get pathNames():Array {
 			return this._navigation.getPathNames();
 		}

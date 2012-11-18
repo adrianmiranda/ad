@@ -1,6 +1,10 @@
 package com.ad.data {
 	import flash.display.DisplayObjectContainer;
 	
+	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * TODO: 
+	 */
 	public final class Model {
 		
 		public static function parameters(data:*, useOwnPrintf:Boolean = false):Parameters {

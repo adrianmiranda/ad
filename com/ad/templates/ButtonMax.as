@@ -9,6 +9,9 @@ package com.ad.templates {
 	[Event(name = 'over', type = 'flash.events.MouseEvent')]
 	[Event(name = 'out', type = 'flash.events.MouseEvent')]
 	
+	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 */
 	public class ButtonMax extends Cluricaun implements IButton {
 		private var _selected:Boolean;
 		private var _params:Object = new Object();

@@ -12,6 +12,7 @@ package com.ad.media {
 	import flash.media.Video;
 	
 	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
 	 * @tips To use video steps just player 10.1 or older and
 	 * Export video with key frame distance: 1
 	 */

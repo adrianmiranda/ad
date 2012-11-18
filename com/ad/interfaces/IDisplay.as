@@ -2,6 +2,9 @@ package com.ad.interfaces {
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	
+	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 */
 	public interface IDisplay extends IEventControl {
 		function move(x:Number, y:Number):void;
 		function size(width:Number, height:Number):void;

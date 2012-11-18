@@ -13,6 +13,9 @@ package com.ad.net {
 	import flash.net.URLRequest;
 	import flash.utils.Timer;
 	
+	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 */
 	public class Request {
 		private var _request:URLRequest;
 		private var _loader:URLLoader;

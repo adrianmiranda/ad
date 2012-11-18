@@ -1,5 +1,8 @@
 package com.ad.utils {
 	
+	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 */
 	public final class BranchUtils {
 		
 		public static function trimFirstLevel(value:String):String {

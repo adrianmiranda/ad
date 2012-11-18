@@ -4,6 +4,7 @@ package com.ad.core {
 	import com.ad.utils.BranchUtils;
 	import com.ad.errors.ADError;
 	import com.ad.utils.Browser;
+	import com.ad.proxy.nsapplication;
 	import com.asual.SWFAddressEvent;
 	import com.asual.SWFAddress;
 
@@ -15,6 +16,10 @@ package com.ad.core {
 	[Event(type='ApplicationEvent', name='ApplicationEvent.CHANGE')]
 	[Event(type='ApplicationEvent', name='ApplicationEvent.INIT')]
 
+	/**
+	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 */
+	use namespace nsapplication;
 	public class NavigationCore extends EventControl {
 		protected const MULTITON_MESSAGE:String = 'NavigationCore instance for this API key already initialised!';
 		protected static var instances:Array = new Array();
@@ -66,7 +71,7 @@ package com.ad.core {
 			this.validateContainer(this._container = container);
 			SWFAddress.addEventListener(SWFAddressEvent.EXTERNAL_CHANGE, this.onExternalChange);
 			SWFAddress.addEventListener(SWFAddressEvent.INTERNAL_CHANGE, this.onInternalChange);
-			SWFAddress.addEventListener(SWFAddressEvent.CHANGE, this.onStartup);
+			SWFAddress.addEventListener(SWFAddressEvent.CHANGE, this.onStartup, false, 0, true);
 			SWFAddress.addEventListener(SWFAddressEvent.INIT, this.onInit);
 		}
 		
@@ -121,7 +126,7 @@ package com.ad.core {
 
 		protected function onStartup(event:SWFAddressEvent):void {
 			SWFAddress.addEventListener(SWFAddressEvent.CHANGE, this.onChange);
-			SWFAddress.removeEventListener(SWFAddressEvent.CHANGE, this.onStartup);
+			SWFAddress.removeEventListener(SWFAddressEvent.CHANGE, this.onStartup, false);
 			this.startup();
 			super.dispatchEvent(new ApplicationEvent(ApplicationEvent.STARTUP, this.apiKey));
 		}
@@ -245,17 +250,19 @@ package com.ad.core {
 			return SWFAddress.getValue();
 		}
 
-		public function navigateTo(value:String, query:Object = null):void {
-			if (query) {
-				value = value.concat('?');
-				for (var key:String in query) {
-					value = value.concat(key + '=' + query[key] + '&');
+		public function navigateTo(value:*, query:Object = null):void {
+			if (value is String) {
+				if (query) {
+					value = value.concat('?');
+					for (var key:String in query) {
+						value = value.concat(key + '=' + query[key] + '&');
+					}
+					value = value.substring(0, (value.length - 1));
 				}
-				value = value.substring(0, (value.length - 1));
+				value = this.apiKey != version ? this.apiKey + '/' + value : value;
+				this._history[this._depth] = BranchUtils.arrange(value);
+				SWFAddress.setValue(this._history[this._depth++]);
 			}
-			value = this.apiKey != version ? this.apiKey + '/' + value : value;
-			this._history[this._depth] = BranchUtils.arrange(value);
-			SWFAddress.setValue(this._history[this._depth++]);
 		}
 
 		public function getPath():String {
@@ -324,7 +331,7 @@ package com.ad.core {
 		}
 		
 		override public function toString():String {
-			return '[NavigationCore' + this.apiKey + ']';
+			return '[NavigationCore ' + this.apiKey + ']';
 		}
 	}
 }
