@@ -116,29 +116,29 @@ package com.ad.core {
 
 		protected function onExternalChange(event:SWFAddressEvent):void {
 			this.externalChange();
-			super.dispatchEvent(new ApplicationEvent(ApplicationEvent.EXTERNAL_CHANGE, this.apiKey));
+			this.notify(ApplicationEvent.EXTERNAL_CHANGE);
 		}
 
 		protected function onInternalChange(event:SWFAddressEvent):void {
 			this.internalChange();
-			super.dispatchEvent(new ApplicationEvent(ApplicationEvent.INTERNAL_CHANGE, this.apiKey));
+			this.notify(ApplicationEvent.INTERNAL_CHANGE);
 		}
 
 		protected function onStartup(event:SWFAddressEvent):void {
 			SWFAddress.addEventListener(SWFAddressEvent.CHANGE, this.onChange);
 			SWFAddress.removeEventListener(SWFAddressEvent.CHANGE, this.onStartup, false);
 			this.startup();
-			super.dispatchEvent(new ApplicationEvent(ApplicationEvent.STARTUP, this.apiKey));
+			this.notify(ApplicationEvent.STARTUP);
 		}
 
 		protected function onChange(event:SWFAddressEvent):void {
 			this.change();
-			super.dispatchEvent(new ApplicationEvent(ApplicationEvent.CHANGE, this.apiKey));
+			this.notify(ApplicationEvent.CHANGE);
 		}
 
 		protected function onInit(event:SWFAddressEvent):void {
 			this.init();
-			super.dispatchEvent(new ApplicationEvent(ApplicationEvent.INIT, this.apiKey));
+			this.notify(ApplicationEvent.INIT);
 		}
 
 		public function call(jsFunction:String, ...rest:Array):* {
@@ -265,6 +265,10 @@ package com.ad.core {
 			}
 		}
 
+		public function reload():void {
+			// N/A yet.
+		}
+
 		public function getPath():String {
 			return SWFAddress.getPath();
 		}
@@ -311,6 +315,10 @@ package com.ad.core {
 
 		public function get container():DisplayObjectContainer {
 			return this._container;
+		}
+
+		protected function notify(type:String):void {
+			super.dispatchEvent(new ApplicationEvent(type, this.apiKey));
 		}
 
 		public function dispose(flush:Boolean = false):void {

@@ -100,7 +100,7 @@ package com.ad.display {
 				this._vars = vars ? vars : {};
 				this._targetFrame = parseFrame(frame);
 				if (this._vars.onInit) {
-					this._vars.onInit.apply(null, this._vars.onInitParams);
+					this._vars.onInit.apply(super, this._vars.onInitParams);
 				}
 				this.addDelay(Number(this._vars.delay) || 0);
 			}
@@ -219,13 +219,13 @@ package com.ad.display {
 			this.removeDelay();
 			this.addEnterFrame();
 			if (this._vars.onStart) {
-				this._vars.onStart.apply(null, this._vars.onStartParams);
+				this._vars.onStart.apply(super, this._vars.onStartParams);
 			}
 		}
 		
 		private function onUpdateFrames(event:Event):void {
 			if (this._vars.onUpdate) {
-				this._vars.onUpdate.apply(null, this._vars.onUpdateParams);
+				this._vars.onUpdate.apply(super, this._vars.onUpdateParams);
 			}
 			if (this.currentFrame < this._targetFrame) {
 				super.nextFrame();
@@ -233,7 +233,7 @@ package com.ad.display {
 				super.prevFrame();
 			} else if (super.currentFrame == this._targetFrame) {
 				if (this._vars.onComplete) {
-					this._vars.onComplete.apply(null, this._vars.onCompleteParams);
+					this._vars.onComplete.apply(super, this._vars.onCompleteParams);
 				}
 				if (this._looping) {
 					if (this._yoyo) {
@@ -258,6 +258,14 @@ package com.ad.display {
 
 		public function get running():Boolean {
 			return this._running;
+		}
+
+		public function get looping():Boolean {
+			return this._looping;
+		}
+
+		public function get yoyo():Boolean {
+			return this._yoyo;
 		}
 
 		public function get target():MovieClip {

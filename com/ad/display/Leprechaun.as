@@ -3,6 +3,7 @@
 	import com.ad.utils.Cleaner;
 	
 	import flash.events.Event;
+	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
@@ -13,6 +14,7 @@
 	 */
 	public class Leprechaun extends Nymph implements IDisplay {
 		private var _registrationPoint:Point;
+		private var _registrationShape:Shape;
 		private var _locked:Boolean;
 		private var _dead:Boolean;
 		
@@ -24,6 +26,7 @@
 		
 		private function onRemovedFromStage(event:Event):void {
 			super.removeEventListener(Event.REMOVED_FROM_STAGE, this.onRemovedFromStage, false);
+			this.detachRegistrationPoint();
 			this._dead = true;
 		}
 		
@@ -31,6 +34,10 @@
 		
 		public function moveRegistrationPoint(x:Number, y:Number):void {
 			this._registrationPoint = new Point(x, y);
+			if (this._registrationShape) {
+				this._registrationShape.x = x;
+				this._registrationShape.y = y;
+			}
 		}
 		
 		public function set parentX(value:Number):void {
@@ -64,13 +71,25 @@
 		public function set parentScaleX(value:Number):void {
 			this.setProperty('scaleX', value);
 		}
+
+		public function get parentScaleX():Number {
+			return super.scaleX;
+		}
 		
 		public function set parentScaleY(value:Number):void {
 			this.setProperty('scaleY', value);
 		}
+
+		public function get parentScaleY():Number {
+			return super.scaleY;
+		}
 		
 		public function set parentRotation(value:Number):void {
 			this.setProperty('rotation', value);
+		}
+
+		public function get parentRotation():Number {
+			return super.rotation;
 		}
 		
 		private function setProperty(property:String, value:Number):void {
@@ -122,13 +141,7 @@
 		}
 		
 		public function set showRegistrationPoint(value:Boolean):void {
-			super.graphics.clear();
-			if (!value) return;
-			super.graphics.lineStyle(2, 0xFF0000);
-			super.graphics.moveTo(-5, -5);
-			super.graphics.lineTo(5, 5);
-			super.graphics.moveTo(-5, 5);
-			super.graphics.lineTo(5, -5);
+			value ? this.attachRegistrationPoint(5) : this.detachRegistrationPoint();
 		}
 		
 		override public function addChild(child:DisplayObject):DisplayObject {
@@ -162,6 +175,30 @@
 				super.removeAllEventListener();
 				Cleaner.kill(super);
 				this._dead = true;
+			}
+		}
+
+		private function attachRegistrationPoint(diameter:Number = 5):void {
+			this.detachRegistrationPoint();
+			this._registrationShape = this.addChild(new Shape()) as Shape;
+			if (this._registrationShape) {
+				this._registrationShape.graphics.lineStyle(2, 0xFF0000);
+				this._registrationShape.graphics.moveTo(-diameter, -diameter);
+				this._registrationShape.graphics.lineTo(diameter, diameter);
+				this._registrationShape.graphics.moveTo(-diameter, diameter);
+				this._registrationShape.graphics.lineTo(diameter, -diameter);
+				this._registrationShape.graphics.drawCircle(0, 0, diameter * 2);
+				super.setChildIndex(this._registrationShape, super.numChildren - 1);
+			}
+		}
+
+		private function detachRegistrationPoint():void {
+			if (this._registrationShape) {
+				this._registrationShape.graphics.clear();
+				if (this._registrationShape.parent) {
+					this._registrationShape.parent.removeChild(this._registrationShape);
+					this._registrationShape = null;
+				}
 			}
 		}
 		

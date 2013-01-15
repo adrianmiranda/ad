@@ -13,6 +13,7 @@ package com.ad.core {
 
 	/**
 	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * TODO: 
 	 */
 	use namespace nsapplication;
 	public final class Navigation extends NavigationData {
@@ -35,7 +36,7 @@ package com.ad.core {
 
 		override protected function stackTransition(view:View, params:Object = null):void {
 			try {
-				trace('flow:', super.header.flow);
+				//trace('flow:', super.header.flow);
 				if (this._section) {
 					//super.stop(true);
 					this._section.transitionOut();
