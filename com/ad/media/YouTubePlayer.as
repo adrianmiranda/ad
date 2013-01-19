@@ -29,12 +29,10 @@ package com.ad.media {
 		
 		public function YouTubePlayer(width:int = 320, height:int = 240, resizable:Boolean = false) {
 			Security.allowDomain('*');
-			Security.allowDomain('http://ppivot-win.com.br/');
 			Security.allowDomain('www.youtube.com');
 			Security.allowDomain('youtube.com');
 			Security.allowDomain('s.ytimg.com');
 			Security.allowDomain('i.ytimg.com');
-			Security.allowDomain('http://ppivot-win.com.br/crossdomain.xml');
 			Security.loadPolicyFile('http://img.youtube.com/crossdomain.xml');
 			Security.loadPolicyFile('http://i.ytimg.com/crossdomain.xml');
 			Security.loadPolicyFile('http://s.ytimg.com/crossdomain.xml');
@@ -55,8 +53,9 @@ package com.ad.media {
 		// SETUP
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
-		public function startup(videoId:String):void {
-			var url:String = YOUTUBE_EMBEDDED_PLAYER_URL.split('VIDEO_ID').join(videoId);
+		public function startup(video:String):void {
+			if (/^http/.test(video)) video = getIdFromURL(video);
+			var url:String = YOUTUBE_EMBEDDED_PLAYER_URL.split('VIDEO_ID').join(video);
 			_loader.load(new URLRequest(url));
 		}
 		
@@ -124,7 +123,7 @@ package com.ad.media {
 			_player && _player.setSize(_width, _height);
 		}
 		
-		public function queueVideoById(videoID:String, quality:String = QUALITY_DEFAULT):void {
+		public function cueVideoById(videoID:String, quality:String = QUALITY_DEFAULT):void {
 			_player && _player.cueVideoById(videoID, 0, quality);
 		}
 		
@@ -132,7 +131,7 @@ package com.ad.media {
 			_player && _player.loadVideoById(videoID, 0, quality);
 		}
 		
-		public function queueVideoByUrl(url:String, quality:String = QUALITY_DEFAULT):void {
+		public function cueVideoByUrl(url:String, quality:String = QUALITY_DEFAULT):void {
 			_player && _player.cueVideoByUrl(url, 0, quality);
 		}
 		
@@ -142,7 +141,9 @@ package com.ad.media {
 		
 		public static function getIdFromURL(url:String):String {
 			var parts:Array = [];
-			if (url.indexOf('watch?v=') != -1) {
+			if (!url) {
+				return '';
+			} else if (url.indexOf('watch?v=') != -1) {
 				parts = url.split('watch?v=');
 			} else if (url.indexOf('watch/v/') != -1) {
 				parts = url.split('watch/v/');
