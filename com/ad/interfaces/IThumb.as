@@ -6,7 +6,7 @@ package com.ad.interfaces {
 	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
 	 */
 	public interface IThumb extends IButton {
-		function load(url:String):void;
+		function load(urlOrRequest:*):void;
 		function loadBytes(bytes:ByteArray):void;
 		function get content():DisplayObject;
 		function get url():String;
