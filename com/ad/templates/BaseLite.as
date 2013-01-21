@@ -10,6 +10,7 @@
 	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
 	 */
 	public class BaseLite extends ViewerLite implements IBase {
+		private var _bounds:Rectangle = new Rectangle();
 		private var _margin:Rectangle = new Rectangle();
 		private var _resolution:Point = new Point();
 		private var _screen:Rectangle = new Rectangle();
@@ -37,6 +38,7 @@
 			super.removeEventListener(Event.ADDED_TO_STAGE, this.onAddedToStage);
 			super.stage.addEventListener(Event.DEACTIVATE, this.onDeactivate);
 			super.stage.addEventListener(Event.ACTIVATE, this.onActivate);
+			this._bounds = super.getBounds(super);
 			this._flashVars = super.stage.loaderInfo.parameters;
 			this._resolution.x = Capabilities.screenResolutionX;
 			this._resolution.y = Capabilities.screenResolutionY;
@@ -160,6 +162,10 @@
 			return this._resolution.clone();
 		}
 		
+		public function get originBounds():Rectangle {
+			return this._bounds.clone();
+		}
+
 		public function get screen():Rectangle {
 			return this._screen.clone();
 		}

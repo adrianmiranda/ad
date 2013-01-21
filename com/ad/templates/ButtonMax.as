@@ -5,6 +5,7 @@ package com.ad.templates {
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
+	[Event(name = 'active', type = 'flash.events.MouseEvent')]
 	[Event(name = 'click', type = 'flash.events.MouseEvent')]
 	[Event(name = 'over', type = 'flash.events.MouseEvent')]
 	[Event(name = 'out', type = 'flash.events.MouseEvent')]
@@ -14,6 +15,7 @@ package com.ad.templates {
 	 */
 	public class ButtonMax extends Cluricaun implements IButton {
 		private var _selected:Boolean;
+		private var _event:MouseEvent;
 		private var _params:Object = new Object();
 		private var _reference:uint;
 		
@@ -46,17 +48,25 @@ package com.ad.templates {
 		protected function finalize():void {
 			// to override
 		}
+
+		public function active():void {
+			this.over();// to override
+		}
 		
-		protected function click():void {
+		public function click():void {
 			// to override
 		}
 		
-		protected function over():void {
+		public function over():void {
 			// to override
 		}
 		
-		protected function out():void {
+		public function out():void {
 			// to override
+		}
+
+		public function get event():MouseEvent {
+			return this._event;
 		}
 		
 		public function get selected():Boolean {
@@ -65,7 +75,7 @@ package com.ad.templates {
 		
 		public function set selected(value:Boolean):void {
 			this._selected = value;
-			this._selected ? this.over() : this.out();
+			this._selected ? this.active() : this.out();
 		}
 		
 		public function get params():Object {
@@ -81,18 +91,22 @@ package com.ad.templates {
 		}
 		
 		private function onButtonMouseUp(event:MouseEvent):void {
-			if (!this.selected) this.over();
+			this._event = event;
+			if (!this.selected) this.active();
 		}
 		
 		private function onButtonMouseDown(event:MouseEvent):void {
-			/*if (!this.selected)*/ this.click();
+			this._event = event;
+			if (!this.selected) this.click();
 		}
 		
 		private function onButtonMouseOver(event:MouseEvent):void {
+			this._event = event;
 			if (!this.selected) this.over();
 		}
 		
 		private function onButtonMouseOut(event:MouseEvent):void {
+			this._event = event;
 			if (!this.selected) this.out();
 		}
 		

@@ -29,7 +29,9 @@ package com.ad.core {
 			var params:Object = super.getParameterNames().length ? super.parameters : null;
 			var path:String = super.getPath();
 			if (this.isHomePage(path)) {
+				super.setHistory(this.standardView.history);
 				super.navigateTo(this.standardView.branch, params);
+				super.setHistory(this.header.history);
 			} else {
 				var view:View = this.header.getView(path);
 				if (view) {
@@ -39,7 +41,9 @@ package com.ad.core {
 					this.stackTransition(view, params);
 					super.notify(ApplicationEvent.CHANGE_VIEW);
 				} else {
+					super.setHistory(this.standardView.history);
 					super.navigateTo(this.standardView.branch, params);
+					super.setHistory(this.header.history);
 				}
 			}
 		}
@@ -90,7 +94,9 @@ package com.ad.core {
 				path = BranchUtils.trimQueryString(path);
 				suffix = path.substr(path.indexOf(section.branch) + section.branch.length, path.length);
 			}
+			super.setHistory(section.history);
 			super.navigateTo(BranchUtils.arrange(language.branch + '/' + section.branch + suffix + params), query);
+			super.setHistory(this.header.history);
 		}
 
 		public function setLanguage(value:*):Language {

@@ -44,7 +44,7 @@ package com.ad.core {
 					//super.prepareViewLoader(view);
 					this._section = new view.caste();
 					this._section.apiKey = super.apiKey;
-					this._section.name = view.className.substr(view.className.lastIndexOf('.') + 1, view.className.length);
+					this._section.name = view.className;
 					this._section.addEventListener(TransitionEvent.TRANSITION_IN, this.onSectionTransitionIn);
 					this._section.addEventListener(TransitionEvent.TRANSITION_IN_COMPLETE, this.onSectionTransitionInComplete);
 					this._section.addEventListener(TransitionEvent.TRANSITION_OUT, this.onSectionTransitionOut);

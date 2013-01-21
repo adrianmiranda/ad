@@ -181,12 +181,14 @@ package com.ad.display {
 			this.detachRegistrationPoint();
 			this._registrationShape = this.addChild(new Shape()) as Shape;
 			if (this._registrationShape) {
+				this._registrationShape.graphics.beginFill(0xffffff, 1);
 				this._registrationShape.graphics.lineStyle(2, 0xFF0000);
 				this._registrationShape.graphics.moveTo(-diameter, -diameter);
 				this._registrationShape.graphics.lineTo(diameter, diameter);
 				this._registrationShape.graphics.moveTo(-diameter, diameter);
 				this._registrationShape.graphics.lineTo(diameter, -diameter);
 				this._registrationShape.graphics.drawCircle(0, 0, diameter * 2);
+				this._registrationShape.graphics.endFill();
 				super.setChildIndex(this._registrationShape, super.numChildren - 1);
 			}
 		}

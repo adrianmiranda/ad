@@ -208,34 +208,119 @@
 			return '[Leprechaun ' + super.name + ']';
 		}
 
-		// PROXIES
-		public function gotoAndStop(frame:Object, scene:String = null):void{}
-		public function gotoAndPlay(frame:Object, scene:String = null):void{}
-		public function prevFrame():void{}
-		public function nextFrame():void{}
-		public function nextScene():void{}
-		public function prevScene():void{}
-		public function stop():void{}
-		public function play():void{}
-		public function playTo(frame:Object, vars:Object = null):void{}
-		public function playToBeginAndStop(vars:Object = null):void{}
-		public function playToEndAndStop(vars:Object = null):void{}
-		public function loopBetween(from:Object = 1, to:Object = 0, yoyo:Boolean = false, vars:Object = null):void{}
-		public function cancelLooping():void{}
-		public function getFrameByLabel(frame:String):int{return 0;}
-		public function frameIsValid(frame:Object):Boolean{return !1;}
-		public function parseFrame(frame:Object):int{return 0;}
-		public function set onCompleteFrame(closure:Function):void{}
-		public function set trackAsMenu(value:Boolean):void{}
-		public function get trackAsMenu():Boolean{return !1;}
-		public function get duration():Number{return 0;}
-		public function get position():Number{return 0;}
-		public function get currentLabels():Array{return null;}
-		public function get currentLabel():String{return null;}
-		public function get currentFrame():int{return 0;}
-		public function get framesLoaded():int{return 0;}
-		public function get totalFrames():int{return 0;}
-		public function set enabled(value:Boolean):void{}
-		public function get enabled():Boolean{return !1;}
+		/**
+		 * IDisplay proxies
+		 */
+		public function gotoAndStop(frame:Object, scene:String = null):void {
+			// never implement
+		}
+
+		public function gotoAndPlay(frame:Object, scene:String = null):void {
+			// never implement
+		}
+
+		public function prevFrame():void {
+			// never implement
+		}
+		
+		public function nextFrame():void {
+			// never implement
+		}
+		
+		public function nextScene():void {
+			// never implement
+		}
+		
+		public function prevScene():void {
+			// never implement
+		}
+		
+		public function stop():void {
+			// never implement
+		}
+		
+		public function play():void {
+			// never implement
+		}
+		
+		public function playTo(frame:Object, vars:Object = null):void {
+			// never implement
+		}
+		
+		public function playToBeginAndStop(vars:Object = null):void {
+			// never implement
+		}
+		
+		public function playToEndAndStop(vars:Object = null):void {
+			// never implement
+		}
+		
+		public function loopBetween(from:Object = 1, to:Object = 0, yoyo:Boolean = false, vars:Object = null):void {
+			// never implement
+		}
+		
+		public function cancelLooping():void {
+			// never implement
+		}
+		
+		public function set onCompleteFrame(closure:Function):void {
+			// never implement
+		}
+		
+		public function set trackAsMenu(value:Boolean):void {
+			// never implement
+		}
+		
+		public function set enabled(value:Boolean):void {
+			// never implement
+		}
+		
+		public function frameIsValid(frame:Object):Boolean {
+			return !1;
+		}
+		
+		public function get trackAsMenu():Boolean {
+			return !1;
+		}
+		
+		public function get enabled():Boolean {
+			return !1;
+		}
+		
+		public function getFrameByLabel(frame:String):int {
+			return 0;
+		}
+		
+		public function parseFrame(frame:Object):int {
+			return 0;
+		}
+		
+		public function get duration():Number {
+			return 0;
+		}
+		
+		public function get position():Number {
+			return 0;
+		}
+		
+		public function get currentFrame():int {
+			return 0;
+		}
+		
+		public function get framesLoaded():int {
+			return 0;
+		}
+		
+		public function get totalFrames():int{
+			return 0;
+		}
+		
+		public function get currentLabels():Array {
+			return [];
+		}
+		
+		public function get currentLabel():String {
+			return '';
+		}
 	}
 }

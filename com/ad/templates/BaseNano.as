@@ -8,7 +8,8 @@ package com.ad.templates {
 	/**
 	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
 	 */
-	public class BaseNano extends Sprite {
+	public class BaseNano extends Sprite/* implements IBase*/ {
+		private var _bounds:Rectangle = new Rectangle();
 		private var _margin:Rectangle = new Rectangle();
 		private var _screen:Rectangle = new Rectangle();
 		private var _autoStartRendering:Boolean;
@@ -25,6 +26,7 @@ package com.ad.templates {
 		
 		protected function onAddedToStage(event:Event):void {
 			super.removeEventListener(Event.ADDED_TO_STAGE, this.onAddedToStage);
+			this._bounds = super.getBounds(super);
 			this._screen.left = this._margin.x;
 			this._screen.top = this._margin.y;
 			this._screen.right = (super.stage.stageWidth - this._margin.width);
@@ -102,6 +104,10 @@ package com.ad.templates {
 			// to override
 		}
 		
+		public function get originBounds():Rectangle {
+			return this._bounds.clone();
+		}
+
 		public function get screen():Rectangle {
 			return this._screen.clone();
 		}

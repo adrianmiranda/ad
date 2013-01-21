@@ -30,6 +30,7 @@ package com.ad.media {
 		public function YouTubePlayer(width:int = 320, height:int = 240, resizable:Boolean = false) {
 			Security.allowDomain('*');
 			Security.allowDomain('www.youtube.com');
+			Security.allowDomain('img.youtube.com');
 			Security.allowDomain('youtube.com');
 			Security.allowDomain('s.ytimg.com');
 			Security.allowDomain('i.ytimg.com');
@@ -53,8 +54,9 @@ package com.ad.media {
 		// SETUP
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
-		public function startup(video:String):void {
-			if (/^http/.test(video)) video = getIdFromURL(video);
+		public function load(video:*):void {
+			if (video is URLRequest) video = video.url;
+			if (/^http/.test(video)) video = YouTubePlayer.getIdFromURL(video);
 			var url:String = YOUTUBE_EMBEDDED_PLAYER_URL.split('VIDEO_ID').join(video);
 			_loader.load(new URLRequest(url));
 		}
@@ -120,7 +122,9 @@ package com.ad.media {
 		public function setSize(width:int, height:int):void {
 			_width = width;
 			_height = height;
-			_player && _player.setSize(_width, _height);
+			if (_player && _player.setSize is Function) {
+				_player.setSize(_width, _height);
+			}
 		}
 		
 		public function cueVideoById(videoID:String, quality:String = QUALITY_DEFAULT):void {
@@ -153,8 +157,9 @@ package com.ad.media {
 			return String(parts[1]).split('/').join('');
 		}
 		
-		public static function getThumbnail(videoId:String):URLRequest {
-			return new URLRequest('http://img.youtube.com/vi/' + videoId + '/0.jpg');
+		public static function getThumbnail(video:String):URLRequest {
+			if (/^http/.test(video)) video = YouTubePlayer.getIdFromURL(video);
+			return new URLRequest('http://img.youtube.com/vi/' + video + '/0.jpg');
 		}
 		
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

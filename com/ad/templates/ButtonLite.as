@@ -5,6 +5,7 @@ package com.ad.templates {
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
+	[Event(name = 'active', type = 'flash.events.MouseEvent')]
 	[Event(name = 'click', type = 'flash.events.MouseEvent')]
 	[Event(name = 'over', type = 'flash.events.MouseEvent')]
 	[Event(name = 'out', type = 'flash.events.MouseEvent')]
@@ -48,15 +49,19 @@ package com.ad.templates {
 			// to override
 		}
 		
-		protected function click():void {
+		public function click():void {
+			// to override
+		}
+
+		public function active():void {
+			this.over(); // to override
+		}
+		
+		public function over():void {
 			// to override
 		}
 		
-		protected function over():void {
-			// to override
-		}
-		
-		protected function out():void {
+		public function out():void {
 			// to override
 		}
 		
@@ -82,17 +87,17 @@ package com.ad.templates {
 		
 		public function set selected(value:Boolean):void {
 			this._selected = value;
-			this._selected ? this.over() : this.out();
+			this._selected ? this.active() : this.out();
 		}
 		
 		private function onButtonMouseUp(event:MouseEvent):void {
 			this._event = event;
-			if (!this.selected) this.over();
+			if (!this.selected) this.active();
 		}
 		
 		private function onButtonMouseDown(event:MouseEvent):void {
 			this._event = event;
-			/*if (!this.selected)*/ this.click();
+			if (!this.selected) this.click();
 		}
 		
 		private function onButtonMouseOver(event:MouseEvent):void {

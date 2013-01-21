@@ -26,6 +26,7 @@ package com.ad.data {
 		private var _mistake:String;
 		private var _layer:String;
 		private var _class:String;
+		private var _history:Boolean;
 		private var _track:String;
 		private var _title:String;
 		private var _level:uint;
@@ -38,6 +39,7 @@ package com.ad.data {
 			this._index = INDEX++;
 			this._node = xml;
 			this._id = xml.@id;
+			this._history = xml.@history == undefined ? true : bool(xml.@history);
 			this._track = xml.@track;
 			this._layer = xml.@layer;
 			this._title = xml.@title;
@@ -238,6 +240,10 @@ package com.ad.data {
 		
 		public function get layer():String {
 			return this._layer;
+		}
+
+		public function get history():Boolean {
+			return this._history;	
 		}
 		
 		public function get track():String {

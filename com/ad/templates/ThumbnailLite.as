@@ -20,22 +20,28 @@ package com.ad.templates {
 		private var _content:DisplayObject;
 		private var _url:String;
 		
-		public function ThumbnailLite(url:String = null, hide:Boolean = false, allow:Boolean = false) {
+		public function ThumbnailLite(urlOrRequest:* = null, hide:Boolean = false, allow:Boolean = false) {
 			if (allow) {
 				Security.allowDomain('*');
 				Security.allowInsecureDomain('*');
 			}
-			if (url) this.load(url);
+			if (urlOrRequest) {
+				this.load(urlOrRequest);
+			}
 			super(hide);
 		}
 		
-		public function load(url:String):void {
-			this._url = url;
-			if (url) {
+		public function load(urlOrRequest:*):void {
+			if (urlOrRequest is URLRequest) {
+				this._url = urlOrRequest.url;
+			} else if (urlOrRequest is String) {
+				this._url = url;
+			}
+			if (this._url) {
 				var loader:Loader = new Loader();
 				loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, this.onThumbIOError);
 				loader.contentLoaderInfo.addEventListener(Event.COMPLETE, this.onThumbLoaded);
-				loader.load(new URLRequest(url), new LoaderContext(false, ApplicationDomain.currentDomain));
+				loader.load(new URLRequest(this._url), new LoaderContext(false, ApplicationDomain.currentDomain));
 			}
 		}
 		

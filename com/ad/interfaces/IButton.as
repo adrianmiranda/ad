@@ -9,5 +9,9 @@ package com.ad.interfaces {
 		function set selected(value:Boolean):void;
 		function get reference():uint;
 		function set reference(value:uint):void;
+		function active():void;
+		function click():void;
+		function over():void;
+		function out():void;
 	}
 }
