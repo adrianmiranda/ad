@@ -1,8 +1,6 @@
 package com.ad.utils {
-
-	// > Only to Flash Player 10, comment to use Flash Player 11
-	//import com.adobe.serialization.json.JSON;
 	
+	CONFIG::FLASH_10_1 import com.adobe.serialization.json.JSON;
 	import flash.utils.Dictionary;
 	import flash.utils.ByteArray;
 	
