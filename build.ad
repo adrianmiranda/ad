@@ -78,7 +78,7 @@ elif [ "$1" = "rl" ]; then
 	fi
 	open $preview1
 elif [ "$1" = "ssr" ]; then
-	if ["$3"]; then
+	if [ "$3" ]; then
 		cd "$3"
 	fi
 	find ./ -exec grep -Hn "$2" {} \;
