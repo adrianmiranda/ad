@@ -7,7 +7,7 @@
 	import flash.geom.Point;
 	
 	/**
-	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
 	 */
 	public class DraggableSprite extends SpriteBase {
 		private var _bounds:Rectangle;

@@ -12,7 +12,7 @@ package com.ad.templates {
 	import flash.geom.Rectangle;
 	
 	/**
-	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
 	 */
 	use namespace nsapplication;
 	public class SectionLite extends BaseLite implements ISection {

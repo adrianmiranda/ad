@@ -3,7 +3,7 @@ package com.ad.core {
 	import com.ad.proxy.nsapplication;
 
 	/**
-	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
 	 */
 	use namespace nsapplication;
 	public class ApplicationCore extends EventControl {

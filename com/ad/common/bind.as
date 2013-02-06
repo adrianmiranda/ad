@@ -2,7 +2,7 @@ package com.ad.common {
 	import com.ad.core.ApplicationRequest;
 	
 	/**
-	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
 	 */
 	public function bind(raw:String, core:String = null):String {
 		var app:ApplicationRequest;

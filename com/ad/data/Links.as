@@ -5,7 +5,7 @@ package com.ad.data {
 	import flash.utils.Proxy;
 	
 	/**
-	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
 	 * @xml
 	 *	<links>
 	 *		<a id="link1">http://www.adrianmiranda.com.br/</a>

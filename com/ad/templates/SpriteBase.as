@@ -8,7 +8,7 @@ package com.ad.templates {
 	import flash.display.Sprite;
 	
 	/**
-	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
 	 */
 	public class SpriteBase extends Sprite {
 		private var _margin:Rectangle = new Rectangle();

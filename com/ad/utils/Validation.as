@@ -1,7 +1,7 @@
 ﻿package com.ad.utils {
 	
 	/**
-	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
 	 */
 	public final class Validation {
 		

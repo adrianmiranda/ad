@@ -7,7 +7,7 @@ package com.ad.utils {
 	import flash.utils.ByteArray;
 	
 	/**
-	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
 	 * @see http://labs.influxis.com/wp-content/uploads/huw_column1.pdf
 	 */
 	public final class ObjectUtil {
@@ -67,8 +67,12 @@ package com.ad.utils {
 		
 		public static function decode(text:String, reviver:Function = null):Object
 		{
+			CONFIG::FLASH_10_1
+			{
+				return JSON.decode(text);
+			}
+			
 			return JSON.parse(text, reviver);
-			//return JSON.decode(text);
 		}
 		
 		public static function encode(value:Object, replacer:* = null, space:* = null):String

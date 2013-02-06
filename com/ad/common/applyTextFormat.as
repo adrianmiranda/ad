@@ -3,7 +3,7 @@ package com.ad.common {
 	import flash.text.TextFormat;
 	
 	/**
-	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
 	 * @see http://stackoverflow.com/questions/5802287/as3-textfield-not-applying-b-tag
 	 */
 	public function applyTextFormat(textField:TextField, textFormat:TextFormat, resize:Boolean = true):TextFormat {

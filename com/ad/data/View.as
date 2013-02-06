@@ -9,7 +9,7 @@ package com.ad.data {
 	import flash.utils.getDefinitionByName;
 	
 	/**
-	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
 	 > TODO: Identificar uma sessão qualquer pelo branch na propriedade standard.
 	 */
 	public final class View {

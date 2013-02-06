@@ -5,7 +5,7 @@ package com.ad.common {
 	import flash.utils.setTimeout;
 
 	/**
-	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
 	 * simulate double click handler with mouseChildren true
 	 */
 	public function addDoubleClick(target:DisplayObject, listener:Function = null, delay:Number = 0.15):Function {

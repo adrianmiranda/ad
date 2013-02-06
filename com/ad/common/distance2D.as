@@ -1,7 +1,7 @@
 package com.ad.common {
 	
 	/**
-	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
 	 */
 	public function distance2D(x1:Number, y1:Number, x2:Number, y2:Number):Number {
 		var tx:Number = Math.abs(x1 - x2);

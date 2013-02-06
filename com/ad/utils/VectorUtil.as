@@ -2,7 +2,7 @@ package com.ad.utils {
 	import __AS3__.vec.Vector;
 	
 	/**
-	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
 	 */
 	public final class VectorUtil {
 		

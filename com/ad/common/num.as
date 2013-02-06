@@ -1,7 +1,7 @@
 package com.ad.common {
 	
 	/**
-	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
 	 */
 	public function num(value:*):Number {
 		value = Number(value);

@@ -9,7 +9,7 @@ package com.ad.data {
 	import flash.utils.Proxy;
 	
 	/**
-	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
 	 > TODO: Arrangement and registration point movement.
 	 */
 	use namespace nsdisplay;

@@ -6,7 +6,7 @@
 	import flash.events.Event;
 	
 	/**
-	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
 	 */
 	public class DeeplinkEvent extends Event {
 		public static const INTERNAL_CHANGE:String = 'DeeplinkEvent.INTERNAL_CHANGE';

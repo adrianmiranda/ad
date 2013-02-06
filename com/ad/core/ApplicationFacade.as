@@ -13,7 +13,7 @@ package com.ad.core {
 	import flash.display.Stage;
 	
 	/**
-	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
 	 */
 	use namespace nsapplication;
 	public class ApplicationFacade extends ApplicationLoader {

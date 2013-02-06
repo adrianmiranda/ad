@@ -9,7 +9,7 @@ package com.ad.net {
 	import flash.utils.Timer;
 	
 	/**
-	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
 	 * @tip To use video steps just player 10.1 or older and
 	 * Export video with key frame distance: 1
 	 */

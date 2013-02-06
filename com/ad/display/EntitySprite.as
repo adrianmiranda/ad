@@ -3,7 +3,7 @@ package com.ad.display {
 	import flash.display.Sprite;
 	
 	/**
-	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
 	 */
 	public class EntitySprite extends Sprite {
 		

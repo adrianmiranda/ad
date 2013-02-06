@@ -1,0 +1,89 @@
+#!/bin/sh
+################################################################################
+##
+##	Adrian C. Miranda <adriancmiranda@gmail.com>
+##	
+##	To make build executable:
+##	$ chmod 775 build.ad
+##
+##	Usage:
+##	$ cd path/to/work
+##	$ sh build.ad r
+##	
+##	@todo:
+##	$ Hit esc in compile error.
+##	
+################################################################################
+#
+# build index
+#
+as="sources/classes/Boot.as"
+swf="publish/boot.swf"
+html="publish/index.html"
+
+#
+# class paths
+#
+sourcespath="sources/classes/ sources/libs/"
+librarypath="sources/swc/"
+
+#
+# previews
+#
+preview0=$swf
+preview1=$html
+preview2="http://localhost:8000/"
+
+#
+# support
+#
+flexpath="/Users/adrianmiranda/addons/SDKs/flex_sdk_4.6.0"
+swc="$flexpath/frameworks/libs/framework.swc $librarypath"
+mxmlc="$flexpath/bin/mxmlc"
+asdoc="$flexpath/bin/asdoc"
+flashlog='/Users/adrianmiranda/Library/Preferences/Macromedia/Flash Player/Logs/flashlog.txt'
+vars='-define CONFIG::LOGGING true -define CONFIG::FLASH_10_1 false -define CONFIG::PLATFORM true -define CONFIG::MOCK false'
+
+# 
+# shortcut cmd's
+# 
+function pause(){
+   read -p "$*"
+}
+
+if [ "$2" = "f" ]; then
+	options="-static-link-runtime-shared-libraries=true -use-network=false -incremental=false -keep=false -debug=false -target-player=11.1 $vars"
+else 
+	options="-static-link-runtime-shared-libraries=true -use-network=false -incremental=false -keep=false -debug=true -target-player=11.1 $vars"
+fi
+
+#
+# run mxmlc
+#
+echo "### BUILDING $swf"
+$mxmlc $as -o $swf -source-path $sourcespath -library-path $swc $options
+echo "### FINISH!"
+
+#
+# launch previews
+#
+if [ "$1" = "r" ]; then
+	if [ "$2" = "-f" ]; then
+		tail -f "$flashlog"
+	fi
+	open $preview0
+elif [ "$1" = "rl" ]; then
+	if [ "$2" = "-f" ]; then
+		tail -f "$flashlog"
+	fi
+	open $preview1
+elif [ "$1" = "ssr" ]; then
+	find ./ -exec grep -Hn "$2" {} \;
+elif [ "$1" = "rlh" ]; then
+	cd "publish"
+	if [ "$2" = "-f" ]; then
+		tail -f "$flashlog"
+	fi
+	open $preview2
+	python -m SimpleHTTPServer
+fi

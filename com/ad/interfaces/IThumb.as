@@ -3,7 +3,7 @@ package com.ad.interfaces {
 	import flash.utils.ByteArray;
 	
 	/**
-	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
 	 */
 	public interface IThumb extends IButton {
 		function load(urlOrRequest:*):void;

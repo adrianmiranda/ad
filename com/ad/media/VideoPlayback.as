@@ -15,7 +15,7 @@ package com.ad.media {
 	import flash.geom.Point;
 	
 	/**
-	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
 	 */
 	public class VideoPlayback extends EventControl {
 		public static const MIN_SPEED:Number = 0.02;

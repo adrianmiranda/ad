@@ -5,7 +5,7 @@ package com.ad.events {
 	import flash.events.Event;
 	
 	/**
-	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
 	 * TODO: 
 	 */
 	public final class ApplicationEvent extends Event {

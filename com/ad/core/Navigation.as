@@ -13,7 +13,7 @@ package com.ad.core {
 	import flash.events.Event;
 
 	/**
-	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
 	 > TODO: Subsections manager
 	 */
 	use namespace nsapplication;

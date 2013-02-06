@@ -2,7 +2,7 @@ package com.ad.data {
 	import flash.utils.ByteArray;
 	
 	/**
-	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
 	 * TODO: 
 	 */
 	public class ImageData extends ValueObject {

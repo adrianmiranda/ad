@@ -11,7 +11,7 @@ package com.ad.templates {
 	[Event(name = 'out', type = 'flash.events.MouseEvent')]
 	
 	/**
-	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
 	 */
 	public class ButtonLite extends Leprechaun implements IButton {
 		private var _selected:Boolean;

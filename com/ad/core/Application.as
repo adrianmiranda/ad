@@ -10,7 +10,7 @@ package com.ad.core {
 	import flash.display.DisplayObjectContainer;
 	
 	/**
-	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
 	 */
 	use namespace nsapplication;
 	public final class Application extends ApplicationFacade {

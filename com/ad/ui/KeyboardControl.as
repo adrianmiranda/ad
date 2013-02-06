@@ -15,7 +15,7 @@ package com.ad.ui {
 	[Event(name = 'KeyComboEvent.KEY_UP', type = 'com.ad.events.KeyComboEvent')]
 	
 	/**
-	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
 	 */
 	public class KeyboardControl extends EventControl {
 		public static var shortcutTarget:KeyboardControl = new KeyboardControl();

@@ -2,7 +2,7 @@
 	import flash.events.Event;
 	
 	/**
-	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
 	 */
 	public class MediaEvent extends Event {
 		public static const CUE_POINT:String = 'MediaEvent.onCuePoint';

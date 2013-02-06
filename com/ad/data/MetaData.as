@@ -1,7 +1,7 @@
 package com.ad.data {
 
 	/**
-	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
 	 * TODO: 
 	 */
 	public class MetaData extends ValueObject {

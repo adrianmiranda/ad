@@ -9,7 +9,7 @@ package com.ad.display {
 	import flash.utils.Timer;
 	
 	/**
-	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
 	 * @see http://gamedev.michaeljameswilliams.com/2009/04/03/extends-override-and-super/
 	 * @see http://flash-creations.com/notes/actionscript_controlsound.php
 	 */

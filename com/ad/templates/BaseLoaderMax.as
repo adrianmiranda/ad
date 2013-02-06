@@ -5,7 +5,7 @@ package com.ad.templates {
 	import flash.utils.getTimer;
 	
 	/**
-	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
 	 */
 	public class BaseLoaderMax extends BaseMax implements IBaseLoader {
 		private var _bytesLoaded:Number = 0;

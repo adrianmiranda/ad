@@ -3,7 +3,7 @@ package com.ad.common {
 	import com.ad.display.Layer;
 	
 	/**
-	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
 	 */
 	public function getLayer(id:String = null):* {
 		if (id == null) return Layers.shortcutTarget;

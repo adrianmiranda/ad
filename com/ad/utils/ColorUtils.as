@@ -4,7 +4,7 @@ package com.ad.utils {
 	import flash.geom.ColorTransform;
 	
 	/**
-	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
 	 */
 	public final class ColorUtils {
 		public static function tint(rgb:uint = 0, amount:Number = 1, alpha:Number = 1):ColorTransform {

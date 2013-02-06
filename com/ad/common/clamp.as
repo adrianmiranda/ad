@@ -1,7 +1,7 @@
 package com.ad.common {
 
 	/**
-	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
 	 */
 	public function clamp(value:Number, min:Number, max:Number):Number {
 		if (isNaN(value)) return NaN;

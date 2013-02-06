@@ -4,7 +4,7 @@ package com.ad.templates {
 	import flash.geom.Rectangle;
 	
 	/**
-	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
 	 > FIXME: Interface hierarchy to implements.
 	 */
 	public class BaseNano extends Sprite /*implements IBase, ISprite*/ {

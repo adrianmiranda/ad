@@ -2,7 +2,7 @@ package com.ad.interfaces {
 	import flash.geom.Rectangle;
 	
 	/**
-	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
 	 */
 	public interface IBase extends IViewer {
 		function startRendering():void;

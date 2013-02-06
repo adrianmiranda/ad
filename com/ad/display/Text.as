@@ -4,7 +4,7 @@ package com.ad.display {
 	import flash.utils.describeType;
 
 	/**
-	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
 	 */
 	public class Text extends TextField {
 		private var _recordedHeight:Number;

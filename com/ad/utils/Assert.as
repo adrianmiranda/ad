@@ -7,7 +7,7 @@ package com.ad.utils
 	import flash.utils.Dictionary;
 	
 	/**
-	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
 	 */
 	public final class Assert {
 		public static function isTrue(expression:Boolean, message:String = ''):void {

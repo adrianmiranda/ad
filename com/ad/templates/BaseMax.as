@@ -7,7 +7,7 @@ package com.ad.templates {
 	import flash.system.Capabilities;
 	
 	/**
-	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
 	 */
 	public class BaseMax extends ViewerMax implements IBase {
 		private var _bounds:Rectangle = new Rectangle();

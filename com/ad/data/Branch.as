@@ -2,7 +2,7 @@ package com.ad.data {
 	import com.ad.common.getClassName;
 	
 	/**
-	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
 	 * TODO: 
 	 */
 	public final class Branch {

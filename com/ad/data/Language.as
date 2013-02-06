@@ -8,7 +8,7 @@ package com.ad.data {
 	import flash.display.DisplayObject;
 	
 	/**
-	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br> 
+	 * @author Adrian C. Miranda <adriancmiranda@gmail.com> 
 	 */
 	public final class Language {
 		internal namespace nsarmored = 'www.adrianmiranda.com.br/com/adframework/core/data/language.nsarmored';

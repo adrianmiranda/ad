@@ -10,7 +10,7 @@
 	import flash.geom.Point;
 	
 	/**
-	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
 	 > FIXME: Interface hierarchy to implements.
 	 */
 	public class Leprechaun extends Nymph implements IDisplay/*, ISprite*/ {

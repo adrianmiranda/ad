@@ -8,7 +8,7 @@ package com.ad.core {
 	import com.ad.events.ApplicationEvent;
 	
 	/**
-	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
 	 > TODO: Corrigir leitura de prefixo para view
 	 */
 	use namespace nsapplication;

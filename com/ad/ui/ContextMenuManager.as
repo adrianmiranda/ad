@@ -12,7 +12,7 @@
 	[Event(name = 'ContextMenuEvent.MENU_SELECT', type = 'flash.events.ContextMenuEvent')]
 	
 	/**
-	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
 	 */
 	public class ContextMenuManager extends EventDispatcher {
 		protected var target:InteractiveObject;

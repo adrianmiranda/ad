@@ -4,7 +4,7 @@ package com.ad.misc {
 	import flash.geom.Point;
 	
 	/**
-	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
 	 * @see http://en.wikipedia.org/wiki/Radian#Advantages_of_measuring_in_radians
 	 * TODO: 
 	 */

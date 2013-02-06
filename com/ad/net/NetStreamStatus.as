@@ -2,7 +2,7 @@ package com.ad.net {
 	import flash.utils.Dictionary;
 	
 	/**
-	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
 	 */
 	public final class NetStreamStatus {
 		private static var $map:Dictionary = new Dictionary(true);

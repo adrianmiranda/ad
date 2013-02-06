@@ -9,7 +9,7 @@ package com.ad.interfaces {
 	import flash.geom.Transform;
 	
 	/**
-	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
 	 */
 	public interface IDisplayObject extends IEventControl {
 		// PROXY PROPERTIES

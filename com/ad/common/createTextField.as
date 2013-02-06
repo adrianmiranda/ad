@@ -5,7 +5,7 @@
 	import flash.text.TextFormat;
 	
 	/**
-	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
 	 */
 	public function createTextField(textformat:TextFormat = null, autoSize:String = 'left', type:String = 'dynamic'):TextField {
 		var textField:TextField = new TextField();

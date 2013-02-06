@@ -14,7 +14,7 @@ package com.ad.templates {
 	import flash.utils.ByteArray;
 	
 	/**
-	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
 	 */
 	public class ThumbnailMax extends ButtonMax implements IThumb {
 		private var _content:DisplayObject;

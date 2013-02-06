@@ -17,7 +17,7 @@ package com.ad.core {
 	[Event(type='ApplicationEvent', name='ApplicationEvent.INIT')]
 
 	/**
-	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
 	 */
 	use namespace nsapplication;
 	public class NavigationCore extends EventControl {

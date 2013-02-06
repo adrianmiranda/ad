@@ -2,7 +2,7 @@
 	import flash.events.Event;
 	
 	/**
-	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
 	 */
 	public class TransitionEvent extends Event {
 		public static const BEFORE_PRELOAD:String = 'TransitionEvent.BEFORE_PRELOAD';

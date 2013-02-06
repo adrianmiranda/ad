@@ -8,7 +8,7 @@ package com.ad.utils {
 	import flash.display.Loader;
 	
 	/**
-	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
 	 */
 	public final class Cleaner {
 		

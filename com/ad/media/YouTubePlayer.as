@@ -8,7 +8,7 @@ package com.ad.media {
 	import flash.net.URLRequest;
 	
 	/**
-	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
 	 */
 	public class YouTubePlayer extends BaseNano {
 		private static const YOUTUBE_EMBEDDED_PLAYER_URL:String = 'http://www.youtube.com/v/VIDEO_ID?version=3&rel=0';

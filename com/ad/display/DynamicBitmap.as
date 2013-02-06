@@ -3,7 +3,7 @@ package com.ad.display {
 	import flash.display.BitmapData;
 	
 	/**
-	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
 	 */
 	dynamic public class DynamicBitmap extends Bitmap {
 		public function DynamicBitmap(bitmapData:BitmapData = null) {

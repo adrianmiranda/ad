@@ -1,7 +1,7 @@
 package com.ad.common {
 	
 	/**
-	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
 	 * TODO: Implementar para usar como no c/php:
 	 * sprintf('%03d', value);
 	 */

@@ -20,7 +20,7 @@ package com.ad.core {
 	import flash.system.LoaderContext;
 	
 	/**
-	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
 	 > TODO: Usage a single method to add and remove listeners.
 	 > Create a new loaderContext to header.
 	 */

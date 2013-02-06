@@ -8,7 +8,7 @@ package com.ad.interfaces {
 	import flash.ui.ContextMenu;
 	
 	/**
-	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
 	 */
 	public interface ISprite extends IDisplayObject {
 		// PROXY SPRITE PROPERTIES

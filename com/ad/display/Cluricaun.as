@@ -9,7 +9,7 @@ package com.ad.display {
 	import flash.geom.Point;
 	
 	/**
-	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
 	 > FIXME: Interface hierarchy to implements.
 	 */
 	dynamic public class Cluricaun extends Joker implements IDisplay/*, IMovieClip*/ {

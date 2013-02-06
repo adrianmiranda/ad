@@ -1,7 +1,7 @@
 package com.ad.common {
 	
 	/**
-	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
 	 */
 	public function mod(index:Number, min:Number, max:Number):Number {
 		var value:Number = index % max;

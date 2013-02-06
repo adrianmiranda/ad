@@ -4,7 +4,7 @@
 	import flash.geom.Rectangle;
 	
 	/**
-	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
 	 */
 	public function createBitmapData(target:DisplayObject, width:Number = 0, height:Number = 0, transparent:Boolean = true, fillColor:uint = 0):BitmapData {
 		var bounds:Rectangle = target.getBounds(target);

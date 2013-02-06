@@ -7,7 +7,7 @@
 	import flash.system.Capabilities;
 	
 	/**
-	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
 	 */
 	public class BaseLite extends ViewerLite implements IBase {
 		private var _bounds:Rectangle = new Rectangle();

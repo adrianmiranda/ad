@@ -3,7 +3,7 @@ package com.ad.interfaces {
 	import flash.display.DisplayObjectContainer;
 	
 	/**
-	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
 	 */
 	public interface IDisplay extends IMovieClip {
 		function move(x:Number, y:Number):void;
