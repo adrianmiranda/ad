@@ -18,7 +18,7 @@
 		private var _autoStartRendering:Boolean;
 		private var _rendering:Boolean;
 		private var _resizable:Boolean;
-		private var _frameRate:Number;// @see http://www.leebrimelow.com/?p=237
+		private var _frameRate:Number;
 		private var _quality:String;
 		public var SW:Number = 0;
 		public var SH:Number = 0;
@@ -107,28 +107,28 @@
 			this.rendering();
 		}
 		
-		protected function startRendering():void {
+		public function startRendering():void {
 			if (!this._rendering) {
 				this._rendering = true;
 				super.addEventListener(Event.ENTER_FRAME, this.onRenderTick, false, 0, true);
 			}
 		}
 		
-		protected function stopRendering():void {
+		public function stopRendering():void {
 			if (this._rendering) {
 				this._rendering = false;
 				super.removeEventListener(Event.ENTER_FRAME, this.onRenderTick);
 			}
 		}
 
-		protected function startArrange():void {
+		public function startArrange():void {
 			if (this._resizable && super.stage) {
 				super.stage.addEventListener(Event.RESIZE, this.onStageResize, false, 0, true);
 				this.onStageResize(new Event(Event.RESIZE));
 			}
 		}
 
-		protected function stopArrange():void {
+		public function stopArrange():void {
 			if (this._resizable && super.stage) {
 				super.stage.removeEventListener(Event.RESIZE, this.onStageResize);
 			}

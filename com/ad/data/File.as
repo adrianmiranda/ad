@@ -31,7 +31,7 @@ package com.ad.data {
 			this._bytes = ((num(xml.@kb) || 20000 / 1024) * 1024);
 			this._preload = xml.@preload != undefined ? bool(xml.@preload) : true;
 			this._noCache = xml.@noCache != undefined ? bool(xml.@noCache) : true;
-			if (xml.attribute('run-in-background') != undefined){
+			if (xml.attribute('run-in-background') != undefined) {
 				this._preload = false;
 				this._runInBackground = bool(xml.attribute('run-in-background'));
 				trace("Warning: '"+ this._id +"' file is running in the background.");
@@ -45,6 +45,9 @@ package com.ad.data {
 			}
 			else if (node.@id == undefined) {
 				throw new ADError(error + 'node missing required attribute \'id\'');
+			}
+			else if (!/^([a-zA-Z0-9-_])+$/g.test(node.@id)) {
+				throw new ADError(error + node.@id + ' \'id\' attribute contains invalid characters');
 			}
 			else if (node.@url == undefined) {
 				throw new ADError(error + 'node missing required attribute \'url\'');

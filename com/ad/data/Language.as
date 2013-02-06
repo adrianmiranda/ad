@@ -12,6 +12,7 @@ package com.ad.data {
 	 */
 	public final class Language {
 		internal namespace nsarmored = 'www.adrianmiranda.com.br/com/adframework/core/data/language.nsarmored';
+		private static var LIST:Vector.<Language> = new Vector.<Language>();
 		private static var BRANCH:String = new String();
 		private static var INDEX:uint;
 		private var _index:int;
@@ -34,6 +35,7 @@ package com.ad.data {
 			this._track = xml.@track;
 			if (this._index) {
 				this._branch = BRANCH += BranchUtils.lputSlash(BranchUtils.cleanup(this.id));
+				LIST.push(this);
 			} else {
 				this._branch = BranchUtils.lputSlash(BranchUtils.cleanup(this.id));
 			}
@@ -78,6 +80,9 @@ package com.ad.data {
 			}
 			else if (INDEX > 0 && node.@id == undefined) {
 				throw new ADError(error + 'node missing required attribute \'id\'');
+			}
+			else if (INDEX > 0 && !/^([a-zA-Z0-9-_])+$/g.test(node.@id)) {
+				throw new ADError(error + node.@id + ' \'id\' attribute contains invalid characters');
 			}
 		}
 		
@@ -125,8 +130,12 @@ package com.ad.data {
 					}
 				}
 			}
-			if (this.branch && value is String && value.indexOf(this.branch) > -1) {
-				return this.getLanguage(value.substr(0, this.branch.length));
+			var re:RegExp = new RegExp('^('+ this.branch +').*$');
+			if (this.branch && value is String && re.test(value)) {
+				var matches:Array = re.exec(value);
+				if (matches && matches.length) {
+					return this.getLanguage(matches[1]);
+				}
 			}
 			return null;
 		}
@@ -136,6 +145,10 @@ package com.ad.data {
 			return this._languages.length > 0;
 		}
 		
+		public function get list():Vector.<Language> {
+			return LIST;
+		}
+
 		public function get languages():Vector.<Language> {
 			return this._languages;
 		}
@@ -189,6 +202,7 @@ package com.ad.data {
 				}
 				this._languages = null;
 			}
+			LIST = new Vector.<Language>();
 			BRANCH = new String();
 			INDEX = 0;
 			this._standard = null;

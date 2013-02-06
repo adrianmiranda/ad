@@ -1,5 +1,7 @@
 package com.ad.utils {
-	import com.adobe.serialization.json.JSON;
+
+	// > Only to Flash Player 10, comment to use Flash Player 11
+	//import com.adobe.serialization.json.JSON;
 	
 	import flash.utils.Dictionary;
 	import flash.utils.ByteArray;
@@ -8,7 +10,7 @@ package com.ad.utils {
 	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
 	 * @see http://labs.influxis.com/wp-content/uploads/huw_column1.pdf
 	 */
-	final public class ObjectUtil {
+	public final class ObjectUtil {
 		
 		public static function isObject(instance:*):Boolean {
 			try {
@@ -65,14 +67,14 @@ package com.ad.utils {
 		
 		public static function decode(text:String, reviver:Function = null):Object
 		{
-			//return JSON.parse(text, reviver);
-			return JSON.decode(text);
+			return JSON.parse(text, reviver);
+			//return JSON.decode(text);
 		}
 		
 		public static function encode(value:Object, replacer:* = null, space:* = null):String
 		{
-			//return JSON.stringify(value, replacer, space);
-			return JSON.encode(value);
+			return JSON.stringify(value, replacer, space);
+			//return JSON.encode(value);
 		}
 		
 		public static function resolvePropertyChain(chain:String, targetInstance:Object):*

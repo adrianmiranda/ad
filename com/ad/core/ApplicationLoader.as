@@ -21,6 +21,8 @@ package com.ad.core {
 	
 	/**
 	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 > TODO: Usage a single method to add and remove listeners.
+	 > Create a new loaderContext to header.
 	 */
 	use namespace nsapplication;
 	public class ApplicationLoader extends ApplicationRequest {
@@ -36,6 +38,10 @@ package com.ad.core {
 		public static function getInstance(key:String = null):ApplicationLoader {
 			if (!hasInstance(key)) instances[key] = new ApplicationLoader(key);
 			return instances[key] as ApplicationLoader;
+		}
+
+		public function registerFileType(extensions:String, loaderClass:Class):void {
+			LoaderMax.registerFileType(extensions, loaderClass);
 		}
 		
 		public function loaders(...rest:Array):void {
@@ -237,7 +243,6 @@ package com.ad.core {
 			super.dispatchEvent(event.clone());
 		}
 		
-		// FIXME: ao invés de usar dois métodos, um pra remover outro pra adicionar, resumir pra uma usando listeners(boolean); nas chamadas
 		private function addLoaderListeners():void {
 			if (this._loader && !this._loader.hasEventListener(LoaderEvent.COMPLETE)) {
 				this._loader.addEventListener(LoaderEvent.CHILD_PROGRESS, this.onViewChildProgress);

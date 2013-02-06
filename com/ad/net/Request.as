@@ -1,5 +1,5 @@
 package com.ad.net {
-	import com.adobe.serialization.json.JSON;
+	import com.ad.utils.ObjectUtil;
 	
 	import flash.events.Event;
 	import flash.events.ProgressEvent;
@@ -144,7 +144,7 @@ package com.ad.net {
 			var json:Object;
 			if (this._data) {
 				try {
-					json = JSON.decode(String(this._data));
+					json = ObjectUtil.decode(String(this._data));
 				} catch(event:Error) {
 					json = new Object();
 				}

@@ -146,7 +146,14 @@ package com.ad.core {
 		}
 
 		public function get parameters():Object {
-			return Browser.queryString;
+			var params:Object = {};
+			var paramNames:Array = SWFAddress.getParameterNames();
+			var index:int = 0;
+			while (index < paramNames.length) {
+				params[paramNames[index]] = SWFAddress.getParameter(paramNames[index]);
+				index = index + 1;
+			}
+			return params;
 		}
 
 		public function get history():Array {
@@ -224,7 +231,7 @@ package com.ad.core {
 		}
 
 		public function setTitle(title:String, delimiter:String = null):void {
-			_title ||= title ||= 'AdFramework';
+			_title ||= title ||= 'AM Framework';
 			if (delimiter != null) {
 				_bread = delimiter;
 				for each (var crumb:String in this.getPathNames()) {
@@ -252,7 +259,7 @@ package com.ad.core {
 
 		public function navigateTo(value:*, query:Object = null):void {
 			if (value is String) {
-				if (query) {
+				if (query is Object) {
 					value = value.concat('?');
 					for (var key:String in query) {
 						value = value.concat(key + '=' + query[key] + '&');
@@ -260,7 +267,9 @@ package com.ad.core {
 					value = value.substring(0, (value.length - 1));
 				}
 				value = this.apiKey != version ? this.apiKey + '/' + value : value;
-				this._history[this._depth] = BranchUtils.arrange(value);
+				value = BranchUtils.arrange(value);
+				value = value.replace(/^\/+|\/+$/g, '');
+				this._history[this._depth] = value;
 				SWFAddress.setValue(this._history[this._depth++]);
 			}
 		}

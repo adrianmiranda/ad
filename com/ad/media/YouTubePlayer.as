@@ -159,7 +159,7 @@ package com.ad.media {
 		
 		public static function getThumbnail(video:String):URLRequest {
 			if (/^http/.test(video)) video = YouTubePlayer.getIdFromURL(video);
-			return new URLRequest('http://img.youtube.com/vi/' + video + '/0.jpg');
+			return new URLRequest('http://i.ytimg.com/vi/' + video + '/0.jpg');
 		}
 		
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

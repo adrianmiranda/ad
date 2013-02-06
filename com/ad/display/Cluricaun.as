@@ -10,8 +10,9 @@ package com.ad.display {
 	
 	/**
 	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 > FIXME: Interface hierarchy to implements.
 	 */
-	dynamic public class Cluricaun extends Joker implements IDisplay {
+	dynamic public class Cluricaun extends Joker implements IDisplay/*, IMovieClip*/ {
 		private var _registrationPoint:Point;
 		private var _registrationShape:Shape;
 		private var _locked:Boolean;
@@ -20,9 +21,19 @@ package com.ad.display {
 		public function Cluricaun() {
 			super();
 			this.moveRegistrationPoint(0, 0);
+			super.addEventListener(Event.ADDED_TO_STAGE, this.onAddedToStage, false, 0, true);
 			super.addEventListener(Event.REMOVED_FROM_STAGE, this.onRemovedFromStage, false, 0, true);
 		}
-		
+
+		private function onAddedToStage(event:Event):void {
+			super.removeEventListener(Event.ADDED_TO_STAGE, this.onAddedToStage, false);
+			this.rotation = super.rotation;
+			this.scaleX = super.scaleX;
+			this.scaleY = super.scaleY;
+			this.x = super.x;
+			this.y = super.y;
+		}
+
 		private function onRemovedFromStage(event:Event):void {
 			super.removeEventListener(Event.REMOVED_FROM_STAGE, this.onRemovedFromStage, false);
 			this.detachRegistrationPoint();
@@ -39,71 +50,87 @@ package com.ad.display {
 			}
 		}
 		
-		public function set parentX(value:Number):void {
-			var point:Point = super.parent.globalToLocal(super.localToGlobal(this._registrationPoint));
-			super.x = super.x + (value - point.x);
+		override public function set x(value:Number):void {
+			if (super.parent) {
+				var point:Point = super.parent.globalToLocal(super.localToGlobal(this._registrationPoint));
+				super.x = super.x + (value - point.x);
+			} else {
+				super.x = value;
+			}
 		}
 		
-		public function get parentX():Number {
-			var point:Point = super.parent.globalToLocal(super.localToGlobal(this._registrationPoint));
-			return point.x;
+		override public function get x():Number {
+			if (super.parent) {
+				var point:Point = super.parent.globalToLocal(super.localToGlobal(this._registrationPoint));
+				return point.x;
+			}
+			return super.x;
 		}
 		
-		public function set parentY(value:Number):void {
-			var point:Point = super.parent.globalToLocal(super.localToGlobal(this._registrationPoint));
-			super.y = super.y + (value - point.y);
+		override public function set y(value:Number):void {
+			if (super.parent) {
+				var point:Point = super.parent.globalToLocal(super.localToGlobal(this._registrationPoint));
+				super.y = super.y + (value - point.y);
+			} else {
+				super.y = value;
+			}
 		}
 		
-		public function get parentY():Number {
-			var point:Point = super.parent.globalToLocal(super.localToGlobal(this._registrationPoint));
-			return point.y;
+		override public function get y():Number {
+			if (super.parent) {
+				var point:Point = super.parent.globalToLocal(super.localToGlobal(this._registrationPoint));
+				return point.y;
+			}
+			return super.y;
 		}
 		
-		public function get parentMouseX():Number {
+		override public function get mouseX():Number {
 			return Math.round(super.mouseX - this._registrationPoint.x);
 		}
 		
-		public function get parentMouseY():Number {
+		override public function get mouseY():Number {
 			return Math.round(super.mouseY - this._registrationPoint.y);
 		}
 		
-		public function set parentScaleX(value:Number):void {
+		override public function set scaleX(value:Number):void {
 			this.setProperty('scaleX', value);
 		}
-
-		public function get parentScaleX():Number {
-			return super.scaleX;
-		}
 		
-		public function set parentScaleY(value:Number):void {
+		override public function set scaleY(value:Number):void {
 			this.setProperty('scaleY', value);
 		}
-
-		public function get parentScaleY():Number {
-			return super.scaleY;
-		}
 		
-		public function set parentRotation(value:Number):void {
+		override public function set rotation(value:Number):void {
 			this.setProperty('rotation', value);
 		}
 
-		public function get parentRotation():Number {
-			return super.rotation;
+		// in test
+		override public function set rotationX(value:Number):void {
+			this.setProperty('rotationX', value);
+		}
+
+		// in test
+		override public function set rotationY(value:Number):void {
+			this.setProperty('rotationY', value);
 		}
 		
 		private function setProperty(property:String, value:Number):void {
-			var pointA:Point = super.parent.globalToLocal(super.localToGlobal(this._registrationPoint));
-			super[property] = value;
-			var pointB:Point = super.parent.globalToLocal(super.localToGlobal(this._registrationPoint));
-			super.x = super.x - (pointB.x - pointA.x);
-			super.y = super.y - (pointB.y - pointA.y);
+			if (super.parent) {
+				var pointA:Point = super.parent.globalToLocal(super.localToGlobal(this._registrationPoint));
+				super[property] = value;
+				var pointB:Point = super.parent.globalToLocal(super.localToGlobal(this._registrationPoint));
+				super.x = super.x - (pointB.x - pointA.x);
+				super.y = super.y - (pointB.y - pointA.y);
+			} else {
+				super[property] = value;
+			}
 		}
 		
 		/////////////////////////////////////////////////////////////////////////////////////////////////////
 		
 		public function move(x:Number, y:Number):void {
-			super.x = Math.round(x);
-			super.y = Math.round(y);
+			this.x = Math.round(x);
+			this.y = Math.round(y);
 		}
 		
 		public function size(width:Number, height:Number):void {
@@ -112,15 +139,24 @@ package com.ad.display {
 		}
 		
 		public function set scale(value:Number):void {
-			super.scaleX = super.scaleY = value;
+			this.scaleX = this.scaleY = value;
 		}
 		
 		public function fit(width:Number, height:Number):void {
-			super.width = width;
-			super.scaleY = super.scaleX;
-			if (super.height < height) {
+			if (super.height < super.width) {
 				super.height = height;
-				super.scaleX = super.scaleY;
+				this.scaleX = this.scaleY;
+				if (super.width < width) {
+					super.width = width;
+					this.scaleY = this.scaleX;
+				}
+			} else {
+				super.width = width;
+				this.scaleY = this.scaleX;
+				if (super.height < height) {
+					super.height = height;
+					this.scaleX = this.scaleY;
+				}
 			}
 		}
 		
@@ -181,13 +217,13 @@ package com.ad.display {
 			this.detachRegistrationPoint();
 			this._registrationShape = this.addChild(new Shape()) as Shape;
 			if (this._registrationShape) {
-				this._registrationShape.graphics.beginFill(0xffffff, 1);
+				this._registrationShape.graphics.beginFill(0x00CCFF, 1);
 				this._registrationShape.graphics.lineStyle(2, 0xFF0000);
 				this._registrationShape.graphics.moveTo(-diameter, -diameter);
 				this._registrationShape.graphics.lineTo(diameter, diameter);
 				this._registrationShape.graphics.moveTo(-diameter, diameter);
 				this._registrationShape.graphics.lineTo(diameter, -diameter);
-				this._registrationShape.graphics.drawCircle(0, 0, diameter * 2);
+				//this._registrationShape.graphics.drawCircle(0, 0, diameter * 2);
 				this._registrationShape.graphics.endFill();
 				super.setChildIndex(this._registrationShape, super.numChildren - 1);
 			}

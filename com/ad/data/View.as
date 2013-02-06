@@ -10,9 +10,11 @@ package com.ad.data {
 	
 	/**
 	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 > TODO: Identificar uma sessão qualquer pelo branch na propriedade standard.
 	 */
 	public final class View {
 		internal namespace nsarmored = 'http://www.adrianmiranda.com.br/com/adframework/core/data/view.nsarmored';
+		private static var LIST:Vector.<View> = new Vector.<View>();
 		private static var BRANCH:String = new String();
 		private static var INDEX:uint;
 		private var _caste:Class;
@@ -47,6 +49,7 @@ package com.ad.data {
 			this._caste = getDefinitionByName(this._class) as Class;
 			if (this._index) {
 				this._branch = BRANCH += BranchUtils.lputSlash(BranchUtils.cleanup(this.id));
+				LIST.push(this);
 			} else {
 				this._branch = BranchUtils.lputSlash(BranchUtils.cleanup(this.id));
 			}
@@ -79,6 +82,9 @@ package com.ad.data {
 			}
 			else if (node.@id == undefined) {
 				throw new ADError(error + 'node missing required attribute \'id\'');
+			}
+			else if (!/^([a-zA-Z0-9-_])+$/g.test(node.@id)) {
+				throw new ADError(error + node.@id + ' \'id\' attribute contains invalid characters');
 			}
 			else if (node.@['class'] == undefined) {
 				throw new ADError(error + node.@id + ' node missing required attribute \'class\'');
@@ -125,6 +131,7 @@ package com.ad.data {
 		
 		public function getView(value:* = ''):View {
 			var view:View;
+			var indexBranch:int;
 			if (value is String) value = BranchUtils.cleanup(value);
 			if (value == this) return this;
 			if (value == this.id) return this;
@@ -143,7 +150,7 @@ package com.ad.data {
 					}
 				}
 			}
-			if (value is String && value.indexOf(this.branch) > -1) {
+			if (value is String && this.branch && value.indexOf(this.branch) > -1) {
 				return this.getView(value.substr(value.indexOf(this.branch), this.branch.length));
 			}
 			return null;
@@ -201,7 +208,11 @@ package com.ad.data {
 		public function get binding():DisplayObject {
 			return this._binding;
 		}
-		
+
+		public function get list():Vector.<View> {
+			return LIST;
+		}
+
 		public function get views():Vector.<View> {
 			return this._views;
 		}
@@ -284,6 +295,7 @@ package com.ad.data {
 				this._files = null;
 			}
 			BRANCH = new String();
+			LIST = null;
 			INDEX = 0;
 			this._binding = null;
 			this._standard = null;

@@ -30,6 +30,14 @@ package com.ad.templates {
 			}
 			super(hide);
 		}
+
+		override protected function onRemovedFromStage(event:Event):void {
+			super.onRemovedFromStage(event);
+			if (this._content && this._content.parent) {
+				this._content.parent.removeChild(this._content);
+				this._content = null;
+			}
+		}
 		
 		public function load(urlOrRequest:*):void {
 			if (urlOrRequest is URLRequest) {

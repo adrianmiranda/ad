@@ -87,7 +87,8 @@ package com.ad.utils {
 		}
 		
 		public static function get queryString():URLVariables {
-			var source:String = search;
+			var matches:Array = href.match(/(\?|&)([a-zA-Z0-9]+)=[0-9]+&?/g);
+			var source:String = matches ? (matches.length ? matches[1] : matches[0]) : '';
 			return new URLVariables(source ? source.substring(1, source.length) : null);
 		}
 		

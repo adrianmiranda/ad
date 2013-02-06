@@ -38,6 +38,7 @@ package com.ad.utils {
 			if (target.stage && target.parent && target.parent.contains(target)) {
 				target.parent.removeChild(target);
 			}
+			gc();
 		}
 		
 		public static function gc():void {

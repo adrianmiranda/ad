@@ -1,14 +1,13 @@
 package com.ad.templates {
-	import com.ad.interfaces.IBase;
-	
 	import flash.events.Event;
 	import flash.display.Sprite;
 	import flash.geom.Rectangle;
 	
 	/**
 	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
+	 > FIXME: Interface hierarchy to implements.
 	 */
-	public class BaseNano extends Sprite/* implements IBase*/ {
+	public class BaseNano extends Sprite /*implements IBase, ISprite*/ {
 		private var _bounds:Rectangle = new Rectangle();
 		private var _margin:Rectangle = new Rectangle();
 		private var _screen:Rectangle = new Rectangle();
@@ -67,22 +66,22 @@ package com.ad.templates {
 			this.rendering();
 		}
 		
-		protected function startRendering():void {
+		public function startRendering():void {
 			super.addEventListener(Event.ENTER_FRAME, this.onRenderTick, false, 0, true);
 		}
 		
-		protected function stopRendering():void {
+		public function stopRendering():void {
 			super.removeEventListener(Event.ENTER_FRAME, this.onRenderTick);
 		}
 
-		protected function startArrange():void {
+		public function startArrange():void {
 			if (this._resizable && super.stage) {
 				super.stage.addEventListener(Event.RESIZE, this.onStageResize, false, 0, true);
 				this.onStageResize(new Event(Event.RESIZE));
 			}
 		}
 
-		protected function stopArrange():void {
+		public function stopArrange():void {
 			if (this._resizable && super.stage) {
 				super.stage.removeEventListener(Event.RESIZE, this.onStageResize);
 			}

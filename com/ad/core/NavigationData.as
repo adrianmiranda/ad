@@ -9,175 +9,12 @@ package com.ad.core {
 	
 	/**
 	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
-	 * TODO: 
+	 > TODO: Corrigir leitura de prefixo para view
 	 */
 	use namespace nsapplication;
 	public class NavigationData extends NavigationCore {
-
-		public function fromHeader(header:Header):void {
-			this.validateHeader(this._header = header);
-			this.setStandardLanguage();
-			this.setStandardView();
-			super.setHistory(header.history);
-			super.setTracker(header.track);
-			super.setStrict(header.strict);
-			super.setTitle(header.title);
-		}
-
-		override protected function startup():void {
-			this.validateHeader(this.header);
-			var params:Object = super.getParameterNames().length ? super.parameters : null;
-			var path:String = super.getPath();
-			if (this.isHomePage(path)) {
-				super.setHistory(this.standardView.history);
-				super.navigateTo(this.standardView.branch, params);
-				super.setHistory(this.header.history);
-			} else {
-				var view:View = this.header.getView(path);
-				if (view) {
-					this.setView(view);
-					super.setTitle(view.title);
-					this.setLanguage(view.branch);
-					this.stackTransition(view, params);
-					super.notify(ApplicationEvent.CHANGE_VIEW);
-				} else {
-					super.setHistory(this.standardView.history);
-					super.navigateTo(this.standardView.branch, params);
-					super.setHistory(this.header.history);
-				}
-			}
-		}
-		
-		override protected function externalChange():void {
-			this.validateHeader(this.header);
-			var value:String = BranchUtils.arrange(super.getValue());
-			var suffix:String = new String();
-			var lastLanguage:Language = this.language;
-			var lastView:View = this.view;
-			var typedLanguage:Language = this.setLanguage(value);
-			var typedView:View = this.setView(value);
-			if (this.view.id != this.lastView.id) {
-				if (value.indexOf(this.view.id) > -1 || value.indexOf(this.view.branch) > -1) {
-					suffix = value.substr(value.indexOf(this.view.branch) + this.view.branch.length, value.length);
-					value = value.split(this.language.branch).join('');
-					if (this.lastView.level == 1) {
-						this.navigateTo(BranchUtils.arrange(this.language.branch + '/' + this.view.branch + suffix));
-						return;
-					}
-				}
-				if (this.view.id == this.mistakeView.id) {
-					super.setHistory(false);
-					this.navigateTo(BranchUtils.arrange(this.language.branch + '/' + this.view.branch + suffix));
-					super.setHistory(this.header.history);
-				}
-			}
-		}
-
-		override protected function internalChange():void {
-			this.validateHeader(this.header);
-			var value:String = BranchUtils.arrange(super.getValue());
-			this.setLanguage(value);
-			this.setView(value);
-		}
-
-		override public function navigateTo(value:*, query:Object = null):void {
-			this.validateHeader(this.header);
-			value = BranchUtils.arrange(value);
-			var section:View, suffix:String = new String();
-			var params:String = BranchUtils.getQueryString(value, true);
-			var path:String = BranchUtils.cleanup(value);
-			this.setLanguage(path);
-			path = path.split(this.language.branch).join('');
-			path = this.isHomePage(path) ? this.standardView.branch : path;
-			section = header.getView(path) || this.view;
-			if (path.indexOf(section.branch) > -1) {
-				path = BranchUtils.trimQueryString(path);
-				suffix = path.substr(path.indexOf(section.branch) + section.branch.length, path.length);
-			}
-			super.setHistory(section.history);
-			super.navigateTo(BranchUtils.arrange(language.branch + '/' + section.branch + suffix + params), query);
-			super.setHistory(this.header.history);
-		}
-
-		public function setLanguage(value:*):Language {
-			var locale:Language;
-			if (value) {
-				this.validateHeader(this.header);
-				locale = this.lang::get(value);
-				if (locale) {
-					locale = locale.tree;
-					if (locale.branch != language.branch) {
-						this._lastLanguage = this._language;
-						this._language = locale;
-						super.notify(ApplicationEvent.CHANGE_LANGUAGE);
-					}
-				} else {
-					super.setHistory(false);
-					super.navigateTo(BranchUtils.arrange(this.language.branch + '/' + this.view.branch));
-					super.setHistory(this.header.history);
-				}
-			}
-			return locale;
-		}
-
-		public function setView(value:*):View {
-			var section:View;
-			if (value) {
-				this.validateHeader(this.header);
-				if (value is String) {
-					value = BranchUtils.arrange(value);
-					value = this.isHomePage(value) ? this.standardView.branch : value;
-					value = value.split(this.language.branch).join('');
-				}
-				section = this.header.getView(value) || this.mistakeView;
-				if (section) {
-					var suffix:String = new String();
-					if (value is String && value.indexOf(section.branch) > -1) {
-						suffix = value.substr(value.indexOf(section.branch) + section.branch.length, value.length);
-					}
-					//if (section.branch != this.view.branch) {
-						this._lastView = this._view;
-						this._view = section;
-						super.setTitle(this.view.title);
-						this.stackTransition(this.view);
-						super.notify(ApplicationEvent.CHANGE_VIEW);
-					//}
-				}
-			}
-			return section;
-		}
-		
-		private function setStandardLanguage():void {
-			this._lastLanguage = this.standardLanguage;
-			this._language = this.standardLanguage;
-		}
-
-		private function setStandardView():void {
-			this._lastView = this.standardView;
-			this._view = this.standardView;
-			super.setTitle(this.view.title);
-		}
-
-
-
-		/**
-		 *
-		 * HML
-		 *
-		 */
-		view function get(value:*):View {
-			return null;
-		}
-
-
-		/**
-		 *
-		 * DEV
-		 *
-		 */
-		protected namespace lang = 'com.ad.data.Language';
-		protected namespace view = 'com.ad.data.View';
-		protected namespace path = 'com.ad.data';
+		public namespace i18n = 'com.ad.data.Language';
+		public namespace area = 'com.ad.data.View';
 		private var _lastLanguage:Language;
 		private var _language:Language;
 		private var _lastView:View;
@@ -207,48 +44,133 @@ package com.ad.core {
 			this.fromHeader(new Header(xml, null));
 		}
 
-		public function isHomePage(value:*):Boolean {
+		public function fromHeader(header:Header):void {
+			this.validateHeader(this._header = header);
+			super.setHistory(header.history);
+			super.setTracker(header.track);
+			super.setStrict(header.strict);
+			super.setTitle(header.title);
+		}
+
+		override protected function init():void {
 			this.validateHeader(this.header);
-			if (value is String) {
-				value = value.split(this.language.branch).join('');
-				value = BranchUtils.arrange(value, false).toLowerCase();
-			}
-			return (value == this.view || value == this.views.root.branch || value == '/' || value == '');
+			this.navigateTo(super.getValue(), super.parameters);
 		}
 
-		lang function get(value:*):Language {
-			var locale:Language = this.languages.getLanguage(value);
-			if (locale && locale.standard) {
-				return lang::get(locale.standard);
-			}
-			return locale;
+		override protected function startup():void {
+			this.validateHeader(this.header);
+			this.calculate();
+		}
+		
+		override public function navigateTo(value:*, query:Object = null):void {
+			this.validateHeader(this.header);
+			var qs:String = value is String ? super.getQueryString(value) : '';
+			var language:Language = this.i18n::get(value);
+			var view:View = this.area::get(value);
+			super.setHistory(view.history);
+			super.navigateTo(language.branch +'/'+ view.branch + qs, query);
+			super.setHistory(header.history);
 		}
 
-		path function get(value:String):* {
-			var pattern:RegExp = new RegExp('(.*)('+ value +'/*$)', 'g');
-			var result:Object = pattern.exec(value);
-			trace(result[1]);
-			trace(result[2]);
+		override protected function externalChange():void {
+			this.validateHeader(this.header);
+		}
+
+		override protected function internalChange():void {
+			this.validateHeader(this.header);
+		}
+		
+		override protected function change():void {
+			this.validateHeader(this.header);
+			this.calculate();
+		}
+
+		public function calculate(value:* = null):Boolean {
+			this.validateHeader(this.header);
+			value ||= super.getValue() || super.getPath();
+			var language:Language = this.i18n::get(value);
+			var view:View = this.area::get(value);
+			if (this.base && this.base.views) {
+				if (this.area::set(view) || this.i18n::set(language)) {
+					this.navigateTo(language.branch +'/'+ view.branch, super.parameters);
+					super.notify(ApplicationEvent.CHANGE);
+				}
+				return true;
+			}
+			return false;
+		}
+
+		i18n function set(value:* = null):Language {
+			this.validateHeader(this.header);
+			value = this.i18n::get(value);
+			if (value != this._lastLanguage) {
+				this._lastLanguage = this._language || value;
+				this._language = value;
+				super.notify(ApplicationEvent.CHANGE_LANGUAGE);
+				return value;
+			}
 			return null;
 		}
 
+		area function set(value:* = null):View {
+			this.validateHeader(this.header);
+			value = this.area::get(value);
+			if (value != this._lastView) {
+				this._lastView = this._view || value;
+				this._view = value;
+				super.setTitle(value.title || this.header.title);
+				this.stackTransition(value, super.parameters);
+				super.notify(ApplicationEvent.CHANGE_VIEW);
+				return value;
+			}
+			return null;
+		}
+
+		i18n function get(value:* = null):Language {
+			this.validateHeader(this.header);
+			var language:Language = this.languages;
+			if (language) {
+				language = language.getLanguage(value);
+				if (language && language.standard) {
+					return i18n::get(language.standard);
+				} else if (!language) {
+					return this.standardLanguage;
+				}
+			}
+			return language;
+		}
+
+		area function get(value:* = null):View {
+			this.validateHeader(this.header);
+			var view:View = this.base;
+			if (view && view.views) {
+				view = view.getView(value);
+				if (view && view.standard) {
+					return this.area::get(view.standard);
+				} else if (!view) {
+					return this.mistakeView;
+				}
+			}
+			return view;
+		}
+
 		public function get standardView():View {
-			return this.header ? this.views.getView(this.views.root.standard) : null;
+			return this.area::get(this.base.root.standard);
 		}
 		
 		public function get mistakeView():View {
-			return this.header ? this.views.getView(this.views.root.mistake) : null;
+			return this.area::get(this.base.root.mistake);
 		}
 		
 		public function get standardLanguage():Language {
-			return this.languages ? this.lang::get(this.languages.standard) : null;
+			return this.i18n::get(this.languages.standard);
 		}
 		
 		public function get languages():Language {
 			return this.header ? this.header.languages : null;
 		}
 		
-		public function get views():View {
+		public function get base():View {
 			return this.header ? this.header.views : null;
 		}
 
@@ -271,17 +193,17 @@ package com.ad.core {
 		public function get view():View {
 			return this._view;
 		}
-		
-		protected function stackTransition(view:View, params:Object = null):void {
-			// to override.
-		}
 
+		protected function stackTransition(view:View, params:Object = null):void {
+			// to override
+		}
+		
 		override public function dispose(flush:Boolean = false):void {
 			if (flush) {
-				this._header = null;
 				this._lastLanguage = null;
 				this._language = null;
 				this._lastView = null;
+				this._header = null;
 				this._view = null;
 			}
 			super.dispose(flush);

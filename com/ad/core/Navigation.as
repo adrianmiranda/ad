@@ -10,10 +10,11 @@ package com.ad.core {
 	
 	import flash.display.DisplayObjectContainer;
 	import flash.display.DisplayObject;
+	import flash.events.Event;
 
 	/**
 	 * @author Adrian C. Miranda <ad@adrianmiranda.com.br>
-	 * TODO: 
+	 > TODO: Subsections manager
 	 */
 	use namespace nsapplication;
 	public final class Navigation extends NavigationData {
@@ -50,12 +51,17 @@ package com.ad.core {
 					this._section.addEventListener(TransitionEvent.TRANSITION_OUT, this.onSectionTransitionOut);
 					this._section.addEventListener(TransitionEvent.TRANSITION_OUT_COMPLETE, this.onSectionTransitionOutComplete);
 					//this._section::attachChildView();
+					super.container.addEventListener(Event.ADDED, onSectionAdded);
 					super.container.addChild(DisplayObject(this._section));
-					this._section.transitionIn();
 				}
 			} catch(event:Error) {
 				trace('[ApplicationFacade]::stackTransition:', event.message);
 			}
+		}
+
+		private function onSectionAdded(event:Event):void {
+			super.container.removeEventListener(Event.ADDED, onSectionAdded);
+			this._section.transitionIn();
 		}
 		
 		private function onSectionTransitionIn(event:TransitionEvent):void {

@@ -166,22 +166,22 @@ package com.ad.templates {
 			}
 		}
 		
-		protected function startRendering():void {
+		public function startRendering():void {
 			super.addEventListener(Event.ENTER_FRAME, this.onRenderTick, false, 0, true);
 		}
 		
-		protected function stopRendering():void {
+		public function stopRendering():void {
 			super.removeEventListener(Event.ENTER_FRAME, this.onRenderTick);
 		}
 
-		protected function startArrange():void {
+		public function startArrange():void {
 			if (this._resizable && super.stage) {
 				super.stage.addEventListener(Event.RESIZE, this.onStageResize, false, 0, true);
 				this.onStageResize(new Event(Event.RESIZE));
 			}
 		}
 
-		protected function stopArrange():void {
+		public function stopArrange():void {
 			if (this._resizable && super.stage) {
 				super.stage.removeEventListener(Event.RESIZE, this.onStageResize);
 			}
