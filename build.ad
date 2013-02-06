@@ -15,17 +15,23 @@
 ##	
 ################################################################################
 #
+# app structure
+#
+bin="publish"
+src="sources"
+
+#
 # build index
 #
-as="sources/classes/Boot.as"
-swf="publish/boot.swf"
-html="publish/index.html"
+as="$src/classes/Boot.as"
+swf="$bin/boot.swf"
+html="$bin/index.html"
 
 #
 # class paths
 #
-sourcespath="sources/classes/ sources/libs/"
-librarypath="sources/swc/"
+sourcespath="$src/classes/ $src/libs/"
+librarypath="$src/swc/"
 
 #
 # previews
@@ -48,12 +54,12 @@ vars='-define CONFIG::LOGGING true -define CONFIG::FLASH_10_1 false -define CONF
 # shortcut cmd's
 # 
 function pause(){
-   read -p "$*"
+	read -p "$*"
 }
 
-if [ "$2" = "f" ]; then
+if [ "$2" = "f" ]; then # release
 	options="-static-link-runtime-shared-libraries=true -use-network=false -incremental=false -keep=false -debug=false -target-player=11.1 $vars"
-else 
+else # debug
 	options="-static-link-runtime-shared-libraries=true -use-network=false -incremental=false -keep=false -debug=true -target-player=11.1 $vars"
 fi
 
@@ -67,23 +73,23 @@ echo "### FINISH!"
 #
 # launch previews
 #
-if [ "$1" = "r" ]; then
+if [ "$1" = "r" ]; then # run
 	if [ "$2" = "-f" ]; then
 		tail -f "$flashlog"
 	fi
 	open $preview0
-elif [ "$1" = "rl" ]; then
+elif [ "$1" = "rl" ]; then # run local
 	if [ "$2" = "-f" ]; then
 		tail -f "$flashlog"
 	fi
 	open $preview1
-elif [ "$1" = "ssr" ]; then
+elif [ "$1" = "ssr" ]; then # search strings recursively in files
 	if [ "$3" ]; then
 		cd "$3"
 	fi
 	find ./ -exec grep -Hn "$2" {} \;
-elif [ "$1" = "rlh" ]; then
-	cd "publish"
+elif [ "$1" = "rlh" ]; then # run localhost
+	cd "$bin"
 	if [ "$2" = "-f" ]; then
 		tail -f "$flashlog"
 	fi
