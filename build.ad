@@ -139,7 +139,7 @@ elif [ "$1" = "rlh" ] || [ "$1" = "llh" ]; then # run localhost
 	python -m SimpleHTTPServer
 	echo " << traffic successfully CANCELED"
 elif [ "$1" = "help" ]; then # help user
-	echo "usage:  sh build.ad [l][ll][r][rl][rlh][ssr[=<string>][=<path>]][help]"
+	echo "usage:  sh build.ad [l][ll][llh][r][rl][rlh][ssr[=<string>][=<path>]][help]"
 	echo "\tsh build.ad <command> [<args>]"
 	echo "\nThe most commonly used git commands are:"
 	echo "   l\tLaunch"
@@ -149,4 +149,5 @@ elif [ "$1" = "help" ]; then # help user
 	echo "   rl\tRun local"
 	echo "   rlh\tRun localhost"
 	echo "   ssr\tSearch strings recursively in files"
+	echo "-"
 fi
