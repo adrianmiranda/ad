@@ -67,8 +67,7 @@ vars='-define CONFIG::LOGGING true -define CONFIG::PLATFORM true -define CONFIG:
 #
 # utils
 #
-function float_cond()
-{
+function float_cond() {
 	local cond=0
 	if [[ $# -gt 0 ]]; then
 		cond=$(echo "$*" | bc -q 2>/dev/null)
@@ -138,7 +137,7 @@ elif [ "$1" = "rlh" ] || [ "$1" = "llh" ]; then # run localhost
 	echo "      [ Press ctrl+c to get out ] \n"
 	python -m SimpleHTTPServer
 	echo " << traffic successfully CANCELED"
-elif [ "$1" = "help" ]; then # help user
+elif [ "$1" = "help" ] || [ "$1" = "h" ]; then # help user
 	echo "usage:  sh build.ad [l][ll][llh][r][rl][rlh][ssr[=<string>][=<path>]][help]"
 	echo "\tsh build.ad <command> [<args>]"
 	echo "\nThe most commonly used git commands are:"
