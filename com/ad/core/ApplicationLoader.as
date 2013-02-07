@@ -67,6 +67,17 @@ package com.ad.core {
 			super.onRequestResult();
 			if (super.header.hasFiles) {
 				this.loadHeader(super.header);
+			} else if (super.header.views.root.hasFiles) {
+				if (super.vars.onReady) {
+					super.vars.onReady.apply(null, super.vars.onReadyParams);
+				}
+				this.prepareViewLoader(super.header.views.root);
+				this._load && this.load();
+			} else {
+				if (super.vars.onReady) {
+					super.vars.onReady.apply(null, super.vars.onReadyParams);
+				}
+				onComplete(new LoaderEvent(LoaderEvent.COMPLETE, this));
 			}
 		}
 		
