@@ -100,7 +100,7 @@ fi
 #
 # run mxmlc
 #
-if [ "$1" != "help" ] && [ "$1" != "l" ]; then
+if [ "$1" != "help" ] && [ "$1" != "l" ] && [ "$1" != "ll" ] && [ "$1" != "llh" ]; then
 	echo ":: Building $swf in $bin \n"
 	$mxmlc $as -o $swf -source-path $sourcespath -library-path $swc $options
 	echo "\n:: Decommisioning Previous Compile"
@@ -119,7 +119,7 @@ fi
 if [ "$1" = "r" ] || [ "$1" = "l" ]; then # run
 	echo " + Launch Booting Instances in player"
 	open $preview0
-elif [ "$1" = "rl" ]; then # run local
+elif [ "$1" = "rl" ] || [ "$1" = "ll" ]; then # run local
 	echo " + Launch Booting Instances in browser"
 	open $preview1
 elif [ "$1" = "ssr" ]; then # search strings recursively in files
@@ -130,7 +130,7 @@ elif [ "$1" = "ssr" ]; then # search strings recursively in files
 	echo ":: Searching in ./$3 by $2 \n"
 	find ./ -exec grep -Hn "$2" {} \;
 	echo "\n:: Decommisioning Previous Search \n"
-elif [ "$1" = "rlh" ]; then # run localhost
+elif [ "$1" = "rlh" ] || [ "$1" = "llh" ]; then # run localhost
 	echo " + Rerouting $preview2 to $bin"
 	cd "$bin"
 	open $preview2
@@ -139,10 +139,12 @@ elif [ "$1" = "rlh" ]; then # run localhost
 	python -m SimpleHTTPServer
 	echo " << traffic successfully CANCELED"
 elif [ "$1" = "help" ]; then # help user
-	echo "usage:  sh build.ad [l][r][rl][rlh][ssr[=<string>][=<path>]][help]"
+	echo "usage:  sh build.ad [l][ll][r][rl][rlh][ssr[=<string>][=<path>]][help]"
 	echo "\tsh build.ad <command> [<args>]"
 	echo "\nThe most commonly used git commands are:"
 	echo "   l\tLaunch"
+	echo "   ll\tLaunch local"
+	echo "   llh\tLaunch localhost"
 	echo "   r\tRun"
 	echo "   rl\tRun local"
 	echo "   rlh\tRun localhost"
