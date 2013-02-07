@@ -8,7 +8,7 @@
 ##
 ##	Usage:
 ##	$ cd path/to/work
-##	$ sh build.ad r
+##	$ sh build.ad help
 ##	
 ##	@todo:
 ##	$ Hit esc in compile error.
@@ -50,11 +50,11 @@ preview2="http://localhost:8000/"
 # support
 #
 targetplayer=11.1
+flashlog='/Users/adrianmiranda/Library/Preferences/Macromedia/Flash Player/Logs/flashlog.txt'
 flexpath="/Users/adrianmiranda/addons/SDKs/flex_sdk_4.6.0"
 swc="$flexpath/frameworks/libs/framework.swc $librarypath"
 mxmlc="$flexpath/bin/mxmlc"
 asdoc="$flexpath/bin/asdoc"
-flashlog='/Users/adrianmiranda/Library/Preferences/Macromedia/Flash Player/Logs/flashlog.txt'
 vars='-define CONFIG::LOGGING true -define CONFIG::PLATFORM true -define CONFIG::MOCK false'
 
 ################################################################################
@@ -100,9 +100,11 @@ fi
 #
 # run mxmlc
 #
-echo "### BUILDING $swf"
-$mxmlc $as -o $swf -source-path $sourcespath -library-path $swc $options
-echo "### FINISH!"
+if [ "$1" != "help" ] && [ "$1" != "l" ] && [ "$1" != "ll" ] && [ "$1" != "llh" ]; then
+	echo ":: Building $swf in $bin \n"
+	$mxmlc $as -o $swf -source-path $sourcespath -library-path $swc $options
+	echo "\n:: Decommisioning Previous Compile"
+fi
 
 #
 # debug in terminal
@@ -114,17 +116,38 @@ fi
 #
 # launch previews
 #
-if [ "$1" = "r" ]; then # run
+if [ "$1" = "r" ] || [ "$1" = "l" ]; then # run
+	echo " + Launch Booting Instances in player"
 	open $preview0
-elif [ "$1" = "rl" ]; then # run local
+elif [ "$1" = "rl" ] || [ "$1" = "ll" ]; then # run local
+	echo " + Launch Booting Instances in browser"
 	open $preview1
 elif [ "$1" = "ssr" ]; then # search strings recursively in files
 	if [ "$3" ]; then
+		echo " + Rerouting search to $3"
 		cd "$3"
 	fi
+	echo ":: Searching in ./$3 by $2 \n"
 	find ./ -exec grep -Hn "$2" {} \;
-elif [ "$1" = "rlh" ]; then # run localhost
+	echo "\n:: Decommisioning Previous Search \n"
+elif [ "$1" = "rlh" ] || [ "$1" = "llh" ]; then # run localhost
+	echo " + Rerouting $preview2 to $bin"
 	cd "$bin"
 	open $preview2
+	echo "   +> Booting $preview2 in $bin"
+	echo "      [ Press ctrl+c to get out ] \n"
 	python -m SimpleHTTPServer
+	echo " << traffic successfully CANCELED"
+elif [ "$1" = "help" ]; then # help user
+	echo "usage:  sh build.ad [l][ll][llh][r][rl][rlh][ssr[=<string>][=<path>]][help]"
+	echo "\tsh build.ad <command> [<args>]"
+	echo "\nThe most commonly used git commands are:"
+	echo "   l\tLaunch"
+	echo "   ll\tLaunch local"
+	echo "   llh\tLaunch localhost"
+	echo "   r\tRun"
+	echo "   rl\tRun local"
+	echo "   rlh\tRun localhost"
+	echo "   ssr\tSearch strings recursively in files"
+	echo "-"
 fi
