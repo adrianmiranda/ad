@@ -69,14 +69,16 @@ package com.ad.utils {
 			{
 				return JSON.decode(text);
 			}
-			
 			return JSON.parse(text, reviver);
 		}
 		
 		public static function encode(value:Object, replacer:* = null, space:* = null):String
 		{
+			CONFIG::FLASH_10_1
+			{
+				return JSON.encode(value);
+			}
 			return JSON.stringify(value, replacer, space);
-			//return JSON.encode(value);
 		}
 		
 		public static function resolvePropertyChain(chain:String, targetInstance:Object):*
