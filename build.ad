@@ -15,6 +15,12 @@
 ##	
 ################################################################################
 #
+#
+#	> config
+#
+#
+################################################################################
+#
 # app structure
 #
 bin="publish"
@@ -43,27 +49,52 @@ preview2="http://localhost:8000/"
 #
 # support
 #
+targetplayer=11.1
 flexpath="/Users/adrianmiranda/addons/SDKs/flex_sdk_4.6.0"
 swc="$flexpath/frameworks/libs/framework.swc $librarypath"
 mxmlc="$flexpath/bin/mxmlc"
 asdoc="$flexpath/bin/asdoc"
 flashlog='/Users/adrianmiranda/Library/Preferences/Macromedia/Flash Player/Logs/flashlog.txt'
-vars='-define CONFIG::LOGGING true -define CONFIG::FLASH_10_1 false -define CONFIG::PLATFORM true -define CONFIG::MOCK false'
+vars='-define CONFIG::LOGGING true -define CONFIG::PLATFORM true -define CONFIG::MOCK false'
 
-# 
-# shortcut cmd's
-# 
-function pause(){
-	read -p "$*"
+################################################################################
+#
+#
+#	> exec
+#
+#
+################################################################################
+#
+# utils
+#
+function float_cond()
+{
+	local cond=0
+	if [[ $# -gt 0 ]]; then
+		cond=$(echo "$*" | bc -q 2>/dev/null)
+		if [[ -z "$cond" ]]; then cond=0; fi
+		if [[ "$cond" != 0  &&  "$cond" != 1 ]]; then cond=0; fi
+	fi
+	local stat=$((cond == 0))
+	return $stat
 }
 
-# 
+#
+# define target player
+#
+if float_cond ''$targetplayer' > 10.1'; then
+	vars="-target-player=$targetplayer $vars -define CONFIG::FLASH_10_1 false"
+else
+	vars="-target-player=$targetplayer $vars -define CONFIG::FLASH_10_1 true"
+fi
+
+#
 # set options
-# 
-if [ "$2" = "f" ]; then # release
-	options="-static-link-runtime-shared-libraries=true -use-network=false -incremental=false -keep=false -debug=false -target-player=11.1 $vars"
+#
+if [ "$2" = "r" ]; then # release
+	options="-static-link-runtime-shared-libraries=true -use-network=false -incremental=false -keep=false -debug=false $vars"
 else # debug
-	options="-static-link-runtime-shared-libraries=true -use-network=false -incremental=false -keep=false -debug=true -target-player=11.1 $vars"
+	options="-static-link-runtime-shared-libraries=true -use-network=false -incremental=false -keep=false -debug=true $vars"
 fi
 
 #
@@ -73,10 +104,10 @@ echo "### BUILDING $swf"
 $mxmlc $as -o $swf -source-path $sourcespath -library-path $swc $options
 echo "### FINISH!"
 
-# 
-# debug
-# 
-if [ "$2" = "-f" ]; then
+#
+# debug in terminal
+#
+if [ "$2" = "d" ]; then
 	tail -f "$flashlog"
 fi
 
