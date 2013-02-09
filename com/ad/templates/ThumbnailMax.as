@@ -1,6 +1,8 @@
 package com.ad.templates {
+	import com.ad.common.percentage;
 	import com.ad.interfaces.IThumb;
 	
+	import flash.events.ProgressEvent;
 	import flash.events.IOErrorEvent;
 	import flash.events.Event;
 	import flash.net.URLRequest;
@@ -18,6 +20,7 @@ package com.ad.templates {
 	 */
 	public class ThumbnailMax extends ButtonMax implements IThumb {
 		private var _content:DisplayObject;
+		private var _percentage:Number;
 		private var _url:String;
 		
 		public function ThumbnailMax(urlOrRequest:* = null, hide:Boolean = false, allow:Boolean = false) {
@@ -46,8 +49,10 @@ package com.ad.templates {
 				this._url = url;
 			}
 			if (this._url) {
+				this._percentage = 0;
 				var loader:Loader = new Loader();
 				loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, this.onThumbIOError);
+				loader.contentLoaderInfo.addEventListener(ProgressEvent.PROGRESS, this.onThumbLoading);
 				loader.contentLoaderInfo.addEventListener(Event.COMPLETE, this.onThumbLoaded);
 				loader.load(new URLRequest(this._url), new LoaderContext(false, ApplicationDomain.currentDomain));
 			}
@@ -55,9 +60,15 @@ package com.ad.templates {
 		
 		public function loadBytes(bytes:ByteArray):void {
 			var loader:Loader = new Loader();
-			loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, this.onThumbIOError);
-			loader.contentLoaderInfo.addEventListener(Event.COMPLETE, this.onThumbLoaded);
+			loader.contentLoaderInfo.removeEventListener(ProgressEvent.PROGRESS, this.onThumbLoading);
+			loader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, this.onThumbIOError);
+			loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, this.onThumbLoaded);
 			loader.loadBytes(bytes, new LoaderContext(false, ApplicationDomain.currentDomain));
+		}
+
+		private function onThumbLoading(event:ProgressEvent):void {
+			this._percentage = percentage(event.bytesLoaded, event.bytesTotal);
+			this.progress();
 		}
 		
 		private function onThumbLoaded(event:Event):void {
@@ -75,6 +86,14 @@ package com.ad.templates {
 		
 		public function get content():DisplayObject {
 			return this._content;
+		}
+
+		public function get percentage():Number {
+			return this._percentage;
+		}
+
+		protected function progress():void {
+			// to override
 		}
 		
 		protected function loaded():void {

@@ -103,6 +103,7 @@ package com.ad.core {
 			var base:ISection;
 			if (this.header) {
 				base = new this.header.views.root.caste();
+				base.name = this.header.views.root.className;
 				base.apiKey = super.apiKey;
 			}
 			return DisplayObject(base);
