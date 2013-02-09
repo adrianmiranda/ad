@@ -18,6 +18,7 @@ package com.ad.core {
 		private var _binding:DisplayObject;
 		private var _request:Request;
 		private var _header:Header;
+		private var _base:ISection;
 		private var _xml:XML;
 		
 		public function ApplicationRequest(key:String = null) {
@@ -99,14 +100,13 @@ package com.ad.core {
 			return this._request ? this._request.rawData != null : false;
 		}
 		
-		public function get base():DisplayObject {
-			var base:ISection;
-			if (this.header) {
-				base = new this.header.views.root.caste();
-				base.name = this.header.views.root.className;
-				base.apiKey = super.apiKey;
+		public function get base():ISection {
+			if (this.header && !_base) {
+				_base = new this.header.views.root.caste();
+				_base.name = this.header.views.root.className;
+				_base.apiKey = super.apiKey;
 			}
-			return DisplayObject(base);
+			return _base;
 		}
 		
 		public function get binding():DisplayObject {
@@ -129,6 +129,7 @@ package com.ad.core {
 		}
 		
 		override public function dispose(flush:Boolean = false):void {
+			this._base = null;
 			if (this._request) {
 				this._request.close(true);
 				this._request = null;
