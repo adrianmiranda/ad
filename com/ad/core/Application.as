@@ -30,27 +30,27 @@ package com.ad.core {
 		}
 		
 		public function layers(data:*, target:DisplayObjectContainer = null):Application {
-			Layers.fromXML(super.getContent(data) || data, target || DisplayObjectContainer(super.binding), null);
+			Layers.fromXML(super.getAsset(data) || data, target || DisplayObjectContainer(super.binding), null);
 			return this;
 		}
 		
 		public function params(data:*, useOwnPrintf:Boolean = false):Application {
-			Parameters.parse(super.getContent(data) || data, useOwnPrintf, null);
+			Parameters.parse(super.getAsset(data) || data, useOwnPrintf, null);
 			return this;
 		}
 		
 		public function tracks(data:*, useOwnPrintf:Boolean = false):Application {
-			Analytics.parse(super.getContent(data) || data, useOwnPrintf, null);
+			Analytics.parse(super.getAsset(data) || data, useOwnPrintf, null);
 			return this;
 		}
 		
 		public function texts(data:*, useOwnPrintf:Boolean = false):Application {
-			Texts.parse(super.getContent(data) || data, useOwnPrintf, null);
+			Texts.parse(super.getAsset(data) || data, useOwnPrintf, null);
 			return this;
 		}
 		
 		public function links(data:*, useOwnPrintf:Boolean = false):Application {
-			Links.parse(super.getContent(data) || data, useOwnPrintf, null);
+			Links.parse(super.getAsset(data) || data, useOwnPrintf, null);
 			return this;
 		}
 	}

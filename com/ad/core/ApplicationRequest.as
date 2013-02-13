@@ -1,4 +1,5 @@
 package com.ad.core {
+	import com.ad.data.File;
 	import com.ad.data.View;
 	import com.ad.data.Header;
 	import com.ad.data.Language;
@@ -12,6 +13,22 @@ package com.ad.core {
 	
 	/**
 	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
+	 * @xml
+	 *	<header history="yes" strict="yes" connections="2" flow="normal" title="Some title">
+	 *		<file id="layers" url="{@baseContent}content/settings/layers.xml" kb="4"/>
+	 *		<base id="base" class="project.Base" standard="main" mistake="main">
+	 *			<file id="base" url="{@baseContent}content/views/base.swf" kb="108"/>
+	 *			<view id="main" class="project.areas.Main"></view>
+	 *		</base>
+	 *	</header>
+	 *	
+	 * -----
+	 * @usage
+	 * import com.ad.core.ApplicationRequest;
+	 * var app:ApplicationRequest = new ApplicationRequest('projectNameOrNothing');
+	 * app.fromXML('content/settings/sitemap.xml');
+	 * app.onParsed = onSitemapParsed;
+	 * app.startup(this);
 	 */
 	use namespace nsapplication;
 	public class ApplicationRequest extends ApplicationCore {
@@ -107,6 +124,18 @@ package com.ad.core {
 				_base.apiKey = super.apiKey;
 			}
 			return _base;
+		}
+
+		public function getLanguage(id:* = ''):Language {
+			return this.header ? this.header.languages.getLanguage(id) : null;
+		}
+
+		public function getView(id:* = ''):View {
+			return this.header ? this.header.views.getView(id) : null;
+		}
+
+		public function getFile(id:* = 0):File {
+			return this.header ? this.header.views.getFile(id) : null;
 		}
 		
 		public function get binding():DisplayObject {

@@ -223,7 +223,6 @@ package com.ad.display {
 				this._registrationShape.graphics.lineTo(diameter, diameter);
 				this._registrationShape.graphics.moveTo(-diameter, diameter);
 				this._registrationShape.graphics.lineTo(diameter, -diameter);
-				//this._registrationShape.graphics.drawCircle(0, 0, diameter * 2);
 				this._registrationShape.graphics.endFill();
 				super.setChildIndex(this._registrationShape, super.numChildren - 1);
 			}

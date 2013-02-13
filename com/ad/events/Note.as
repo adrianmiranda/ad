@@ -30,6 +30,7 @@ package com.ad.events {
 		public static const SEARCH:String = 'Note.SEARCH';
 		public static const SEARCH_COMPLETE:String = 'Note.SEARCH_COMPLETE';
 		public static const REFRESH:String = 'Note.REFRESH';
+		public static const PROGRESS:String = 'Note.PROGRESS';
 		
 		protected var _target:Object;
 		protected var _ready:Boolean;

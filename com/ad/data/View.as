@@ -277,7 +277,7 @@ package com.ad.data {
 			return this._node;
 		}
 		
-		public function dispose():void {
+		public function dispose(flush:Boolean = false):void {
 			if (this.hasViews) {
 				var id:uint = this._views.length;
 				while (id--) {
@@ -294,9 +294,11 @@ package com.ad.data {
 				}
 				this._files = null;
 			}
-			BRANCH = new String();
-			LIST = null;
-			INDEX = 0;
+			if (flush) {
+				BRANCH = new String();
+				LIST = null;
+				INDEX = 0;
+			}
 			this._binding = null;
 			this._standard = null;
 			this._mistake = null;

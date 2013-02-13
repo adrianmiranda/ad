@@ -193,7 +193,7 @@ package com.ad.data {
 			return this._node;
 		}
 		
-		public function dispose():void {
+		public function dispose(flush:Boolean = false):void {
 			if (this.hasLanguages) {
 				var id:uint = this._languages.length;
 				while (id--) {
@@ -202,9 +202,11 @@ package com.ad.data {
 				}
 				this._languages = null;
 			}
-			LIST = new Vector.<Language>();
-			BRANCH = new String();
-			INDEX = 0;
+			if (flush) {
+				LIST = new Vector.<Language>();
+				BRANCH = new String();
+				INDEX = 0;
+			}
 			this._standard = null;
 			this._binding = null;
 			this._parent = null;

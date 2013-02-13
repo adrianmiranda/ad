@@ -12,6 +12,7 @@ package com.ad.data {
 	public final class File {
 		private var _binding:DisplayObject;
 		private var _parent:View;
+		private var _backgroundConnections:uint;// no yet implemented
 		private var _runInBackground:Boolean;
 		private var _preload:Boolean;
 		private var _noCache:Boolean;
@@ -115,7 +116,7 @@ package com.ad.data {
 			return this._xml;
 		}
 		
-		public function dispose():void {
+		public function dispose(flush:Boolean = false):void {
 			this._binding = null;
 			this._parent = null;
 			this._xml = null;

@@ -50,7 +50,10 @@ package com.ad.data {
 		}
 		
 		override flash_proxy function getProperty(name:*):* {
-			return this.usePrintf(name) && this.useOwnPrintf ? (printf(this.data[name], this) || '??? ' + name) : this.data[name];
+			if (this.usePrintf(name) && this.useOwnPrintf) {
+				return (printf(this.data[name], this) || '/??? ' + name);
+			}
+			return this.data[name] || '/??? ' + name;
 		}
 		
 		override flash_proxy function hasProperty(name:*):Boolean {

@@ -18,6 +18,7 @@ package com.ad.data {
 		public function get parameters():Array {
 			return this._parameters;
 		}
+		
 		public function set parameters(value:Array):void {
 			this._parameters = value;
 		}
@@ -25,6 +26,7 @@ package com.ad.data {
 		public function get name():String {
 			return this._name;
 		}
+		
 		public function set name(value:String):void {
 			this._name = value;
 		}
@@ -32,6 +34,7 @@ package com.ad.data {
 		public function get time():String {
 			return this._time;
 		}
+		
 		public function set time(value:String):void {
 			this._time = value;
 		}
@@ -39,6 +42,7 @@ package com.ad.data {
 		public function get type():String {
 			return this._type;
 		}
+
 		public function set type(value:String):void {
 			this._type = value;
 		}

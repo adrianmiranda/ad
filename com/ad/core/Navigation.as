@@ -86,7 +86,7 @@ package com.ad.core {
 			if (this._section) this.killSection();
 		}
 		
-		private function killSection():void {
+		private function killSection(flush:Boolean = false):void {
 			this._transitionState &= 1;
 			this._isInterrupted = false;
 			TweenMax.killTweensOf(this._section);
@@ -94,10 +94,11 @@ package com.ad.core {
 			TweenMax.killDelayedCallsTo(this._section);
 			TweenLite.killTweensOf(this._section);
 			TweenLite.killDelayedCallsTo(this._section);
-			this._section.die();
+			Cleaner.kill(DisplayObjectContainer(this._section));
 			this._section = null;
-			Cleaner.gc();
-			this.stackTransition(super.view);
+			if (!flush) {
+				this.stackTransition(super.view);
+			}
 		}
 		
 		private function onInterruptTransition():void {
@@ -116,8 +117,7 @@ package com.ad.core {
 		override public function dispose(flush:Boolean = false):void {
 			if (flush) {
 				if (this._section) {
-					this._section.die();
-					this._section = null;
+					this.killSection(flush);
 				}
 			}
 			super.dispose(flush);

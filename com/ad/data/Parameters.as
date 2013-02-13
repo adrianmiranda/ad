@@ -49,7 +49,7 @@ package com.ad.data {
 	 * 
 	 * trace('benchmark:', $('debug-benchmark'));
 	 */
-	dynamic final public class Parameters extends Proxy {
+	dynamic public final class Parameters extends Proxy {
 		public static var shortcutTarget:Parameters = new Parameters();
 		public var useOwnPrintf:Boolean;
 		public var data:Object;

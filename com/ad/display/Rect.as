@@ -32,8 +32,8 @@ package com.ad.display {
 			super.graphics.endFill();
 		}
 		
-		public function set color(color:uint):void {
-			this._color = color;
+		public function set color(value:uint):void {
+			this._color = value;
 			this.draw();
 		}
 		

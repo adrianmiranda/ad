@@ -3,7 +3,7 @@ package com.ad.data {
 	
 	/**
 	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
-	 * TODO: 
+	 * TODO: Implement all cue params
 	 */
 	public class ValueObject {
 		private var _id:*;

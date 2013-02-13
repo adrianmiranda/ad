@@ -4,6 +4,7 @@ package com.ad.templates {
 	
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.utils.Dictionary;
 	
 	[Event(name = 'active', type = 'flash.events.MouseEvent')]
 	[Event(name = 'click', type = 'flash.events.MouseEvent')]
@@ -14,16 +15,21 @@ package com.ad.templates {
 	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
 	 */
 	public class ButtonLite extends Leprechaun implements IButton {
+		private static var BUTTONS:Dictionary = new Dictionary(true);
+		private var _data:Object = new Object();
 		private var _selected:Boolean;
 		private var _event:MouseEvent;
-		private var _params:Object = new Object();
 		private var _reference:uint;
 		
-		public function ButtonLite(hide:Boolean = false) {
+		public function ButtonLite(groupName:String = null, hide:Boolean = false) {
 			super.buttonMode = true;
 			super.mouseChildren = false;
 			super.addEventListener(Event.ADDED_TO_STAGE, this.onAddedToStage);
 			super.addEventListener(Event.REMOVED_FROM_STAGE, this.onRemovedFromStage);
+			if (!BUTTONS[groupName]) {
+				BUTTONS[groupName] = [];
+			}
+			BUTTONS[groupName].push(this);
 			if (hide) this.out();
 		}
 		
@@ -39,6 +45,7 @@ package com.ad.templates {
 		protected function onRemovedFromStage(event:Event):void {
 			super.removeAllEventListener();
 			this.finalize();
+			BUTTONS = null;
 		}
 		
 		protected function initialize():void {
@@ -73,8 +80,8 @@ package com.ad.templates {
 			return this._selected;
 		}
 		
-		public function get params():Object {
-			return this._params;
+		public function get data():Object {
+			return this._data;
 		}
 		
 		public function get reference():uint {
@@ -108,6 +115,19 @@ package com.ad.templates {
 		private function onButtonMouseOut(event:MouseEvent):void {
 			this._event = event;
 			if (!this.selected) this.out();
+		}
+
+		public function getGroupByName(name:String):Array {
+			return BUTTONS[name];
+		}
+
+		public function unselectAll(name:String):void {
+			var group:Array = getGroupByName(name);
+			for each (var item:ButtonLite in group) {
+				if (item != this) {
+					item.selected = false;
+				}
+			}
 		}
 		
 		override public function toString():String {

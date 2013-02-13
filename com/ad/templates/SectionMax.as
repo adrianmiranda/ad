@@ -82,7 +82,7 @@ package com.ad.templates {
 		}
 		
 		public function getAsset(nameOrURL:String):* {
-			return this._application.getContent(nameOrURL);
+			return this._application.getAsset(nameOrURL);
 		}
 
 		public function getLoader(nameOrURL:String):* {
@@ -133,6 +133,10 @@ package com.ad.templates {
 			return this._application.view;
 		}
 		
+		public function get app():Application {
+			return this._application;
+		}
+
 		override public function toString():String {
 			return '[SectionMax ' + super.name + ']';
 		}

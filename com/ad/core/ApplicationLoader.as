@@ -17,12 +17,13 @@ package com.ad.core {
 	import flash.events.Event;
 	import flash.display.DisplayObject;
 	import flash.media.SoundLoaderContext;
-	import flash.system.LoaderContext;
+	import flash.system.LoaderContext; 
 	
 	/**
 	 * @author Adrian C. Miranda <adriancmiranda@gmail.com>
-	 > TODO: Usage a single method to add and remove listeners.
-	 > Create a new loaderContext to header.
+	 > TODO: Usage a single method to add, remove and dispatch listeners. (brushing bits)
+	 > Create a new loaderContext to header. (to use context to preload assets)
+	 > Background connections (save the user band in case of a lot queues)
 	 */
 	use namespace nsapplication;
 	public class ApplicationLoader extends ApplicationRequest {
@@ -179,7 +180,7 @@ package com.ad.core {
 			return lazyloader;
 		}
 		
-		public function getContent(nameOrURL:String):* {
+		public function getAsset(nameOrURL:String):* {
 			return LoaderMax.getContent(nameOrURL);
 		}
 

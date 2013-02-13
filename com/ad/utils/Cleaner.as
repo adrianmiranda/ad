@@ -37,6 +37,7 @@ package com.ad.utils {
 			removeChildrenOf(target);
 			if (target.stage && target.parent && target.parent.contains(target)) {
 				target.parent.removeChild(target);
+				target = null;
 			}
 			gc();
 		}

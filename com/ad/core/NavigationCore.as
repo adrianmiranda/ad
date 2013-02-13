@@ -5,8 +5,8 @@ package com.ad.core {
 	import com.ad.errors.ADError;
 	import com.ad.utils.Browser;
 	import com.ad.proxy.nsapplication;
-	import com.asual.SWFAddressEvent;
-	import com.asual.SWFAddress;
+	import com.swfaddress.SWFAddressEvent;
+	import com.swfaddress.SWFAddress;
 
 	import flash.display.DisplayObjectContainer;
 	
