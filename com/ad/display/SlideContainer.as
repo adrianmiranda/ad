@@ -5,8 +5,8 @@ package
 	import flash.display.DisplayObjectContainer;
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
-
-	public final class SlideContainer extends Sprite
+	
+	public final class SlideContainer
 	{
 		private var _container:DisplayObjectContainer;
 		private var _cA:Sprite = new Sprite();

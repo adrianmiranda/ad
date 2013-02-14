@@ -24,6 +24,7 @@ package com.ad.core {
 	 > TODO: Usage a single method to add, remove and dispatch listeners. (brushing bits)
 	 > Create a new loaderContext to header. (to use context to preload assets)
 	 > Background connections (save the user band in case of a lot queues)
+	 > autoPlay VideoLoader, SWFLoader, MP3Loader
 	 */
 	use namespace nsapplication;
 	public class ApplicationLoader extends ApplicationRequest {
@@ -150,7 +151,7 @@ package com.ad.core {
 				var core:LoaderCore;
 				if (file is File) {
 					trace("File '"+ file.id +"' ({"+ file.url +"})"+ (!file.preload ? " stopped" : ""));
-					core = this.parseFile(file.url, { name:file.id, noCache:file.noCache });
+					core = this.parseFile(file.url, { name:file.id, noCache:file.noCache, autoPlay:false });
 					core.vars.integrateProgress = file.preload;
 					core.vars.estimatedBytes = file.bytes;
 				} else if (file is LoaderItem) {
@@ -179,6 +180,10 @@ package com.ad.core {
 			lazyloader.append(this.parseFile(url, params));
 			return lazyloader;
 		}
+
+		public function prioritizeLoader(nameOrURL:String):void {
+			LoaderMax.prioritize(nameOrURL);
+		}
 		
 		public function getAsset(nameOrURL:String):* {
 			return LoaderMax.getContent(nameOrURL);
@@ -186,6 +191,13 @@ package com.ad.core {
 
 		public function getLoader(nameOrURL:String):* {
 			return LoaderMax.getLoader(nameOrURL);
+		}
+
+		public function get contentLoaders():* {
+			if (this._loader) {
+				return this._loader.content;
+			}
+			return [];
 		}
 		
 		protected function onHeaderComplete(event:LoaderEvent):void {
