@@ -271,7 +271,7 @@ function typeOf(value, strict){
 }
 
 function equals(){
-	var xValue,	yValue, xType, yType;
+	var xValue, yValue, xType, yType;
 	for(var x = 0; x < arguments.length; x++){
 		for(var y = 0; y < arguments.length; y++){
 			xValue = arguments[x];
