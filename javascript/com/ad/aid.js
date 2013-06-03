@@ -1,63 +1,17 @@
 /*------------------------------------------------------------------------------------------------------------------------------------------------------------------------
  * 
- * NATIVE VARIABLES
+ * PROTOTYPES
  * 
  ------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-window.navigator.getUserMedia = window.navigator.getUserMedia||window.navigator.webkitGetUserMedia||window.navigator.mozGetUserMedia||window.navigator.msGetUserMedia;
-window.URL = window.URL||window.webkitURL;
-
-/*------------------------------------------------------------------------------------------------------------------------------------------------------------------------
- * 
- * NATIVE METHODS
- * 
- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-(function(){
-	'use strict';
-	var lastTime = 0;
-	var vendors = ['ms', 'moz', 'webkit', 'o'];
-	var currTime, timeToCall, id;
-	for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x){
-		window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
-		window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame']||window[vendors[x]+'CancelRequestAnimationFrame'];
-	}
-	if(!window.requestAnimationFrame){
-		window.requestAnimationFrame = function(callback, element){
-			currTime = new Date().getTime();
-			timeToCall = Math.max(0, 16 - (currTime - lastTime));
-			id = window.setTimeout(function(){
-				callback(currTime + timeToCall);
-			}, timeToCall);
-			lastTime = currTime + timeToCall;
-			return id;
+if(!typeOf(Function.prototype.bind)){
+	Function.prototype.bind = function(){ 
+		var method = this;
+		var params = Array.prototype.slice.call(arguments), object = params.shift();
+		return function(){
+			return method.apply(object, params.concat(Array.prototype.slice.call(arguments)));
 		};
-	}
-	if(!window.cancelAnimationFrame){
-		window.cancelAnimationFrame = function(id){
-			window.clearTimeout(id);
-		};
-	}
-}());
-
-(function(){
-	'use strict';
-	var method;
-	var noop = function noop(){/*N/A*/};
-	var methods = [
-		'assert', 'clear', 'count', 'debug', 'dir', 'dirxml', 'error',
-		'exception', 'group', 'groupCollapsed', 'groupEnd', 'info', 'log',
-		'markTimeline', 'profile', 'profileEnd', 'table', 'time', 'timeEnd',
-		'timeStamp', 'trace', 'warn'
-	];
-	var length = methods.length;
-	var console = window.console = (window.console||{});
-	while(length--){
-		method = methods[length];
-		if(!console[method]){
-			console[method] = noop;
-		}
-	}
-	window.trace = console.log.bind(console);
-}());
+	};
+}
 
 if(!typeOf(String.prototype.relay)){
 	String.prototype.relay = function(){
@@ -82,13 +36,13 @@ if(!typeOf(String.prototype.trim)) {
 }
 
 if(!typeOf(String.prototype.leftPad)){
-	String.prototype.leftPad = function(character, times){
+	String.prototype.leftPad = function(padChar, times){
 		var source = String(this);
 		var padding = '';
 		times = num(times);
 		if (source.length < times) {
 			while (padding.length + source.length < times) {
-				padding += character;
+				padding += padChar;
 			}
 			return padding + source;
 		}
@@ -97,11 +51,11 @@ if(!typeOf(String.prototype.leftPad)){
 }
 
 if(!typeOf(String.prototype.rightPad)){
-	String.prototype.rightPad = function(character, times){
+	String.prototype.rightPad = function(padChar, times){
 		var source = String(this);
 		times = num(times);
 		while (source.length < times) {
-			source += character;
+			source += padChar;
 		}
 		return source;
 	};
@@ -191,6 +145,67 @@ if(!Math.cosE0){
 		return Math.cos(value === 0 ? 0.000001 : value);
 	};
 }
+
+/*------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ * 
+ * FIX NATIVE VARIABLES
+ * 
+ ------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+window.navigator.getUserMedia = window.navigator.getUserMedia||window.navigator.webkitGetUserMedia||window.navigator.mozGetUserMedia||window.navigator.msGetUserMedia;
+window.URL = window.URL||window.webkitURL;
+
+/*------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ * 
+ * FIX NATIVE METHODS
+ * 
+ ------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+(function(){
+	'use strict';
+	var lastTime = 0;
+	var vendors = ['ms', 'moz', 'webkit', 'o'];
+	var currTime, timeToCall, id;
+	for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x){
+		window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
+		window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame']||window[vendors[x]+'CancelRequestAnimationFrame'];
+	}
+	if(!window.requestAnimationFrame){
+		window.requestAnimationFrame = function(callback, element){
+			currTime = new Date().getTime();
+			timeToCall = Math.max(0, 16 - (currTime - lastTime));
+			id = window.setTimeout(function(){
+				callback(currTime + timeToCall);
+			}, timeToCall);
+			lastTime = currTime + timeToCall;
+			return id;
+		};
+	}
+	if(!window.cancelAnimationFrame){
+		window.cancelAnimationFrame = function(id){
+			window.clearTimeout(id);
+		};
+	}
+}());
+
+(function(){
+	'use strict';
+	var method;
+	var noop = function noop(){/*N/A*/};
+	var methods = [
+		'assert', 'clear', 'count', 'debug', 'dir', 'dirxml', 'error',
+		'exception', 'group', 'groupCollapsed', 'groupEnd', 'info', 'log',
+		'markTimeline', 'profile', 'profileEnd', 'table', 'time', 'timeEnd',
+		'timeStamp', 'trace', 'warn'
+	];
+	var length = methods.length;
+	var console = window.console = (window.console||{});
+	while(length--){
+		method = methods[length];
+		if(!console[method]){
+			console[method] = noop;
+		}
+	}
+	window.trace = console.log.bind(console);
+}());
 
 /*------------------------------------------------------------------------------------------------------------------------------------------------------------------------
  * 
