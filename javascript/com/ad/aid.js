@@ -94,27 +94,30 @@ if(!typeOf(Array.prototype.sortOn)){
 	};
 }
 
-if(!typeOf(Array.prototype.remove)){
-	Array.prototype.remove = function(value){
-		if(this.contains(value)){
-			this.splice(this.indexOf(value), 1);
-		}
-		return this;
-	};
-}
-
 if(!typeOf(Array.prototype.contains)){
 	Array.prototype.contains = function(value){
 		return this.indexOf(value) != -1;
 	};
 }
 
+if(!typeOf(Array.prototype.remove)){
+	Array.prototype.remove = function(value){
+		if(this.indexOf(value) != -1){
+			this.splice(this.indexOf(value), 1);
+		}
+		return this;
+	};
+}
+
 if(!typeOf(Array.prototype.count)){
 	Array.prototype.count = function(value) {
-		var total = -1;
+		var total = 0;
 		var index = this.length;
-		while(index-- && this.contains(value)){
-			total++;
+		var total = index - 1;
+		while(index-- && this.indexOf(value) != -1){
+			if (index != total) {
+				total++;
+			}
 		}
 		return total;
 	}
@@ -204,7 +207,7 @@ window.URL = window.URL||window.webkitURL;
 			console[method] = noop;
 		}
 	}
-	window.log = console.log.bind(console);
+	window.trace = console.log.bind(console);
 }());
 
 /*------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -212,10 +215,6 @@ window.URL = window.URL||window.webkitURL;
  * UTILS METHODS
  * 
  ------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-function trace(){
-	console.log.apply(console, Array.prototype.slice.call(arguments));
-}
-
 function foreach(haystack, callback, dontIgnoreFunctions){
 	for(var key in haystack){
 		if(typeOf(haystack[key]) != 'function' || dontIgnoreFunctions){
