@@ -255,6 +255,7 @@ function getValueByName(name, scope){
 }
 
 function getDefinitionName(value, strict){
+	// Object.prototype.toString.apply(value);
 	if(value === false) return 'Boolean';
 	if(value === '') return 'String';
 	if(value === 0) return 'Number';
