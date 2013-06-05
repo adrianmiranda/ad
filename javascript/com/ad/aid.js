@@ -204,7 +204,7 @@ window.URL = window.URL||window.webkitURL;
 			console[method] = noop;
 		}
 	}
-	window.trace = console.log.bind(console);
+	window.log = console.log.bind(console);
 }());
 
 /*------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -212,6 +212,10 @@ window.URL = window.URL||window.webkitURL;
  * UTILS METHODS
  * 
  ------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+function trace(){
+	console.log.apply(console, Array.prototype.slice.call(arguments));
+}
+
 function foreach(haystack, callback, dontIgnoreFunctions){
 	for(var key in haystack){
 		if(typeOf(haystack[key]) != 'function' || dontIgnoreFunctions){
