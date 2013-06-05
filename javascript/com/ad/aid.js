@@ -388,8 +388,8 @@ function bool(value){
 
 function num(value, ceiling){
 	value = parseFloat(value);
-	value = ((isNaN(value) || !isFinite(value)) ? 0 : value);
-	if (ceiling === true) {
+	value = ((isNaN(value)||!isFinite(value)) ? 0 : value);
+	if(ceiling === true){
 		value = parseInt(value * 1000) / 1000;
 	}
 	return value;
