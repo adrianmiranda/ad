@@ -255,14 +255,14 @@ function getValueByName(name, scope){
 }
 
 function getDefinitionName(value, strict){
-	// Object.prototype.toString.apply(value);
 	if(value === false) return 'Boolean';
 	if(value === '') return 'String';
 	if(value === 0) return 'Number';
 	if(value && value['constructor']){
-		var name = value.constructor.toString()
+		var name = (value.constructor.toString()||Object.prototype.toString.apply(value))
 		.replace(/^.*function([^\s]*|[^\(]*)\([^\x00]+$/, '$1')
-		.replace(/\s+/, '');
+		.replace(/^(\[object\s)|]$/g, '')
+		.replace(/\s+/, '')||'Object';
 		if(strict !== true)
 		if(!/^(Boolean|RegExp|Number|String|Array|Date)$/.test(name)){
 			return 'Object';
@@ -387,11 +387,10 @@ function bool(value){
 }
 
 function num(value, ceiling){
-	value = String(value).replace(/(px|pt|pc|mm|cm|in|ex|em|%)$/gi, '');
-	value = Number(value);
+	value = parseFloat(value);
 	value = ((isNaN(value) || !isFinite(value)) ? 0 : value);
 	if (ceiling === true) {
-		value = parseInt(value * 10000) / 10000;
+		value = parseInt(value * 1000) / 1000;
 	}
 	return value;
 }
