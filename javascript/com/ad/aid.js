@@ -388,9 +388,9 @@ function bool(value){
 
 function num(value, ceiling){
 	value = parseFloat(value);
-	value = ((isNaN(value)||!isFinite(value)) ? 0 : value);
-	if(ceiling === true){
-		value = parseInt(value * 1000) / 1000;
+	value = (isNaN(value) || !isFinite(value)) ? 0 : value;
+	if (ceiling === true) {
+		value = parseInt(value * 10000, 10) / 10000;
 	}
 	return value;
 }
@@ -406,4 +406,63 @@ function int(value){
 
 function clone(value){
 	return JSON.parse(JSON.stringify(value));
+}
+
+function distance(x1, x2, y1, y2){
+	return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
+}
+
+function Rectangle(axisX, axisY, width, height){
+	this.width = num(width);
+	this.height = num(height);
+	this.top = this.x = num(axisX);
+	this.left = this.y = num(axisY);
+	this.right = this.x + this.width;
+	this.bottom = this.y + this.height;
+	this.size = new Point(this.width, this.height);
+	this.topLeft = new Point(this.top, this.left);
+	this.bottomRight = new Point(this.bottom, this.right);
+	Rectangle.prototype.containsRect = function(rectangle) {
+		return this.x < rectangle.x && rectangle.x + rectangle.width < this.x + this.width
+			&& this.y < rectangle.y && rectangle.y + rectangle.height < this.y + this.height;
+	};
+	Rectangle.prototype.containsPoint = function(point) {
+		return this.contains(point.x, point.y);
+	};
+	Rectangle.prototype.contains = function(axisX, axisY) {
+		return axisX > this.x && axisX < this.x + this.width
+			&& axisY > this.y && axisY < this.y + this.height;
+	};
+	Rectangle.prototype.clone = function() {
+		return new Rectangle(this.x, this.y, this.width, this.height);
+	};
+	Rectangle.prototype.toString = function() {
+		return '(x='+this.x+', y='+this.y+', width='+this.width+', height='+this.height+')';
+	};
+}
+
+function Vector3(axisX, axisY, axisZ){
+	this.x = num(axisX);
+	this.y = num(axisY);
+	this.z = num(axisZ);
+	Vector3.prototype.toString = function() {
+		return '(x='+this.x+', y='+this.y+', z='+this.z+')';
+	};
+}
+
+function Point(axisX, axisY){
+	this.x = num(axisX);
+	this.y = num(axisY);
+	Point.distance = function(pointA, pointB){
+		return distance(pointA.x, pointB.x, pointA.y, pointB.y);
+	}
+	Point.prototype.manhattan = function(point){
+		return Math.abs(this.x - point.x) + Math.abs(this.y - point.y);
+	};
+	Point.prototype.clone = function(){
+		return new Point(this.x, this.y);
+	};
+	Point.prototype.toString = function() {
+		return '(x='+this.x+', y='+this.y+')';
+	};
 }
